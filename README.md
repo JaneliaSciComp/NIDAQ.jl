@@ -1,4 +1,4 @@
-National Instruments Data Acquisition Interface [![Picture](/hhmi_janelia_160pix.png)](http://www.janelia.org)
+National Instruments Data Acquisition Interface [![Picture](/hhmi_janelia_160px.png)](http://www.janelia.org)
 ===============================================
 
 This package provides an interface to NIDAQmx-- National Instruments' driver
