@@ -35,4 +35,15 @@ include("digital.jl")
 include("counter.jl")
 include("properties.jl")
 
+function catch_error(code::Int32, extra::ASCIIString="")
+    sz = DAQmxGetErrorString(code, convert(Ptr{Uint8},C_NULL), convert(Uint32,0))
+    data = zeros(Uint8,sz)
+    ret = DAQmxGetErrorString(code, convert(Ptr{Uint8},data), convert(Uint32,sz))
+    ret>0 && warn("DAQmxGetErrorString error $ret")
+    ret<0 && error("DAQmxGetErrorString error $ret")
+    data = convert(ASCIIString, data)
+    code>0 && warn("NIDAQmx: "*extra*data)
+    code<0 && error("NIDAQmx: "*extra*data)
+end
+
 end

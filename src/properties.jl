@@ -1,8 +1,6 @@
 function devices()
     data=zeros(Uint8,256)
-    ret = DAQmxGetSysDevNames(convert(Ptr{Uint8},data), convert(Uint32,256))
-    ret>0 && warn("NIDAQmx: $ret")
-    ret<0 && error("NIDAQmx: $ret")
+    catch_error(DAQmxGetSysDevNames(convert(Ptr{Uint8},data), convert(Uint32,256)))
     split(rstrip(string(char(data)...),'\0'),", ")
 end
 
@@ -17,10 +15,8 @@ for (cfunction, jfunction) in (
         (DAQmxGetDevCOPhysicalChans, :counter_output_channels))
     @eval function $jfunction(device::String)
         data=zeros(Uint8,256)
-        ret = $cfunction(convert(Ptr{Uint8},device), convert(Ptr{Uint8},data),
-                convert(Uint32,256))
-        ret>0 && warn("NIDAQmx: $ret")
-        ret<0 && error("NIDAQmx: $ret")
+        catch_error( $cfunction(convert(Ptr{Uint8},device), convert(Ptr{Uint8},data),
+                convert(Uint32,256)) )
         split(rstrip(string(char(data)...),'\0'),", ")
     end
 
@@ -37,10 +33,8 @@ for (cfunction, jfunction) in (
 
     @eval function $jfunction(device::ASCIIString)
         data=zeros(32)
-        ret = $cfunction(convert(Ptr{Uint8},device), convert(Ptr{Float64},data),
-                convert(Uint32,32))
-        ret>0 && warn("NIDAQmx: $ret")
-        ret<0 && error("NIDAQmx: $ret")
+        catch_error( $cfunction(convert(Ptr{Uint8},device), convert(Ptr{Float64},data),
+                convert(Uint32,32)) )
         data=data[data.!=0.0]
         reshape(data,(2,length(data)>>1))'
     end
@@ -54,10 +48,9 @@ end
 
 function channel_type(t::TaskHandle, channel::ASCIIString)
     val1 = Cint[0]
-    ret = DAQmxGetChanType(t, convert(Ptr{Uint8},channel), convert(Ptr{Int32}, val1))
-    ret>0 && warn("NIDAQmx: $ret")
-    ret<0 && error("NIDAQmx: $ret")
-    
+    catch_error(
+        DAQmxGetChanType(t, convert(Ptr{Uint8},channel), convert(Ptr{Int32}, val1)) )
+      
     val2 = Cint[0]
     if val1[1]==DAQmx_Val_AI
         ret = DAQmxGetAIMeasType(t, convert(Ptr{Uint8},channel), convert(Ptr{Int32}, val2))
@@ -73,8 +66,7 @@ function channel_type(t::TaskHandle, channel::ASCIIString)
     elseif val1[1]==DAQmx_Val_CO
         ret = DAQmxGetCOOutputType(t, convert(Ptr{Uint8},channel), convert(Ptr{Int32}, val2))
     end
-    ret>0 && warn("NIDAQmx: $ret")
-    ret<0 && error("NIDAQmx: $ret")
+    catch_error(ret)
 
     val1[1], val2[1]
 end
@@ -89,12 +81,12 @@ function properties_guts(args, suffix::ASCIIString)
             signature = cfunction.env.defs.sig
             basetype = eval(parse(string(signature[1+length(args)])[5:end-1]))
             if length(signature)==2+length(args)
-              data=zeros(basetype,256)
+              data = zeros(basetype,256)
               ret = cfunction(args..., convert(Ptr{basetype},data),
                       convert(Uint32,256))
               data = rstrip(string(char(data)...),'\0')
             else
-              data=basetype[0]
+              data = basetype[0]
               ret = cfunction(args..., convert(Ptr{basetype},data))
               data = data[1]
             end
@@ -106,9 +98,6 @@ function properties_guts(args, suffix::ASCIIString)
                     settable=false
                 end
                 ret_val[string(cfunction)[9+length(suffix):end]] = (data, settable)
-            else 
-                ret>0 && warn("NIDAQmx: $(string(cfunction)): $ret")
-                ret<0 && warn("NIDAQmx: $(string(cfunction)): $ret")
             end
         end
     end
@@ -146,7 +135,6 @@ end
 
 function set_property(t::TaskHandle, channel::ASCIIString, property::ASCIIString, value)
     @eval ret = $(symbol("DAQmxSetCO"*property))($t, convert(Ptr{Uint8},$channel), $value)
-    ret>0 && warn("NIDAQmx: DAQmxSetCO$property: $ret")
-    ret<0 && warn("NIDAQmx: DAQmxSetCO$property: $ret")
+    catch_error(ret, "DAQmxSetCO$property: ")
     nothing
 end

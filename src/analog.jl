@@ -9,12 +9,10 @@ function analog_input(t::TaskHandle, channel::ASCIIString;
         device::ASCIIString = split(channel,'/')[1]
         range=float(analog_input_ranges(device)[end,:])
     end
-    ret = DAQmxCreateAIVoltageChan(t,
+    catch_error( DAQmxCreateAIVoltageChan(t,
             convert(Ptr{Uint8},channel), convert(Ptr{Uint8},""),
             analog_input_configs[terminal_config], range[1], range[2],
-            convert(Int32,DAQmx_Val_Volts), convert(Ptr{Uint8},C_NULL))
-    ret>0 && warn("NIDAQmx: $ret")
-    ret<0 && error("NIDAQmx: $ret")
+            convert(Int32,DAQmx_Val_Volts), convert(Ptr{Uint8},C_NULL)) )
     nothing
 end
 
@@ -23,11 +21,9 @@ function analog_output(t::TaskHandle, channel::ASCIIString; range=nothing)
         device::ASCIIString = split(channel,'/')[1]
         range=float(analog_output_ranges(device)[end,:])
     end
-    ret = DAQmxCreateAOVoltageChan(t,
+    catch_error( DAQmxCreateAOVoltageChan(t,
             convert(Ptr{Uint8},channel), convert(Ptr{Uint8},""), range[1], range[2],
-            convert(Int32,DAQmx_Val_Volts), convert(Ptr{Uint8},C_NULL))
-    ret>0 && warn("NIDAQmx: $ret")
-    ret<0 && error("NIDAQmx: $ret")
+            convert(Int32,DAQmx_Val_Volts), convert(Ptr{Uint8},C_NULL)) )
     nothing
 end
 
@@ -42,12 +38,10 @@ function read_analog(t::TaskHandle, precision::DataType, num_samples::Integer = 
     num_samples_read = Int32[0]
     if num_samples==-1;  num_samples=1024;  end
     data = Array(precision, num_samples)
-    ret = read_analog_cfunctions[precision](t, convert(Int32,num_samples), 1.0,
+    catch_error( read_analog_cfunctions[precision](t, convert(Int32,num_samples), 1.0,
         convert(Uint32,DAQmx_Val_GroupByChannel), convert(Ptr{precision},data),
         convert(Uint32,num_samples), convert(Ptr{Int32},num_samples_read),
-        convert(Ptr{Uint32},C_NULL))
-    ret>0 && warn("NIDAQmx: $ret")
-    ret<0 && error("NIDAQmx: $ret")
+        convert(Ptr{Uint32},C_NULL)) )
     data = data[1:num_samples_read[1]]
     reshape(data, (num_samples, div(length(data),num_samples)))
 end
@@ -62,11 +56,9 @@ for (cfunction, types) in (
         num_samples::Int32 = size(data, 1)
         data = reshape(data, length(data))
         num_samples_written = Int32[0]
-        ret = $cfunction(t, num_samples, uint32(false), 1.0,
+        catch_error( $cfunction(t, num_samples, uint32(false), 1.0,
             convert(Uint32,DAQmx_Val_GroupByChannel), convert(Ptr{$types},data),
-            convert(Ptr{Int32},num_samples_written), convert(Ptr{Uint32},C_NULL))
-        ret>0 && warn("NIDAQmx: $ret")
-        ret<0 && error("NIDAQmx: $ret")
+            convert(Ptr{Int32},num_samples_written), convert(Ptr{Uint32},C_NULL)) )
         num_samples_written[1]
     end
     @eval write_analog(t::TaskHandle, data::Vector{$types}) =
