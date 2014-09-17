@@ -59,7 +59,7 @@ function line_to_line(t::TaskHandle, channel::ASCIIString;
     nothing
 end
 
-function generate_pulses{T<:Number}(t::TaskHandle, channel::ASCIIString, low::T, high::T;
+function generate_pulses{T<:Number}(t::TaskHandle, channel::ASCIIString, low::T=2, high::T=2;
         delay::T=0)
     if T<:FloatingPoint
         ret = DAQmxCreateCOPulseChanTime(t, convert(Ptr{Uint8},channel), convert(Ptr{Uint8},""),
