@@ -1,7 +1,7 @@
 function devices()
     data=zeros(Uint8,256)
     catch_error(DAQmxGetSysDevNames(convert(Ptr{Uint8},data), convert(Uint32,256)))
-    split(rstrip(string(char(data)...),'\0'),", ")
+    map((x)->convert(ASCIIString,x), split(rstrip(string(char(data)...),'\0'),", "))
 end
 
 for (cfunction, jfunction) in (
@@ -13,15 +13,15 @@ for (cfunction, jfunction) in (
         (DAQmxGetDevDOPorts, :digital_output_ports),
         (DAQmxGetDevCIPhysicalChans, :counter_input_channels),
         (DAQmxGetDevCOPhysicalChans, :counter_output_channels))
-    @eval function $jfunction(device::String)
+    @eval function $jfunction(device::ASCIIString)
         data=zeros(Uint8,256)
         catch_error( $cfunction(convert(Ptr{Uint8},device), convert(Ptr{Uint8},data),
                 convert(Uint32,256)) )
-        split(rstrip(string(char(data)...),'\0'),", ")
+        map((x)->convert(ASCIIString,x), split(rstrip(string(char(data)...),'\0'),", "))
     end
 
     @eval function $jfunction()
-        d::Vector{ASCIIString} = devices()
+        d = devices()
         length(d)!=1 && error("NIDAQmx: more than one device")
         $(symbol(jfunction))(d[1])
     end
@@ -40,7 +40,7 @@ for (cfunction, jfunction) in (
     end
 
     @eval function $jfunction()
-        d::Vector{ASCIIString} = devices()
+        d = devices()
         length(d)!=1 && error("NIDAQmx: more than one device")
         $jfunction(d[1])
     end
