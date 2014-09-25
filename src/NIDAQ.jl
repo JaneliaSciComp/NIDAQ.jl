@@ -16,8 +16,7 @@ export read_analog, read_digital, write_analog, write_digital, read_counter
 export devices, channel_type, getproperties, setproperty!
 export analog_input_ranges, analog_output_ranges
 export analog_input_channels, analog_output_channels
-export digital_input_lines, digital_output_lines
-export digital_input_ports, digital_output_ports
+export digital_input_channels, digital_output_channels
 export counter_input_channels, counter_output_channels
 
 const NIDAQmx = "C:\\Windows\\System32\\nicaiu.dll"

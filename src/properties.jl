@@ -1,23 +1,23 @@
 function devices()
-    data=zeros(Uint8,256)
-    catch_error(DAQmxGetSysDevNames(convert(Ptr{Uint8},data), convert(Uint32,256)))
-    map((x)->convert(ASCIIString,x), split(rstrip(string(char(data)...),'\0'),", "))
+    sz = DAQmxGetSysDevNames(convert(Ptr{Uint8},C_NULL), convert(Uint32,0))
+    data=zeros(Uint8,sz)
+    catch_error(DAQmxGetSysDevNames(convert(Ptr{Uint8},data), convert(Uint32,sz)))
+    map((x)->convert(ASCIIString,x), split(chop(string(char(data)...)),", "))
 end
 
 for (cfunction, jfunction) in (
         (DAQmxGetDevAIPhysicalChans, :analog_input_channels),
         (DAQmxGetDevAOPhysicalChans, :analog_output_channels),
-        (DAQmxGetDevDILines, :digital_input_lines),
-        (DAQmxGetDevDOLines, :digital_output_lines),
-        (DAQmxGetDevDIPorts, :digital_input_ports),
-        (DAQmxGetDevDOPorts, :digital_output_ports),
+        (DAQmxGetDevDILines, :digital_input_channels),
+        (DAQmxGetDevDOLines, :digital_output_channels),
         (DAQmxGetDevCIPhysicalChans, :counter_input_channels),
         (DAQmxGetDevCOPhysicalChans, :counter_output_channels))
     @eval function $jfunction(device::ASCIIString)
-        data=zeros(Uint8,256)
+        sz = $cfunction(convert(Ptr{Uint8},device), convert(Ptr{Uint8},C_NULL), convert(Uint32,0))
+        data=zeros(Uint8,sz)
         catch_error( $cfunction(convert(Ptr{Uint8},device), convert(Ptr{Uint8},data),
-                convert(Uint32,256)) )
-        map((x)->convert(ASCIIString,x), split(rstrip(string(char(data)...),'\0'),", "))
+                convert(Uint32,sz)) )
+        map((x)->convert(ASCIIString,x), split(chop(string(char(data)...)),", "))
     end
 
     @eval function $jfunction()
@@ -32,10 +32,10 @@ for (cfunction, jfunction) in (
         (DAQmxGetDevAOVoltageRngs, :analog_output_ranges))
 
     @eval function $jfunction(device::ASCIIString)
-        data=zeros(32)
+        sz = $cfunction(convert(Ptr{Uint8},device), convert(Ptr{Float64},C_NULL), convert(Uint32,0))
+        data=zeros(sz)
         catch_error( $cfunction(convert(Ptr{Uint8},device), convert(Ptr{Float64},data),
-                convert(Uint32,32)) )
-        data=data[data.!=0.0]
+                convert(Uint32,sz)) )
         reshape(data,(2,length(data)>>1))'
     end
 
@@ -85,10 +85,10 @@ function getproperties_guts(args, suffix::ASCIIString, warning=false)
                     ret = cfunction(args..., convert(Ptr{basetype},data))
                     data = data[1]
                 else
-                    data = zeros(basetype,256)
-                    ret = cfunction(args..., convert(Ptr{basetype},data),
-                            convert(Uint32,256))
-                    data = rstrip(string(char(data)...),'\0')
+                    sz = cfunction(args..., convert(Ptr{basetype},C_NULL), convert(Uint32,0))
+                    data = zeros(basetype,sz)
+                    ret = cfunction(args..., convert(Ptr{basetype},data), convert(Uint32,sz))
+                    data = string(char(chop(data))...)
                 end
             catch
                 warning && warn("can't handle function signature for $cfunction: $signature")
