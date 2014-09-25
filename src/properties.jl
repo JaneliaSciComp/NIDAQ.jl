@@ -56,11 +56,8 @@ function channel_type(t::TaskHandle, channel::ASCIIString)
         ret = DAQmxGetAIMeasType(t, convert(Ptr{Uint8},channel), convert(Ptr{Int32}, val2))
     elseif val1[1]==DAQmx_Val_AO
         ret = DAQmxGetAOOutputType(t, convert(Ptr{Uint8},channel), convert(Ptr{Int32}, val2))
-    elseif val1[1]==DAQmx_Val_DI
-        ret = 0
-        val2[1]=nothing
-    elseif val1[1]==DAQmx_Val_DO
-        ret = DAQmxGetDOOutputDriveType(t, convert(Ptr{Uint8},channel), convert(Ptr{Int32}, val2))
+    elseif val1[1]==DAQmx_Val_DI || val1[1]==DAQmx_Val_DO
+        return val1[1], nothing
     elseif val1[1]==DAQmx_Val_CI
         ret = DAQmxGetCIMeasType(t, convert(Ptr{Uint8},channel), convert(Ptr{Int32}, val2))
     elseif val1[1]==DAQmx_Val_CO
@@ -71,70 +68,74 @@ function channel_type(t::TaskHandle, channel::ASCIIString)
     val1[1], val2[1]
 end
 
-function properties_guts(args, suffix::ASCIIString)
+function getproperties_guts(args, suffix::ASCIIString, warning=false)
     ret_val = Dict()
     local settable
+    local data
+    local ret
     for cfunction in names(NIDAQ,true)
         tmp = string(cfunction)
         if length(tmp)>=8+length(suffix) && tmp[1:8+length(suffix)]=="DAQmxGet"*suffix
             cfunction = getfield(NIDAQ, cfunction)
             signature = cfunction.env.defs.sig
-            basetype = eval(parse(string(signature[1+length(args)])[5:end-1]))
-            if length(signature)==2+length(args)
-              data = zeros(basetype,256)
-              ret = cfunction(args..., convert(Ptr{basetype},data),
-                      convert(Uint32,256))
-              data = rstrip(string(char(data)...),'\0')
-            else
-              data = basetype[0]
-              ret = cfunction(args..., convert(Ptr{basetype},data))
-              data = data[1]
+            try
+                basetype = eval(parse(string(signature[1+length(args)])[5:end-1]))
+                if length(signature)==1+length(args)
+                    data = basetype[0]
+                    ret = cfunction(args..., convert(Ptr{basetype},data))
+                    data = data[1]
+                else
+                    data = zeros(basetype,256)
+                    ret = cfunction(args..., convert(Ptr{basetype},data),
+                            convert(Uint32,256))
+                    data = rstrip(string(char(data)...),'\0')
+                end
+            catch
+                warning && warn("can't handle function signature for $cfunction: $signature")
+                continue
             end
             if ret==0
-                try
-                    getfield(NIDAQ, symbol(replace(string(cfunction),"Get"*suffix,"Set"*suffix)))
-                    settable=true
-                catch
-                    settable=false
-                end
-                ret_val[string(cfunction)[9+length(suffix):end]] = (data, settable)
+              try
+                  getfield(NIDAQ, symbol(replace(string(cfunction),"Get"*suffix,"Set"*suffix)))
+                  settable=true
+              catch
+                  settable=false
+              end
+              ret_val[string(cfunction)[9+length(suffix):end]] = (data, settable)
             end
         end
     end
     ret_val
 end
 
-function properties()
-    properties_guts((), "Sys")
+function getproperties()
+    getproperties_guts((), "Sys")
 end
 
-function properties(device::ASCIIString)
-    properties_guts((convert(Ptr{Uint8},device),), "Dev")
+function getproperties(device::ASCIIString)
+    getproperties_guts((convert(Ptr{Uint8},device),), "Dev")
 end
 
-function properties(t::TaskHandle)
-    properties_guts((t,), "Task")
+function getproperties(t::TaskHandle)
+    getproperties_guts((t,), "Task")
 end
 
-function properties(t::TaskHandle, channel::ASCIIString)
-    tmp = channel_type(t, channel)
-    if tmp[1]==DAQmx_Val_AI
-        properties_guts((t, convert(Ptr{Uint8},channel),), "AI")
-    elseif tmp[1]==DAQmx_Val_AO
-        properties_guts((t, convert(Ptr{Uint8},channel),), "AO")
-    elseif tmp[1]==DAQmx_Val_DI
-        properties_guts((t, convert(Ptr{Uint8},channel),), "DI")
-    elseif tmp[1]==DAQmx_Val_DO
-        properties_guts((t, convert(Ptr{Uint8},channel),), "DO")
-    elseif tmp[1]==DAQmx_Val_CI
-        properties_guts((t, convert(Ptr{Uint8},channel),), "CI")
-    elseif tmp[1]==DAQmx_Val_CO
-        properties_guts((t, convert(Ptr{Uint8},channel),), "CO")
-    end
+channel_types = ["DAQmx_Val_AI", "DAQmx_Val_AO",
+                 "DAQmx_Val_DI", "DAQmx_Val_DO",
+                 "DAQmx_Val_CI", "DAQmx_Val_CO"]
+
+function getproperties(t::TaskHandle, channel::ASCIIString)
+    kind = channel_types[ find(channel_type(t, channel)[1] .==
+            map((x)->getfield(NIDAQ,symbol(x)), channel_types))[1]][end-1:end]
+
+    getproperties_guts((t, convert(Ptr{Uint8},channel)), kind)
 end
 
-function set_property(t::TaskHandle, channel::ASCIIString, property::ASCIIString, value)
-    @eval ret = $(symbol("DAQmxSetCO"*property))($t, convert(Ptr{Uint8},$channel), $value)
-    catch_error(ret, "DAQmxSetCO$property: ")
+function setproperty!(t::TaskHandle, channel::ASCIIString, property::ASCIIString, value)
+    kind = channel_types[ find(channel_type(t, channel)[1] .==
+            map((x)->getfield(NIDAQ,symbol(x)), channel_types))[1]][end-1:end]
+
+    @eval ret = $(symbol("DAQmxSet"*kind*property))($t, convert(Ptr{Uint8},$channel), $value)
+    catch_error(ret, "DAQmxSet$kind$property: ")
     nothing
 end

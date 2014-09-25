@@ -1,5 +1,7 @@
 module NIDAQ
 
+import Gtk.setproperty!  # what if "using NIDAQ, Gtk" ?
+
 # tasks
 export task, start, stop, clear
 
@@ -11,7 +13,7 @@ export count_edges, measure_duty_cycle, quadrature_input, line_to_line, generate
 export read_analog, read_digital, write_analog, write_digital, read_counter
 
 # properties
-export devices, channel_type, properties, set_property
+export devices, channel_type, getproperties, setproperty!
 export analog_input_ranges, analog_output_ranges
 export analog_input_channels, analog_output_channels
 export digital_input_lines, digital_output_lines
