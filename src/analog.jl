@@ -39,9 +39,9 @@ function read_analog(t::TaskHandle, precision::DataType, num_samples::Integer = 
     if num_samples==-1;  num_samples=1024;  end
     data = Array(precision, num_samples)
     catch_error( read_analog_cfunctions[precision](t, convert(Int32,num_samples), 1.0,
-        convert(Uint32,DAQmx_Val_GroupByChannel), convert(Ptr{precision},data),
+        reinterpret(Bool32,uint32(DAQmx_Val_GroupByChannel)), convert(Ptr{precision},data),
         convert(Uint32,num_samples), convert(Ptr{Int32},num_samples_read),
-        convert(Ptr{Uint32},C_NULL)) )
+        reinterpret(Ptr{Bool32},C_NULL)) )
     data = data[1:num_samples_read[1]]
     reshape(data, (num_samples, div(length(data),num_samples)))
 end
@@ -56,9 +56,9 @@ for (cfunction, types) in (
         num_samples::Int32 = size(data, 1)
         data = reshape(data, length(data))
         num_samples_written = Int32[0]
-        catch_error( $cfunction(t, num_samples, uint32(false), 1.0,
-            convert(Uint32,DAQmx_Val_GroupByChannel), convert(Ptr{$types},data),
-            convert(Ptr{Int32},num_samples_written), convert(Ptr{Uint32},C_NULL)) )
+        catch_error( $cfunction(t, num_samples, reinterpret(Bool32, uint32(false)), 1.0,
+            reinterpret(Bool32,uint32(DAQmx_Val_GroupByChannel)), convert(Ptr{$types},data),
+            convert(Ptr{Int32},num_samples_written), reinterpret(Ptr{Bool32},C_NULL)) )
         num_samples_written[1]
     end
     @eval write_analog(t::TaskHandle, data::Vector{$types}) =

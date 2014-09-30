@@ -3421,7 +3421,7 @@ typealias float32 Cfloat
 typealias float64 Cdouble
 typealias int64 Clonglong
 typealias uInt64 Culonglong
-typealias bool32 uInt32
+typealias bool32 Bool32
 typealias TaskHandle Ptr{Void}
 typealias CalHandle uInt32
 typealias DAQmxEveryNSamplesEventCallbackPtr Ptr{Void}

@@ -31,7 +31,7 @@ end
 
 function quadrature_input(t::TaskHandle, channel::ASCIIString;  z_enable::Bool=true)
     ret = DAQmxCreateCIAngEncoderChan(t, convert(Ptr{Uint8},channel), convert(Ptr{Uint8},""),
-            convert(Int32,DAQmx_Val_X4), convert(Uint32,z_enable), 0.0,
+            convert(Int32,DAQmx_Val_X4), reinterpret(Bool32, uint32(z_enable)), 0.0,
             convert(Int32,DAQmx_Val_AHighBHigh), convert(Int32,DAQmx_Val_Ticks),
             uint32(1), 0.0, convert(Ptr{Uint8},""))
     ret>0 && warn(error(ret))
@@ -92,7 +92,7 @@ function read_counter(t::TaskHandle, channel::ASCIIString, num_samples::Integer 
         data = Array(precision, num_samples)
         catch_error( cfunction(t, convert(Int32,num_samples), 1.0,
             convert(Ptr{precision},data), convert(Uint32,num_samples),
-            convert(Ptr{Int32},num_samples_read), convert(Ptr{Uint32},C_NULL)) )
+            convert(Ptr{Int32},num_samples_read), reinterpret(Ptr{Bool32},C_NULL)) )
         data = data[1:num_samples_read[1]]
         reshape(data, (num_samples, div(length(data),num_samples)))
     end
@@ -104,7 +104,7 @@ function read_counter(t::TaskHandle, channel::ASCIIString, num_samples::Integer 
         catch_error( cfunction(t, convert(Int32,num_samples), 1.0,
             convert(Uint32,DAQmx_Val_GroupByChannel),
             convert(Ptr{Float64},high), convert(Ptr{Float64},low), convert(Uint32,num_samples),
-            convert(Ptr{Int32},num_samples_read), convert(Ptr{Uint32},C_NULL)) )
+            convert(Ptr{Int32},num_samples_read), reinterpret(Ptr{Bool32},C_NULL)) )
         high = high[1:num_samples_read[1]]
         low = low[1:num_samples_read[1]]
         reshape(high, (num_samples, div(length(high),num_samples))),

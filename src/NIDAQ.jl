@@ -21,14 +21,19 @@ export counter_input_channels, counter_output_channels
 
 const NIDAQmx = "C:\\Windows\\System32\\nicaiu.dll"
 
+bitstype 32 Bool32 <: Integer
+export Bool32
+
 # could only Pkg.add("Clang") on mac with BUILD_LLVM_CLANG=1 in Make.user option
 # julia> using Clang
 # julia> context = wrap_c.init()
-# julia> context.common_file="common.jl"
+# julia> context.common_file="constants.jl"
 # julia> wrap_c.wrap_c_headers(context, {"NIDAQmx.h"})
+# $ mv NIDAQmx.jl functions.jl
+# $ sed constants.jl:  typealias bool32 uInt32 -> typealias bool32 Bool32
 
-include("common.jl")
-include("NIDAQmx.jl")
+include("constants.jl")
+include("functions.jl")
 
 include("task.jl")
 include("analog.jl")
