@@ -1,46 +1,62 @@
-function count_edges(t::TaskHandle, channel::ASCIIString;
+function count_edges(channel::ASCIIString;
         edge::String="rising", initial_count::Integer=0, direction::String="up")
+    t = CITask()
     if edge ∉ {"rising", "falling"}
         error("edge must either be \"rising\" or \"falling\"")
     end
     if direction ∉ {"up", "down"}
         error("direction must either be \"up\" or \"down\"")
     end
-    catch_error( DAQmxCreateCICountEdgesChan(t,
-        convert(Ptr{Uint8},channel), convert(Ptr{Uint8},""),
+    catch_error( DAQmxCreateCICountEdgesChan(t.th,
+        convert(Ptr{Uint8},channel),
+        convert(Ptr{Uint8},""),
         convert(Int32, edge == "rising" ? DAQmx_Val_Rising : DAQmx_Val_Falling),
         uint32(initial_count),
         convert(Int32, direction == "up" ? DAQmx_Val_CountUp : DAQmx_Val_CountDown)) )
-    nothing
+    t
 end
 
 # broken
-function measure_duty_cycle(t::TaskHandle, channel::ASCIIString;  units::String="seconds")
+function measure_duty_cycle(channel::ASCIIString;  units::String="seconds")
+    t = CITask()
     if units == "seconds"
-        ret = DAQmxCreateCIPulseChanTime(t, convert(Ptr{Uint8},channel), convert(Ptr{Uint8},""),
-                2.0, 1000.0, convert(Int32,DAQmx_Val_Seconds))
+        ret = DAQmxCreateCIPulseChanTime(t.th,
+                convert(Ptr{Uint8},channel), convert(Ptr{Uint8},""),
+                2.0, 1000.0,
+                convert(Int32,DAQmx_Val_Seconds))
     elseif units == "ticks"
-        ret = DAQmxCreateCIPulseChanTicks(t, convert(Ptr{Uint8},channel), convert(Ptr{Uint8},""),
-                convert(Ptr{Uint8},""), 2.0, 1000.0)
+        ret = DAQmxCreateCIPulseChanTicks(t.th,
+                convert(Ptr{Uint8},channel),
+                convert(Ptr{Uint8},""),
+                convert(Ptr{Uint8},""),
+                2.0, 1000.0)
     else
         error("units must either be \"seconds\" or \"ticks\"")
     end
     catch_error(ret)
-    nothing
+    t
 end
 
-function quadrature_input(t::TaskHandle, channel::ASCIIString;  z_enable::Bool=true)
-    ret = DAQmxCreateCIAngEncoderChan(t, convert(Ptr{Uint8},channel), convert(Ptr{Uint8},""),
-            convert(Int32,DAQmx_Val_X4), reinterpret(Bool32, uint32(z_enable)), 0.0,
-            convert(Int32,DAQmx_Val_AHighBHigh), convert(Int32,DAQmx_Val_Ticks),
-            uint32(1), 0.0, convert(Ptr{Uint8},""))
+function quadrature_input(channel::ASCIIString;  z_enable::Bool=true)
+    t = CITask()
+    ret = DAQmxCreateCIAngEncoderChan(t.th,
+            convert(Ptr{Uint8},channel),
+            convert(Ptr{Uint8},""),
+            convert(Int32,DAQmx_Val_X4),
+            reinterpret(Bool32, uint32(z_enable)),
+            0.0,
+            convert(Int32,DAQmx_Val_AHighBHigh),
+            convert(Int32,DAQmx_Val_Ticks),
+            uint32(1), 0.0,
+            convert(Ptr{Uint8},""))
     ret>0 && warn(error(ret))
     ret<0 && error(error(ret))
-    nothing
+    t
 end
 
-function line_to_line(t::TaskHandle, channel::ASCIIString;
+function line_to_line(channel::ASCIIString;
         units::String="seconds", edge1::String="rising", edge2::String="rising")
+    t = CITask()
     if units ∉ {"seconds", "ticks"}
         error("units must either be \"seconds\" or \"ticks\"")
     end
@@ -50,33 +66,45 @@ function line_to_line(t::TaskHandle, channel::ASCIIString;
     if edge2 ∉ {"rising", "falling"}
         error("edge2 must either be \"rising\" or \"falling\"")
     end
-    catch_error( DAQmxCreateCITwoEdgeSepChan(t,
-            convert(Ptr{Uint8},channel), convert(Ptr{Uint8},""), 1.0, 1000.0, 
+    catch_error( DAQmxCreateCITwoEdgeSepChan(t.th,
+            convert(Ptr{Uint8},channel),
+            convert(Ptr{Uint8},""),
+            1.0, 1000.0, 
             convert(Int32, units == "seconds" ? DAQmx_Val_Seconds : DAQmx_Val_Ticks),
             convert(Int32, edge1 == "rising" ? DAQmx_Val_Rising : DAQmx_Val_Falling),
             convert(Int32, edge2 == "rising" ? DAQmx_Val_Rising : DAQmx_Val_Falling),
             convert(Ptr{Uint8},"")) )
-    nothing
+    t
 end
 
-function generate_pulses{T<:Number}(t::TaskHandle, channel::ASCIIString, low::T=2, high::T=2;
-        delay::T=0)
+function generate_pulses{T<:Number}(channel::ASCIIString, low::T=2, high::T=2; delay::T=0)
+    t = COTask()
     if T<:FloatingPoint
-        ret = DAQmxCreateCOPulseChanTime(t, convert(Ptr{Uint8},channel), convert(Ptr{Uint8},""),
-                convert(Int32,DAQmx_Val_Seconds), convert(Int32,DAQmx_Val_Low),
-                convert(Float64,delay), convert(Float64,low), convert(Float64,high))
+        ret = DAQmxCreateCOPulseChanTime(t.th,
+                convert(Ptr{Uint8},channel),
+                convert(Ptr{Uint8},""),
+                convert(Int32,DAQmx_Val_Seconds),
+                convert(Int32,DAQmx_Val_Low),
+                convert(Float64,delay),
+                convert(Float64,low),
+                convert(Float64,high))
     elseif T<:Integer
-        ret = DAQmxCreateCOPulseChanTicks(t, convert(Ptr{Uint8},channel), convert(Ptr{Uint8},""),
-                convert(Ptr{Uint8},""), convert(Int32,DAQmx_Val_Low),
-                convert(Int32,delay), convert(Int32,low), convert(Int32,high))
+        ret = DAQmxCreateCOPulseChanTicks(t.th,
+                convert(Ptr{Uint8},channel),
+                convert(Ptr{Uint8},""),
+                convert(Ptr{Uint8},""),
+                convert(Int32,DAQmx_Val_Low),
+                convert(Int32,delay),
+                convert(Int32,low),
+                convert(Int32,high))
     else
         error("low, high, and delay must either be \"FloatingPoint\" or \"Integer\"")
     end
     catch_error(ret)
-    nothing
+    t
 end
 
-function read_counter(t::TaskHandle, channel::ASCIIString, num_samples::Integer = -1)
+function read(t::CITask, channel::ASCIIString, num_samples::Integer = -1)
     if num_samples==-1;  num_samples=1024;  end
 
     #function read_counter_scalar(precision::DataType, cfunction::Function)
@@ -90,9 +118,13 @@ function read_counter(t::TaskHandle, channel::ASCIIString, num_samples::Integer 
     function read_counter_vector(precision::DataType, cfunction::Function)
         num_samples_read = Int32[0]
         data = Array(precision, num_samples)
-        catch_error( cfunction(t, convert(Int32,num_samples), 1.0,
-            convert(Ptr{precision},data), convert(Uint32,num_samples),
-            convert(Ptr{Int32},num_samples_read), reinterpret(Ptr{Bool32},C_NULL)) )
+        catch_error( cfunction(t.th,
+            convert(Int32,num_samples),
+            1.0,
+            convert(Ptr{precision},data),
+            convert(Uint32,num_samples),
+            convert(Ptr{Int32},num_samples_read),
+            reinterpret(Ptr{Bool32},C_NULL)) )
         data = data[1:num_samples_read[1]]
         reshape(data, (num_samples, div(length(data),num_samples)))
     end
@@ -101,17 +133,22 @@ function read_counter(t::TaskHandle, channel::ASCIIString, num_samples::Integer 
         num_samples_read = Int32[0]
         high = Array(precision, num_samples)
         low = Array(precision, num_samples)
-        catch_error( cfunction(t, convert(Int32,num_samples), 1.0,
+        catch_error( cfunction(t.th,
+            convert(Int32,num_samples),
+            1.0,
             convert(Uint32,DAQmx_Val_GroupByChannel),
-            convert(Ptr{Float64},high), convert(Ptr{Float64},low), convert(Uint32,num_samples),
-            convert(Ptr{Int32},num_samples_read), reinterpret(Ptr{Bool32},C_NULL)) )
+            convert(Ptr{Float64},high),
+            convert(Ptr{Float64},low),
+            convert(Uint32,num_samples),
+            convert(Ptr{Int32},num_samples_read),
+            reinterpret(Ptr{Bool32},C_NULL)) )
         high = high[1:num_samples_read[1]]
         low = low[1:num_samples_read[1]]
         reshape(high, (num_samples, div(length(high),num_samples))),
             reshape(low, (num_samples, div(length(low),num_samples)))
     end
 
-    tmp = channel_type(t, channel)
+    tmp = channel_type(t.th, channel)
     if tmp[2] == DAQmx_Val_CountEdges
         data = read_counter_vector(Uint32, DAQmxReadCounterU32)
     elseif tmp[2] == DAQmx_Val_PulseTime
@@ -122,8 +159,9 @@ function read_counter(t::TaskHandle, channel::ASCIIString, num_samples::Integer 
         data = read_counter_vector(Uint32, DAQmxReadCounterU32)
     elseif tmp[2] == DAQmx_Val_TwoEdgeSep  # might be broken
         val = Cint[0]
-        catch_error( DAQmxGetCITwoEdgeSepUnits(t,
-                convert(Ptr{Uint8},channel), convert(Ptr{Int32}, val)) )
+        catch_error( DAQmxGetCITwoEdgeSepUnits(t.th,
+                convert(Ptr{Uint8},channel),
+                convert(Ptr{Int32},val)) )
         if val[1]==DAQmx_Val_Ticks
             data = read_counter_vector(Uint32, DAQmxReadCounterU32)
             #data = read_counter_scalar(Uint32, DAQmxReadCounterScalarU32)

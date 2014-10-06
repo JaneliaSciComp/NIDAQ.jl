@@ -1,16 +1,16 @@
 module NIDAQ
 
-import Gtk.setproperty!  # what if "using NIDAQ, Gtk" ?
+import Base.write, Base.read, Base.start
+if isdefined(:Gtk)
+  import Gtk.setproperty!  # what if "using NIDAQ, Gtk" ?
+end
 
 # tasks
-export task, start, stop, clear
+export stop, clear
 
 # channels
 export analog_input, analog_output, digital_input, digital_output
 export count_edges, measure_duty_cycle, quadrature_input, line_to_line, generate_pulses
-
-# read/write
-export read_analog, read_digital, write_analog, write_digital, read_counter
 
 # properties
 export devices, channel_type, getproperties, setproperty!
