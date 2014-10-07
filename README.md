@@ -252,7 +252,7 @@ Dict{Any,Any} with 60 entries:
   "DataXferMech"                   => (:DAQmx_Val_ProgrammedIO,true)
 ```
 
-Use ```setproperty!``` to change a channel's mutable property like so:
+Use ```setproperty!``` to change a channel's mutable property:
 
 ```
 julia> setproperty!(t, "Dev1/ai0", "Max", 5.0)
@@ -319,11 +319,30 @@ julia> names(NIDAQ)
 ```
 
 NIDAQmx is a powerful interface, and while NIDAQ.jl provides wrappers
-for all if it's functions, it only abstracts a few of them.  If these
+for all of it's functions, it only abstracts a few of them.  If these
 don't suit your needs you'll have to dive deep into src/functions.jl
 and src/constants.jl.  Complete documentation of this low-level API
 is [here](http://zone.ni.com/reference/en-XX/help/370466V-01/) and
 [here](http://zone.ni.com/reference/en-XX/help/370471W-01/).
+
+One situation where the low-level API is currently needed is to specify
+continous output of pulses using a counter:
+
+```
+julia> t = generate_pulses("Dev1/ctr0")
+COTask(Ptr{Void} @0x00000000059d8790)
+
+julia> names(t)
+1-element Array{Symbol,1}:
+ :th
+
+julia> NIDAQ.DAQmxCfgImplicitTiming(t.th, int32(NIDAQ.DAQmx_Val_ContSamps), uint64(1))
+0
+```
+
+Note that tasks consist of just a single field ```th```, and that this "task
+handle" is what must be passed into many low-level routines.  One must also
+take care to caste the inputs appropriately.
 
 
 Author
