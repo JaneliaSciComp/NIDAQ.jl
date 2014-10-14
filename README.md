@@ -18,7 +18,8 @@ Installation
 ============
 
 First download and install NI-DAQmx version
-[14.0](http://www.ni.com/download/ni-daqmx-14.0/4918/en/) from National
+[14.1](http://www.ni.com/download/ni-daqmx-14.1/4953/en/) (or
+[14.0](http://www.ni.com/download/ni-daqmx-14.0/4918/en/)) from National
 Instruments.  Then on the Julia command line:
 
 ```
@@ -252,7 +253,7 @@ Dict{Any,Any} with 60 entries:
   "DataXferMech"                   => (:DAQmx_Val_ProgrammedIO,true)
 ```
 
-Use ```setproperty!``` to change a channel's mutable property:
+Use ```setproperty!``` to change a mutable property:
 
 ```
 julia> setproperty!(t, "Dev1/ai0", "Max", 5.0)
@@ -320,12 +321,12 @@ julia> names(NIDAQ)
 
 NIDAQmx is a powerful interface, and while NIDAQ.jl provides wrappers
 for all of it's functions, it only abstracts a few of them.  If these
-don't suit your needs you'll have to dive deep into src/functions.jl
-and src/constants.jl.  Complete documentation of this low-level API
+don't suit your needs you'll have to dive deep into src/functions_V*.jl
+and src/constants_V*.jl.  Complete documentation of this low-level API
 is [here](http://zone.ni.com/reference/en-XX/help/370466V-01/) and
 [here](http://zone.ni.com/reference/en-XX/help/370471W-01/).
 
-One situation where the low-level API is currently needed is to specify
+One situation where the low-level API is needed is to specify
 continous output of pulses using a counter:
 
 ```

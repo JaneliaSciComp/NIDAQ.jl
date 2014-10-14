@@ -30,13 +30,33 @@ export Bool32
 # could only Pkg.add("Clang") on mac with BUILD_LLVM_CLANG=1 in Make.user option
 # julia> using Clang
 # julia> context = wrap_c.init()
-# julia> context.common_file="constants.jl"
+# julia> context.common_file="common.jl"
 # julia> wrap_c.wrap_c_headers(context, {"NIDAQmx.h"})
-# $ mv NIDAQmx.jl functions.jl
-# $ sed constants.jl:  typealias bool32 uInt32 -> typealias bool32 Bool32
+# $ edit common.jl:
+#     typealias bool32 uInt32 -> typealias bool32 Bool32
+#     comment out const CVICALLBACK = CVICDECL
+# $ mv NIDAQmx.jl functions_V*.jl
+# $ mv common.jl constants_V*.jl
 
-include("constants.jl")
-include("functions.jl")
+try
+  global ver
+  major = Uint32[0]
+  ccall((:DAQmxGetSysNIDAQMajorVersion,NIDAQmx),Int32,(Ptr{Uint32},),major)
+  minor = Uint32[0]
+  ccall((:DAQmxGetSysNIDAQMinorVersion,NIDAQmx),Int32,(Ptr{Uint32},),minor)
+  update = Uint32[0]
+  ccall((:DAQmxGetSysNIDAQUpdateVersion,NIDAQmx),Int32,(Ptr{Uint32},),update)
+  ver = "$(major[1]).$(minor[1]).$(update[1])"
+catch
+  error("can not determine NIDAQmx version.")
+end
+
+try
+  include("constants_V$ver.jl")
+  include("functions_V$ver.jl")
+catch
+  error("NIDAQmx version $ver is not supported.")
+end
 
 include("task.jl")
 include("analog.jl")
