@@ -101,30 +101,48 @@ function getproperties_guts(args, suffix::ASCIIString, warning::Bool)
                     data = data[1]
                 else
                     sz = cfunction(args..., convert(Ptr{basetype},C_NULL), convert(Uint32,0))
+                    if sz<0
+                      ret=sz
+                      throw()
+                    end
                     data = zeros(basetype,sz)
                     ret = cfunction(args..., convert(Ptr{basetype},data), convert(Uint32,sz))
-                    data = chop(string(char(data)...))
                 end
-                if basetype == Bool32
+                if ret!=0
+                    throw()
+                elseif basetype == Bool32
                     data = reinterpret(Uint32, data) != 0
-                elseif basetype == Int32 && data ∈ keys(signed_constants)
-                    data = signed_constants[data]
-                elseif basetype == Uint32 && data ∈ keys(unsigned_constants)
-                    data = unsigned_constants[data]
+                elseif basetype == Int32
+                    try
+                        data = map((x)->signed_constants[x], data)
+                    end
+                elseif basetype == Uint32
+                    try
+                        data = map((x)->unsigned_constants[x], data)
+                    end
+                elseif basetype == Uint8
+                    data = chop(string(char(data)...))
+                    if search(data,',')>0
+                        data = split(data,", ")
+                    end
                 end
             catch
-                warning && warn("can't handle function signature for $cfunction: $signature")
+                if warning
+                    if ret!=0
+                        catch_error(ret, string(cfunction)*": ", err_fcn=warn)
+                    else
+                        warn("can't handle function signature for $cfunction: $signature")
+                    end
+                end
                 continue
             end
-            if ret==0
-              try
-                  getfield(NIDAQ, symbol(replace(string(cfunction),"Get"*suffix,"Set"*suffix)))
-                  settable=true
-              catch
-                  settable=false
-              end
-              ret_val[string(cfunction)[9+length(suffix):end]] = (data, settable)
+            try
+                getfield(NIDAQ, symbol(replace(string(cfunction),"Get"*suffix,"Set"*suffix)))
+                settable=true
+            catch
+                settable=false
             end
+            ret_val[string(cfunction)[9+length(suffix):end]] = (data, settable)
         end
     end
     ret_val
