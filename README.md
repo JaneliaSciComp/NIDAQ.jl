@@ -18,8 +18,9 @@ Installation
 ============
 
 First download and install NI-DAQmx version
-[14.1](http://www.ni.com/download/ni-daqmx-14.1/4953/en/) (or
-[14.0](http://www.ni.com/download/ni-daqmx-14.0/4918/en/)) from National
+[14.1.0](http://www.ni.com/download/ni-daqmx-14.1/4953/en/) (or
+[14.0.0](http://www.ni.com/download/ni-daqmx-14.0/4918/en/),
+[9.6.0](http://www.ni.com/download/ni-daqmx-9.6/3423/en/)) from National
 Instruments.  Then on the Julia command line:
 
 ```
