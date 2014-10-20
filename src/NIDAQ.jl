@@ -58,11 +58,26 @@ catch
   error("NIDAQmx version $ver is not supported.")
 end
 
-include("task.jl")
-include("analog.jl")
-include("digital.jl")
-include("counter.jl")
-include("properties.jl")
+unsigned_constants = (Uint64=>Symbol)[]
+signed_constants = (Int64=>Symbol)[]
+
+for sym in names(NIDAQ,true)
+    isdefined(sym) || continue
+    sym_str = string(sym)
+    (length(sym_str)<5 || sym_str[1:5]!="DAQmx") && continue
+    sym_str = sym_str[6:end]
+    sym_str[1]=='_' && (sym_str = sym_str[2:end])
+    if @eval typeof($sym) <: Unsigned
+        @eval $(symbol(sym_str)) = uint32($sym)
+        unsigned_constants[eval(:($sym))] = symbol(sym_str)
+    elseif @eval typeof($sym) <: Signed
+        sym_str[1:min(end,4)]=="Val_" || continue
+        @eval $(symbol(sym_str)) = convert(Int32,$sym)
+        signed_constants[eval(:($sym))] = symbol(sym_str)
+    elseif eval(:(typeof($sym)==Function))
+        @eval $(symbol(sym_str)) = $sym
+    end
+end
 
 function catch_error(code::Int32, extra::ASCIIString=""; err_fcn=error)
     sz = DAQmxGetErrorString(code, convert(Ptr{Uint8},C_NULL), convert(Uint32,0))
@@ -74,5 +89,11 @@ function catch_error(code::Int32, extra::ASCIIString=""; err_fcn=error)
     code>0 && warn("NIDAQmx: "*extra*data)
     code<0 && err_fcn("NIDAQmx: "*extra*data)
 end
+
+include("task.jl")
+include("analog.jl")
+include("digital.jl")
+include("counter.jl")
+include("properties.jl")
 
 end

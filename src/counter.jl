@@ -7,12 +7,12 @@ function count_edges(channel::ASCIIString;
     if direction ∉ {"up", "down"}
         error("direction must either be \"up\" or \"down\"")
     end
-    catch_error( DAQmxCreateCICountEdgesChan(t.th,
+    catch_error( CreateCICountEdgesChan(t.th,
         convert(Ptr{Uint8},channel),
         convert(Ptr{Uint8},""),
-        convert(Int32, edge == "rising" ? DAQmx_Val_Rising : DAQmx_Val_Falling),
+        edge == "rising" ? Val_Rising : Val_Falling,
         uint32(initial_count),
-        convert(Int32, direction == "up" ? DAQmx_Val_CountUp : DAQmx_Val_CountDown)) )
+        direction == "up" ? Val_CountUp : Val_CountDown) )
     t
 end
 
@@ -20,12 +20,12 @@ end
 function measure_duty_cycle(channel::ASCIIString;  units::String="seconds")
     t = CITask()
     if units == "seconds"
-        ret = DAQmxCreateCIPulseChanTime(t.th,
+        ret = CreateCIPulseChanTime(t.th,
                 convert(Ptr{Uint8},channel), convert(Ptr{Uint8},""),
                 2.0, 1000.0,
-                convert(Int32,DAQmx_Val_Seconds))
+                Val_Seconds)
     elseif units == "ticks"
-        ret = DAQmxCreateCIPulseChanTicks(t.th,
+        ret = CreateCIPulseChanTicks(t.th,
                 convert(Ptr{Uint8},channel),
                 convert(Ptr{Uint8},""),
                 convert(Ptr{Uint8},""),
@@ -39,14 +39,14 @@ end
 
 function quadrature_input(channel::ASCIIString;  z_enable::Bool=true)
     t = CITask()
-    ret = DAQmxCreateCIAngEncoderChan(t.th,
+    ret = CreateCIAngEncoderChan(t.th,
             convert(Ptr{Uint8},channel),
             convert(Ptr{Uint8},""),
-            convert(Int32,DAQmx_Val_X4),
+            Val_X4,
             reinterpret(Bool32, uint32(z_enable)),
             0.0,
-            convert(Int32,DAQmx_Val_AHighBHigh),
-            convert(Int32,DAQmx_Val_Ticks),
+            Val_AHighBHigh,
+            Val_Ticks,
             uint32(1), 0.0,
             convert(Ptr{Uint8},""))
     ret>0 && warn(error(ret))
@@ -66,13 +66,13 @@ function line_to_line(channel::ASCIIString;
     if edge2 ∉ {"rising", "falling"}
         error("edge2 must either be \"rising\" or \"falling\"")
     end
-    catch_error( DAQmxCreateCITwoEdgeSepChan(t.th,
+    catch_error( CreateCITwoEdgeSepChan(t.th,
             convert(Ptr{Uint8},channel),
             convert(Ptr{Uint8},""),
             1.0, 1000.0, 
-            convert(Int32, units == "seconds" ? DAQmx_Val_Seconds : DAQmx_Val_Ticks),
-            convert(Int32, edge1 == "rising" ? DAQmx_Val_Rising : DAQmx_Val_Falling),
-            convert(Int32, edge2 == "rising" ? DAQmx_Val_Rising : DAQmx_Val_Falling),
+            units == "seconds" ? Val_Seconds : Val_Ticks,
+            edge1 == "rising" ? Val_Rising : Val_Falling,
+            edge2 == "rising" ? Val_Rising : Val_Falling,
             convert(Ptr{Uint8},"")) )
     t
 end
@@ -80,20 +80,20 @@ end
 function generate_pulses{T<:Number}(channel::ASCIIString, low::T=2, high::T=2; delay::T=0)
     t = COTask()
     if T<:FloatingPoint
-        ret = DAQmxCreateCOPulseChanTime(t.th,
+        ret = CreateCOPulseChanTime(t.th,
                 convert(Ptr{Uint8},channel),
                 convert(Ptr{Uint8},""),
-                convert(Int32,DAQmx_Val_Seconds),
-                convert(Int32,DAQmx_Val_Low),
+                Val_Seconds,
+                Val_Low,
                 convert(Float64,delay),
                 convert(Float64,low),
                 convert(Float64,high))
     elseif T<:Integer
-        ret = DAQmxCreateCOPulseChanTicks(t.th,
+        ret = CreateCOPulseChanTicks(t.th,
                 convert(Ptr{Uint8},channel),
                 convert(Ptr{Uint8},""),
                 convert(Ptr{Uint8},""),
-                convert(Int32,DAQmx_Val_Low),
+                Val_Low,
                 convert(Int32,delay),
                 convert(Int32,low),
                 convert(Int32,high))
@@ -136,7 +136,7 @@ function read(t::CITask, channel::ASCIIString, num_samples::Integer = -1)
         catch_error( cfunction(t.th,
             convert(Int32,num_samples),
             1.0,
-            convert(Uint32,DAQmx_Val_GroupByChannel),
+            Val_GroupByChannel,
             convert(Ptr{Float64},high),
             convert(Ptr{Float64},low),
             convert(Uint32,num_samples),
@@ -149,25 +149,25 @@ function read(t::CITask, channel::ASCIIString, num_samples::Integer = -1)
     end
 
     tmp = channel_type(t.th, channel)
-    if tmp[2] == DAQmx_Val_CountEdges
-        data = read_counter_vector(Uint32, DAQmxReadCounterU32)
-    elseif tmp[2] == DAQmx_Val_PulseTime
-        data = read_counter_2vectors(Float64, DAQmxReadCtrTime)
-    elseif tmp[2] == DAQmx_Val_PulseTicks
-        data = read_counter_2vectors(Uint32, DAQmxReadCtrTicks)
-    elseif tmp[2] == DAQmx_Val_Position_AngEncoder
-        data = read_counter_vector(Uint32, DAQmxReadCounterU32)
-    elseif tmp[2] == DAQmx_Val_TwoEdgeSep  # might be broken
+    if tmp[2] == Val_CountEdges
+        data = read_counter_vector(Uint32, ReadCounterU32)
+    elseif tmp[2] == Val_PulseTime
+        data = read_counter_2vectors(Float64, ReadCtrTime)
+    elseif tmp[2] == Val_PulseTicks
+        data = read_counter_2vectors(Uint32, ReadCtrTicks)
+    elseif tmp[2] == Val_Position_AngEncoder
+        data = read_counter_vector(Uint32, ReadCounterU32)
+    elseif tmp[2] == Val_TwoEdgeSep  # might be broken
         val = Cint[0]
-        catch_error( DAQmxGetCITwoEdgeSepUnits(t.th,
+        catch_error( GetCITwoEdgeSepUnits(t.th,
                 convert(Ptr{Uint8},channel),
                 convert(Ptr{Int32},val)) )
-        if val[1]==DAQmx_Val_Ticks
-            data = read_counter_vector(Uint32, DAQmxReadCounterU32)
-            #data = read_counter_scalar(Uint32, DAQmxReadCounterScalarU32)
-        elseif val[1]==DAQmx_Val_Seconds
-            data = read_counter_vector(Float64, DAQmxReadCounterF64)
-            #data = read_counter_scalar(Float64, DAQmxReadCounterScalarF64)
+        if val[1] == Val_Ticks
+            data = read_counter_vector(Uint32, ReadCounterU32)
+            #data = read_counter_scalar(Uint32, ReadCounterScalarU32)
+        elseif val[1] == Val_Seconds
+            data = read_counter_vector(Float64, ReadCounterF64)
+            #data = read_counter_scalar(Float64, ReadCounterScalarF64)
         end
     end
     data

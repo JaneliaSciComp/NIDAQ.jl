@@ -1,8 +1,12 @@
 using NIDAQ, Base.Test
 
+@test typeof(getproperties()) == Dict{Any,Any}
 d = devices()[1]
+@test typeof(getproperties(d)) == Dict{Any,Any}
 
 t = analog_input(d*"/ai0")
+@test typeof(getproperties(t)) == Dict{Any,Any}
+@test typeof(getproperties(t,d*"/ai0")) == Dict{Any,Any}
 @test typeof(t) == NIDAQ.AITask
 @test start(t) == nothing
 @test length(read(t, Float64, 3)) == 3
@@ -48,7 +52,7 @@ t = digital_output(d*"/Port0/Line0")
 
 t = generate_pulses(d*"/ctr0")
 @test typeof(t) == NIDAQ.COTask
-@test NIDAQ.DAQmxCfgImplicitTiming(t.th, int32(NIDAQ.DAQmx_Val_FiniteSamps), uint64(10)) == 0
+@test NIDAQ.CfgImplicitTiming(t.th, NIDAQ.Val_FiniteSamps, uint64(10)) == 0
 @test start(t) == nothing
 @test stop(t) == nothing
 @test clear(t) == nothing

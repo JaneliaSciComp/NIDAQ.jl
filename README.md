@@ -59,24 +59,24 @@ Dict{Any,Any} with 69 entries:
   "AOCurrentRngs"                   => ([],false)
   "AICurrentRngs"                   => ([],false)
   "AIMaxMultiChanRate"              => (2.0e6,false)
-  "COSupportedOutputTypes"          => ([:DAQmx_Val_Pulse_Freq,:DAQmx_Val_Pulse_Ticks,:DAQmx_Val_Pulse_Time],false)
+  "COSupportedOutputTypes"          => ([:Val_Pulse_Freq,:Val_Pulse_Ticks,:Val_Pulse_Time],false)
   "AIFreqRngs"                      => ([],false)
-  "AOSupportedOutputTypes"          => ([:DAQmx_Val_Voltage],false)
+  "AOSupportedOutputTypes"          => ([:Val_Voltage],false)
   "COTrigUsage"                     => (42,false)
   "CIMaxTimebase"                   => (1.0e8,false)
   "DILines"                         => (SubString{ASCIIString}["Dev1/port0/line0","Dev1/port0/line1","Dev1/port0/line2","Dev1/port0/line3","Dev1/port0/lin.
 
   "PXISlotNum"                      => (0xffffffff,false)
-  "AICouplings"                     => (:DAQmx_Val_Task_Verify,false)
+  "AICouplings"                     => (:Val_Task_Verify,false)
   "CIMaxSize"                       => (0x00000020,false)
-  "BusType"                         => (:DAQmx_Val_USB,false)
+  "BusType"                         => (:Val_USB,false)
   "CISampClkSupported"              => (true,false)
   "AILowpassCutoffFreqDiscreteVals" => ([],false)
   "AILowpassCutoffFreqRangeVals"    => ([],false)
-  "ProductCategory"                 => (:DAQmx_Val_XSeriesDAQ,false)
+  "ProductCategory"                 => (:Val_XSeriesDAQ,false)
   "AIBridgeRngs"                    => ([],false)
   "DIMaxRate"                       => (1.0e7,false)
-  "COSampModes"                     => ([:DAQmx_Val_FiniteSamps,:DAQmx_Val_ContSamps],false)
+  "COSampModes"                     => ([:Val_FiniteSamps,:Val_ContSamps],false)
   "AOPhysicalChans"                 => (SubString{ASCIIString}["Dev1/ao0","Dev1/ao1"],false)
   "AOGains"                         => ([],false)
   "PXIChassisNum"                   => (0xffffffff,false)
@@ -91,7 +91,7 @@ Dict{Any,Any} with 69 entries:
   "Terminals"                       => (SubString{ASCIIString}["/Dev1/PFI0","/Dev1/PFI1","/Dev1/PFI2","/Dev1/PFI3","/Dev1/PFI4","/Dev1/PFI5","/Dev1/PFI6",.
 
   "AOMinRate"                       => (0.023283064370807974,false)
-  "AISupportedMeasTypes"            => ([:DAQmx_Val_Current,:DAQmx_Val_Resistance,:DAQmx_Val_Strain_Gage,:DAQmx_Val_Temp_RTD,:DAQmx_Val_Temp_Thrmstr,:DAQm.
+  "AISupportedMeasTypes"            => ([:Val_Current,:Val_Resistance,:Val_Strain_Gage,:Val_Temp_RTD,:Val_Temp_Thrmstr,:DAQm.
 
   "DITrigUsage"                     => (14,false)
   "AIVoltageRngs"                   => ([-1.0,1.0,-2.0,2.0,-5.0,5.0,-10.0,10.0],false)
@@ -103,9 +103,9 @@ Dict{Any,Any} with 69 entries:
   "AccessorySerialNums"             => (Uint32[0],false)
   "AOTrigUsage"                     => (10,false)
   "AIVoltageIntExcitRangeVals"      => ([],false)
-  "CISupportedMeasTypes"            => ([:DAQmx_Val_CountEdges,:DAQmx_Val_Freq,:DAQmx_Val_Period,:DAQmx_Val_TwoEdgeSep,:DAQmx_Val_SemiPeriod,:DAQmx_Val_Pu.
+  "CISupportedMeasTypes"            => ([:Val_CountEdges,:Val_Freq,:Val_Period,:Val_TwoEdgeSep,:Val_SemiPeriod,:Val_Pu.
 
-  "AOSampModes"                     => ([:DAQmx_Val_FiniteSamps,:DAQmx_Val_ContSamps],false)
+  "AOSampModes"                     => ([:Val_FiniteSamps,:Val_ContSamps],false)
   "IsSimulated"                     => (false,false)
   "AOSampClkSupported"              => (true,false)
   "DIPorts"                         => (SubString{ASCIIString}["Dev1/port0","Dev1/port1","Dev1/port2"],false)
@@ -120,9 +120,9 @@ Dict{Any,Any} with 69 entries:
   "AISimultaneousSamplingSupported" => (true,false)
   "DOTrigUsage"                     => (10,false)
   "ChassisModuleDevNames"           => ("",false)
-  "CISampModes"                     => ([:DAQmx_Val_FiniteSamps,:DAQmx_Val_ContSamps],false)
+  "CISampModes"                     => ([:Val_FiniteSamps,:Val_ContSamps],false)
   "CIPhysicalChans"                 => (SubString{ASCIIString}["Dev1/ctr0","Dev1/ctr1","Dev1/ctr2","Dev1/ctr3"],false)
-  "AISampModes"                     => ([:DAQmx_Val_FiniteSamps,:DAQmx_Val_ContSamps],false)
+  "AISampModes"                     => ([:Val_FiniteSamps,:Val_ContSamps],false)
   "AOVoltageRngs"                   => ([-5.0,5.0,-10.0,10.0],false)
   "ProductNum"                      => (0x000075a1,false)
   "AICurrentIntExcitDiscreteVals"   => ([],false)
@@ -192,65 +192,65 @@ as well as a channel:
 julia> getproperties(t, "Dev1/ai0")
 Dict{Any,Any} with 60 entries:
   "LowpassEnable"                     => (false,true)
-  "CurrentACRMSUnits"                 => (:DAQmx_Val_Amps,true)
-  "ResolutionUnits"                   => (:DAQmx_Val_Bits,false)
+  "CurrentACRMSUnits"                 => (:Val_Amps,true)
+  "ResolutionUnits"                   => (:Val_Bits,false)
   "ChanCalApplyCalIfExp"              => (false,true)
   "Max"                               => (10.0,true)
   "UsbXferReqCount"                   => (0x00000004,true)
-  "EddyCurrentProxProbeUnits"         => (:DAQmx_Val_Meters,true)
-  "VoltageUnits"                      => (:DAQmx_Val_Volts,true)
-  "MeasType"                          => (:DAQmx_Val_Voltage,false)
+  "EddyCurrentProxProbeUnits"         => (:Val_Meters,true)
+  "VoltageUnits"                      => (:Val_Volts,true)
+  "MeasType"                          => (:Val_Voltage,false)
   "ChanCalPolyForwardCoeff"           => ([],true)
-  "TorqueUnits"                       => (:DAQmx_Val_NewtonMeters,true)
+  "TorqueUnits"                       => (:Val_NewtonMeters,true)
   "ChanCalDesc"                       => ("",true)
   "ChanCalVerifRefVals"               => ([],true)
   "Gain"                              => (1.0,true)
   "ChanCalTablePreScaledVals"         => ([],true)
-  "ChanCalScaleType"                  => (:DAQmx_Val_Table,true)
-  "AccelUnits"                        => (:DAQmx_Val_g,true)
+  "ChanCalScaleType"                  => (:Val_Table,true)
+  "AccelUnits"                        => (:Val_g,true)
   "RngHigh"                           => (10.0,true)
   "LossyLSBRemovalCompressedSampSize" => (0x00000010,true)
   "IsTEDS"                            => (false,false)
-  "Coupling"                          => (:DAQmx_Val_DC,true)
-  "SoundPressureUnits"                => (:DAQmx_Val_Pascals,true)
-  "StrainGageCfg"                     => (:DAQmx_Val_FullBridgeI,true)
+  "Coupling"                          => (:Val_DC,true)
+  "SoundPressureUnits"                => (:Val_Pascals,true)
+  "StrainGageCfg"                     => (:Val_FullBridgeI,true)
   "MemMapEnable"                      => (false,true)
   "ChanCalVerifAcqVals"               => ([],true)
-  "VelocityUnits"                     => (:DAQmx_Val_MetersPerSecond,true)
+  "VelocityUnits"                     => (:Val_MetersPerSecond,true)
   "RngLow"                            => (-10.0,true)
-  "ResistanceUnits"                   => (:DAQmx_Val_Ohms,true)
-  "FreqUnits"                         => (:DAQmx_Val_Hz,true)
+  "ResistanceUnits"                   => (:Val_Ohms,true)
+  "FreqUnits"                         => (:Val_Hz,true)
   "CustomScaleName"                   => ("",true)
-  "DataXferReqCond"                   => (:DAQmx_Val_OnBrdMemNotEmpty,true)
-  "VoltageACRMSUnits"                 => (:DAQmx_Val_Volts,true)
+  "DataXferReqCond"                   => (:Val_OnBrdMemNotEmpty,true)
+  "VoltageACRMSUnits"                 => (:Val_Volts,true)
   "Min"                               => (-10.0,true)
   "ChanCalHasValidCalInfo"            => (false,false)
-  "CurrentUnits"                      => (:DAQmx_Val_Amps,true)
+  "CurrentUnits"                      => (:Val_Amps,true)
   "DitherEnable"                      => (true,true)
-  "BridgeUnits"                       => (:DAQmx_Val_VoltsPerVolt,true)
-  "StrainUnits"                       => (:DAQmx_Val_Strain,true)
+  "BridgeUnits"                       => (:Val_VoltsPerVolt,true)
+  "StrainUnits"                       => (:Val_Strain,true)
   "ChanCalEnableCal"                  => (false,true)
   "Resolution"                        => (16.0,false)
-  "RawSampJustification"              => (:DAQmx_Val_RightJustified,false)
+  "RawSampJustification"              => (:Val_RightJustified,false)
   "ChanCalPolyReverseCoeff"           => ([],true)
   "DevScalingCoeff"                   => ([0.00010292415409129518,0.0003126729979278514,5.87392931606528e-14,-3.3185468161982717e-19],false)
-  "TempUnits"                         => (:DAQmx_Val_DegC,true)
+  "TempUnits"                         => (:Val_DegC,true)
   "RawSampSize"                       => (0x00000010,false)
   "UsbXferReqSize"                    => (0x00008000,true)
   "ForceReadFromChan"                 => (false,true)
   "ChanCalTableScaledVals"            => ([],true)
-  "ForceUnits"                        => (:DAQmx_Val_Newtons,true)
-  "RVDTUnits"                         => (:DAQmx_Val_Degrees,true)
-  "RawDataCompressionType"            => (:DAQmx_Val_None,true)
+  "ForceUnits"                        => (:Val_Newtons,true)
+  "RVDTUnits"                         => (:Val_Degrees,true)
+  "RawDataCompressionType"            => (:Val_None,true)
   "ThrmcplCJCVal"                     => (25.0,true)
-  "AutoZeroMode"                      => (:DAQmx_Val_None,true)
-  "PressureUnits"                     => (:DAQmx_Val_PoundsPerSquareInch,true)
+  "AutoZeroMode"                      => (:Val_None,true)
+  "PressureUnits"                     => (:Val_PoundsPerSquareInch,true)
   "VoltagedBRef"                      => (1.0,true)
-  "TermCfg"                           => (:DAQmx_Val_Diff,true)
-  "LVDTUnits"                         => (:DAQmx_Val_Meters,true)
+  "TermCfg"                           => (:Val_Diff,true)
+  "LVDTUnits"                         => (:Val_Meters,true)
   "ChanCalOperatorName"               => ("",true)
   "InputSrc"                          => ("_external_channel",true)
-  "DataXferMech"                      => (:DAQmx_Val_ProgrammedIO,true)
+  "DataXferMech"                      => (:Val_ProgrammedIO,true)
 ```
 
 Use ```setproperty!``` to change a mutable property:
@@ -337,13 +337,15 @@ julia> names(t)
 1-element Array{Symbol,1}:
  :th
 
-julia> NIDAQ.DAQmxCfgImplicitTiming(t.th, int32(NIDAQ.DAQmx_Val_ContSamps), uint64(1))
+julia> NIDAQ.CfgImplicitTiming(t.th, NIDAQ.Val_ContSamps, uint64(1))
 0
 ```
 
 Note that tasks consist of just a single field ```th```, and that this "task
-handle" is what must be passed into many low-level routines.  One must also
-take care to caste the inputs appropriately.
+handle" is what must be passed into many low-level routines.  For brevity
+NIDAQ.jl strips the "DAQmx" prefix to all functions and constants in NI-DAQmx,
+and converts the latter to 32 bits.  One must still take care to caste the
+other inputs appropriately though.
 
 
 Author

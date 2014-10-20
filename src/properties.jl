@@ -1,17 +1,17 @@
 function devices()
-    sz = DAQmxGetSysDevNames(convert(Ptr{Uint8},C_NULL), uint32(0))
+    sz = GetSysDevNames(convert(Ptr{Uint8},C_NULL), uint32(0))
     data=zeros(Uint8,sz)
-    catch_error(DAQmxGetSysDevNames(convert(Ptr{Uint8},data), uint32(sz)))
+    catch_error(GetSysDevNames(convert(Ptr{Uint8},data), uint32(sz)))
     map((x)->convert(ASCIIString,x), split(chop(string(char(data)...)),", "))
 end
 
 for (jfunction, cfunction) in (
-        (:analog_input_channels, DAQmxGetDevAIPhysicalChans),
-        (:analog_output_channels, DAQmxGetDevAOPhysicalChans),
-        (:digital_input_channels, DAQmxGetDevDILines),
-        (:digital_output_channels, DAQmxGetDevDOLines),
-        (:counter_input_channels, DAQmxGetDevCIPhysicalChans),
-        (:counter_output_channels, DAQmxGetDevCOPhysicalChans))
+        (:analog_input_channels, GetDevAIPhysicalChans),
+        (:analog_output_channels, GetDevAOPhysicalChans),
+        (:digital_input_channels, GetDevDILines),
+        (:digital_output_channels, GetDevDOLines),
+        (:counter_input_channels, GetDevCIPhysicalChans),
+        (:counter_output_channels, GetDevCOPhysicalChans))
     @eval function $jfunction(device::ASCIIString)
         sz = $cfunction(convert(Ptr{Uint8},device), convert(Ptr{Uint8},C_NULL), uint32(0))
         data=zeros(Uint8,sz)
@@ -28,8 +28,8 @@ for (jfunction, cfunction) in (
 end
 
 for (jfunction, cfunction) in (
-        (:analog_input_ranges, DAQmxGetDevAIVoltageRngs),
-        (:analog_output_ranges, DAQmxGetDevAOVoltageRngs))
+        (:analog_input_ranges, GetDevAIVoltageRngs),
+        (:analog_output_ranges, GetDevAOVoltageRngs))
     @eval function $jfunction(device::ASCIIString)
         sz = $cfunction(convert(Ptr{Uint8},device), convert(Ptr{Float64},C_NULL), uint32(0))
         data=zeros(sz)
@@ -48,39 +48,23 @@ end
 function channel_type(t::Task, channel::ASCIIString)
     val1 = Cint[0]
     catch_error(
-        DAQmxGetChanType(t.th, convert(Ptr{Uint8},channel), convert(Ptr{Int32}, val1)) )
+        GetChanType(t.th, convert(Ptr{Uint8},channel), convert(Ptr{Int32}, val1)) )
       
     val2 = Cint[0]
-    if val1[1]==DAQmx_Val_AI
-        ret = DAQmxGetAIMeasType(t.th, convert(Ptr{Uint8},channel), convert(Ptr{Int32}, val2))
-    elseif val1[1]==DAQmx_Val_AO
-        ret = DAQmxGetAOOutputType(t.th, convert(Ptr{Uint8},channel), convert(Ptr{Int32}, val2))
-    elseif val1[1]==DAQmx_Val_DI || val1[1]==DAQmx_Val_DO
+    if val1[1] == Val_AI
+        ret = GetAIMeasType(t.th, convert(Ptr{Uint8},channel), convert(Ptr{Int32}, val2))
+    elseif val1[1] == Val_AO
+        ret = GetAOOutputType(t.th, convert(Ptr{Uint8},channel), convert(Ptr{Int32}, val2))
+    elseif val1[1] == Val_DI || val1[1] == Val_DO
         return val1[1], nothing
-    elseif val1[1]==DAQmx_Val_CI
-        ret = DAQmxGetCIMeasType(t.th, convert(Ptr{Uint8},channel), convert(Ptr{Int32}, val2))
-    elseif val1[1]==DAQmx_Val_CO
-        ret = DAQmxGetCOOutputType(t.th, convert(Ptr{Uint8},channel), convert(Ptr{Int32}, val2))
+    elseif val1[1] == Val_CI
+        ret = GetCIMeasType(t.th, convert(Ptr{Uint8},channel), convert(Ptr{Int32}, val2))
+    elseif val1[1] == Val_CO
+        ret = GetCOOutputType(t.th, convert(Ptr{Uint8},channel), convert(Ptr{Int32}, val2))
     end
     catch_error(ret)
 
     val1[1], val2[1]
-end
-
-unsigned_constants = (Uint16=>Symbol)[]
-signed_constants = (Int16=>Symbol)[]
-
-for sym in names(NIDAQ,true)
-    isdefined(sym) || continue
-    eval(:(typeof($sym) <: Unsigned)) || continue
-    unsigned_constants[eval(:($sym))] = sym
-end
-
-for sym in names(NIDAQ,true)
-    isdefined(sym) || continue
-    eval(:(typeof($sym) <: Signed)) || continue
-    string(sym)[1:min(end,10)]=="DAQmx_Val_" || continue
-    signed_constants[eval(:($sym))] = sym
 end
 
 function getproperties_guts(args, suffix::ASCIIString, warning::Bool)
@@ -160,9 +144,9 @@ function getproperties(t::Task; warning=false)
     getproperties_guts((t.th,), "Task", warning)
 end
 
-channel_types = ["DAQmx_Val_AI", "DAQmx_Val_AO",
-                 "DAQmx_Val_DI", "DAQmx_Val_DO",
-                 "DAQmx_Val_CI", "DAQmx_Val_CO"]
+channel_types = ["Val_AI", "Val_AO",
+                 "Val_DI", "Val_DO",
+                 "Val_CI", "Val_CO"]
 
 function getproperties(t::Task, channel::ASCIIString; warning=false)
     kind = channel_types[ find(channel_type(t, channel)[1] .==
