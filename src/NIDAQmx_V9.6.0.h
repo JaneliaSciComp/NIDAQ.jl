@@ -16,7 +16,7 @@
 	extern "C" {
 #endif
 
-#ifdef __linux__
+#if defined(__linux__) || defined(__APPLE__)
 #define __CFUNC
 #define __CFUNC_C
 #define __CFUNCPTRVAR
@@ -71,7 +71,7 @@
 #endif
 #ifndef _NI_int64_DEFINED_
 #define _NI_int64_DEFINED_
-#ifdef __linux__
+#if defined(__linux__) || defined(__APPLE__)
 	typedef long long int      int64;
 #else
 	typedef __int64            int64;
@@ -79,7 +79,7 @@
 #endif
 #ifndef _NI_uInt64_DEFINED_
 #define _NI_uInt64_DEFINED_
-#ifdef __linux__
+#if defined(__linux__) || defined(__APPLE__)
 	typedef unsigned long long uInt64;
 #else
 	typedef unsigned __int64   uInt64;

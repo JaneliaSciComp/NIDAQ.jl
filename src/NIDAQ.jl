@@ -31,11 +31,11 @@ export Bool32
 # julia> using Clang
 # julia> context = wrap_c.init()
 # julia> context.common_file="common.jl"
-# <for v9.6: edit NIDAQmx.h and comment out CVICALLBACK>
+# <for v9.6.0: edit NIDAQmx.h and add defined(__APPLE__) to __linux__>
 # julia> wrap_c.wrap_c_headers(context, {"NIDAQmx.h"})
 # $ edit common.jl:
 #     typealias bool32 uInt32 -> typealias bool32 Bool32
-#     <for v14.0/1: comment out const CVICALLBACK = CVICDECL>
+#     comment out const CVICALLBACK = CVICDECL
 # $ mv NIDAQmx.jl functions_V*.jl
 # $ mv common.jl constants_V*.jl
 

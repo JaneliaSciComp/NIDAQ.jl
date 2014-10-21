@@ -1,4 +1,5 @@
 
+#const CVICALLBACK = CVICDECL
 const TRUE = 1
 const FALSE = 0
 const NULL = 0
@@ -3340,7 +3341,11 @@ typealias int32 Clong
 typealias uInt32 Culong
 typealias float32 Cfloat
 typealias float64 Cdouble
-typealias int64 Cint
+typealias int64 Clonglong
+typealias uInt64 Culonglong
 typealias bool32 Bool32
 typealias TaskHandle Ptr{Void}
 typealias CalHandle uInt32
+typealias DAQmxEveryNSamplesEventCallbackPtr Ptr{Void}
+typealias DAQmxDoneEventCallbackPtr Ptr{Void}
+typealias DAQmxSignalEventCallbackPtr Ptr{Void}
