@@ -10,7 +10,7 @@ end
 
 function task(name::ASCIIString)
     t = TaskHandle[0]
-    catch_error( DAQmxCreateTask(convert(Ptr{Uint8},name), convert(Ptr{TaskHandle},t)) )
+    catch_error( DAQmxCreateTask(pointer(name), pointer(t)) )
     t[1]
 end
 task() = task("")
