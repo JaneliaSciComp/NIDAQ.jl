@@ -29,12 +29,12 @@ export Bool32
 
 try
   global ver
-  major = Uint32[0]
-  ccall((:DAQmxGetSysNIDAQMajorVersion,NIDAQmx),Int32,(Ptr{Uint32},),major)
-  minor = Uint32[0]
-  ccall((:DAQmxGetSysNIDAQMinorVersion,NIDAQmx),Int32,(Ptr{Uint32},),minor)
-  update = Uint32[0]
-  ccall((:DAQmxGetSysNIDAQUpdateVersion,NIDAQmx),Int32,(Ptr{Uint32},),update)
+  major = UInt32[0]
+  ccall((:DAQmxGetSysNIDAQMajorVersion,NIDAQmx),Int32,(Ptr{UInt32},),major)
+  minor = UInt32[0]
+  ccall((:DAQmxGetSysNIDAQMinorVersion,NIDAQmx),Int32,(Ptr{UInt32},),minor)
+  update = UInt32[0]
+  ccall((:DAQmxGetSysNIDAQUpdateVersion,NIDAQmx),Int32,(Ptr{UInt32},),update)
   ver = "$(major[1]).$(minor[1]).$(update[1])"
 catch
   error("can not determine NIDAQmx version.")
@@ -47,8 +47,8 @@ catch
   error("NIDAQmx version $ver is not supported.")
 end
 
-unsigned_constants = (Uint64=>Symbol)[]
-signed_constants = (Int64=>Symbol)[]
+unsigned_constants = Dict{UInt64,Symbol}()
+signed_constants = Dict{Int64,Symbol}()
 
 for sym in names(NIDAQ,true)
     isdefined(sym) || continue
@@ -57,7 +57,7 @@ for sym in names(NIDAQ,true)
     sym_str = sym_str[6:end]
     sym_str[1]=='_' && (sym_str = sym_str[2:end])
     if @eval typeof($sym) <: Unsigned
-        @eval $(symbol(sym_str)) = uint32($sym)
+        @eval $(symbol(sym_str)) = UInt32($sym)
         unsigned_constants[eval(:($sym))] = symbol(sym_str)
     elseif @eval typeof($sym) <: Signed
         sym_str[1:min(end,4)]=="Val_" || continue
@@ -69,9 +69,9 @@ for sym in names(NIDAQ,true)
 end
 
 function catch_error(code::Int32, extra::ASCIIString=""; err_fcn=error)
-    sz = DAQmxGetErrorString(code, convert(Ptr{Uint8},C_NULL), convert(Uint32,0))
-    data = zeros(Uint8,sz)
-    ret = DAQmxGetErrorString(code, convert(Ptr{Uint8},data), convert(Uint32,sz))
+    sz = DAQmxGetErrorString(code, convert(Ptr{UInt8},C_NULL), convert(UInt32,0))
+    data = zeros(UInt8,sz)
+    ret = DAQmxGetErrorString(code, pointer(data), convert(UInt32,sz))
     ret>0 && warn("DAQmxGetErrorString error $ret")
     ret<0 && err_fcn("DAQmxGetErrorString error $ret")
     data = chop(convert(ASCIIString, data))

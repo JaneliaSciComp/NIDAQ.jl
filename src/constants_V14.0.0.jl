@@ -3411,10 +3411,10 @@ const DAQmxWarningPALTransferOverread = 50411
 const DAQmxWarningPALDispatcherAlreadyExported = 50500
 const DAQmxWarningPALSyncAbandoned = 50551
 
-typealias int8 Uint8
+typealias int8 UInt8
 typealias uInt8 Cuchar
 typealias int16 Int16
-typealias uInt16 Uint16
+typealias uInt16 UInt16
 typealias int32 Clong
 typealias uInt32 Culong
 typealias float32 Cfloat
