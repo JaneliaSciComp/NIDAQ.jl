@@ -27,18 +27,6 @@ const NIDAQmx = "C:\\Windows\\System32\\nicaiu.dll"
 bitstype 32 Bool32 <: Integer
 export Bool32
 
-# could only Pkg.add("Clang") on mac with BUILD_LLVM_CLANG=1 in Make.user option
-# julia> using Clang
-# julia> context = wrap_c.init()
-# julia> context.common_file="common.jl"
-# <for v9.6.0: edit NIDAQmx.h and add defined(__APPLE__) to __linux__>
-# julia> wrap_c.wrap_c_headers(context, {"NIDAQmx.h"})
-# $ edit common.jl:
-#     typealias bool32 uInt32 -> typealias bool32 Bool32
-#     comment out const CVICALLBACK = CVICDECL
-# $ mv NIDAQmx.jl functions_V*.jl
-# $ mv common.jl constants_V*.jl
-
 try
   global ver
   major = Uint32[0]

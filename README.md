@@ -3,7 +3,7 @@ National Instruments Data Acquisition Interface
 
 This package provides an interface to NIDAQmx-- National Instruments' driver
 for their data acquisition boards.  Their entire C header file was ported
-using [clang.jl](https://github.com/ihnorton/Clang.jl), and a rudimentary
+using [Clang.jl](https://github.com/ihnorton/Clang.jl), and a rudimentary
 higher-level API is provided for ease of use.
 
 
@@ -31,7 +31,7 @@ Pkg.add("NIDAQ")
 Basic Usage
 ===========
 
-With no input arguments, the high-level ```getproperties``` function can
+With no input arguments, the high-level `getproperties` function can
 be used to query the system:
 
 ```
@@ -49,7 +49,7 @@ Dict{Any,Any} with 7 entries:
 Returned is a Dict of tuples, the first member indicating the property value and
 the second a Bool indicating whether the former is mutable.
 
-```getproperties``` can also input a String containing the name of a device:
+`getproperties` can also input a String containing the name of a device:
 
 ```
 julia> getproperties("Dev1")
@@ -154,7 +154,7 @@ julia> analog_input_channels("Dev1")
  "Dev1/ai7"
 ```
 
-To add, for example, analog input channels, use the high-level ```analog_input``` function:
+To add, for example, analog input channels, use the high-level `analog_input` function:
 
 ```
 julia> t = analog_input("Dev1/ai0:1")
@@ -167,14 +167,14 @@ julia> super(AITask)
 Task
 ```
 
-Two channels were added above using the ```:``` notation.  Additional
+Two channels were added above using the `:` notation.  Additional
 channels can be added later by inputing the returned Task:
 
 ```
 julia> analog_input(t, "Dev1/ai2")
 ```
 
-```getproperties``` can also input a Task:
+`getproperties` can also input a Task:
 
 ```
 julia> getproperties(t)
@@ -254,13 +254,13 @@ Dict{Any,Any} with 60 entries:
   "DataXferMech"                      => (:Val_ProgrammedIO,true)
 ```
 
-Use ```setproperty!``` to change a mutable property:
+Use `setproperty!` to change a mutable property:
 
 ```
 julia> setproperty!(t, "Dev1/ai0", "Max", 5.0)
 ```
 
-Once everything is configured, get some data using the ```read``` function:
+Once everything is configured, get some data using the `read` function:
 
 ```
 julia> start(t)
@@ -283,12 +283,12 @@ julia> stop(t)
 julia> clear(t)
 ```
 
-```read``` can also return ```Int16```, ```Int32```, ```Uint16```, and ```Uint32```.
+`read` can also return `Int16`, `Int32`, `Uint16`, and `Uint32`.
 
-Similar work flows exist for ```analog_output```, ```digital_input```,
-and ```digital_output```.  The high-level API also supports many counter
-functions, including ```count_edges``` and ```generate_pulses```.  For a
-full list of convenience functions use the ```names``` function in Julia Base:
+Similar work flows exist for `analog_output`, `digital_input`,
+and `digital_output`.  The high-level API also supports many counter
+functions, including `count_edges` and `generate_pulses`.  For a
+full list of convenience functions use the `names` function in Julia Base:
 
 ```
 julia> names(NIDAQ)
@@ -342,11 +342,41 @@ julia> NIDAQ.CfgImplicitTiming(t.th, NIDAQ.Val_ContSamps, uint64(1))
 0
 ```
 
-Note that tasks consist of just a single field ```th```, and that this "task
+Note that tasks consist of just a single field `th`, and that this "task
 handle" is what must be passed into many low-level routines.  For brevity
 NIDAQ.jl strips the "DAQmx" prefix to all functions and constants in NI-DAQmx,
 and converts the latter to 32 bits.  One must still take care to caste the
 other inputs appropriately though.
+
+
+Adding Support for a Version of NI-DAQmx
+========================================
+
+Julia must be built with the same version of Clang as
+[Clang.jl](https://github.com/ihnorton/Clang.jl) uses to parse NIDAQmx.h.  This
+is most easily ensured by compiling Julia from source and setting
+`BUILD_LLVM_CLANG=1` in Make.user, instead of using a pre-compiled
+distribution.  Then,
+
+```
+julia> using Clang
+julia> context = wrap_c.init()
+julia> context.common_file="common.jl"
+julia> wrap_c.wrap_c_headers(context, {"NIDAQmx.h"})
+$ mv NIDAQmx.h src/functions_V<version>.h
+$ mv NIDAQmx.jl src/functions_V<version>.jl
+$ mv common.jl src/constants_V<version>.jl
+```
+
+The following manual edits are then necessary:
+
++ In `constants_V<version>.jl` comment out `const CVICALLBACK = CVICDECL`.
+
++ For Julia v3, in `constants_V<version>.jl` change `typealias bool32 uInt32`
+to `typealias bool32 Bool32`.
+
++ For NI-DAQmx v9.6.0 in `NIDAQmx.h` change 
+`defined(__linux__)` to `defined(__linux__) || defined(__APPLE__)`.
 
 
 Author
