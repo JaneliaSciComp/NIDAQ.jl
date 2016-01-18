@@ -1,8 +1,8 @@
 function devices()
-    sz = GetSysDevNames(convert(Ptr{Uint8},C_NULL), uint32(0))
-    data=zeros(Uint8,sz)
-    catch_error(GetSysDevNames(convert(Ptr{Uint8},data), uint32(sz)))
-    map((x)->convert(ASCIIString,x), split(chop(string(char(data)...)),", "))
+    sz = GetSysDevNames(convert(Ptr{UInt8},C_NULL), UInt32(0))
+    data=zeros(UInt8,sz)
+    catch_error(GetSysDevNames(pointer(data), UInt32(sz)))
+    map((x)->convert(ASCIIString,x), split(chop(ascii(data)),", "))
 end
 
 for (jfunction, cfunction) in (
@@ -13,11 +13,11 @@ for (jfunction, cfunction) in (
         (:counter_input_channels, GetDevCIPhysicalChans),
         (:counter_output_channels, GetDevCOPhysicalChans))
     @eval function $jfunction(device::ASCIIString)
-        sz = $cfunction(convert(Ptr{Uint8},device), convert(Ptr{Uint8},C_NULL), uint32(0))
-        data=zeros(Uint8,sz)
-        catch_error( $cfunction(convert(Ptr{Uint8},device), convert(Ptr{Uint8},data),
-                uint32(sz)) )
-        map((x)->convert(ASCIIString,x), split(chop(string(char(data)...)),", "))
+        sz = $cfunction(pointer(device), convert(Ptr{UInt8},C_NULL), UInt32(0))
+        data=zeros(UInt8,sz)
+        catch_error( $cfunction(pointer(device), pointer(data),
+                UInt32(sz)) )
+        map((x)->convert(ASCIIString,x), split(chop(ascii(data)),", "))
     end
 
     @eval function $jfunction()
@@ -31,10 +31,10 @@ for (jfunction, cfunction) in (
         (:analog_input_ranges, GetDevAIVoltageRngs),
         (:analog_output_ranges, GetDevAOVoltageRngs))
     @eval function $jfunction(device::ASCIIString)
-        sz = $cfunction(convert(Ptr{Uint8},device), convert(Ptr{Float64},C_NULL), uint32(0))
+        sz = $cfunction(pointer(device), convert(Ptr{Float64},C_NULL), UInt32(0))
         data=zeros(sz)
-        catch_error( $cfunction(convert(Ptr{Uint8},device), convert(Ptr{Float64},data),
-                uint32(sz)) )
+        catch_error( $cfunction(pointer(device), pointer(data),
+                UInt32(sz)) )
         reshape(data,(2,length(data)>>1))'
     end
 
@@ -48,19 +48,19 @@ end
 function channel_type(t::Task, channel::ASCIIString)
     val1 = Cint[0]
     catch_error(
-        GetChanType(t.th, convert(Ptr{Uint8},channel), convert(Ptr{Int32}, val1)) )
+        GetChanType(t.th, pointer(channel), pointer(val1)) )
       
     val2 = Cint[0]
     if val1[1] == Val_AI
-        ret = GetAIMeasType(t.th, convert(Ptr{Uint8},channel), convert(Ptr{Int32}, val2))
+        ret = GetAIMeasType(t.th, pointer(channel), pointer(val2))
     elseif val1[1] == Val_AO
-        ret = GetAOOutputType(t.th, convert(Ptr{Uint8},channel), convert(Ptr{Int32}, val2))
+        ret = GetAOOutputType(t.th, pointer(channel), pointer(val2))
     elseif val1[1] == Val_DI || val1[1] == Val_DO
         return val1[1], nothing
     elseif val1[1] == Val_CI
-        ret = GetCIMeasType(t.th, convert(Ptr{Uint8},channel), convert(Ptr{Int32}, val2))
+        ret = GetCIMeasType(t.th, pointer(channel), pointer(val2))
     elseif val1[1] == Val_CO
-        ret = GetCOOutputType(t.th, convert(Ptr{Uint8},channel), convert(Ptr{Int32}, val2))
+        ret = GetCOOutputType(t.th, pointer(channel), pointer(val2))
     end
     catch_error(ret)
 
@@ -68,44 +68,44 @@ function channel_type(t::Task, channel::ASCIIString)
 end
 
 function getproperties_guts(args, suffix::ASCIIString, warning::Bool)
-    ret_val = Dict()
+    ret_val = Dict{ASCIIString,Tuple{Any,Bool}}()
     local settable
     local data
     local ret
     for sym in names(NIDAQ,true)
-        eval(:(typeof($sym)!=Function)) && continue
+        eval(:(typeof(NIDAQ.$sym)!=Function)) && continue
         if string(sym)[1:min(end,8+length(suffix))]=="DAQmxGet"*suffix
             cfunction = getfield(NIDAQ, sym)
             signature = cfunction.env.defs.sig
             try
-                basetype = eval(parse(string(signature[1+length(args)])[5:end-1]))
-                if length(signature)==1+length(args)
+		basetype = eltype(signature.types[1+length(args)])
+		if length(signature.types)==1+length(args)
                     data = Array(basetype,1)
-                    ret = cfunction(args..., convert(Ptr{basetype},data))
+                    ret = cfunction(args..., pointer(data))
                     data = data[1]
                 else
-                    sz = cfunction(args..., convert(Ptr{basetype},C_NULL), convert(Uint32,0))
+                    sz = cfunction(args..., convert(Ptr{basetype},C_NULL), convert(UInt32,0))
                     if sz<0
                       ret=sz
                       throw()
                     end
                     data = zeros(basetype,sz)
-                    ret = cfunction(args..., convert(Ptr{basetype},data), convert(Uint32,sz))
+                    ret = cfunction(args..., pointer(data), convert(UInt32,sz))
                 end
                 if ret!=0
                     throw()
                 elseif basetype == Bool32
-                    data = reinterpret(Uint32, data) != 0
+                    data = reinterpret(UInt32, data) != 0
                 elseif basetype == Int32
                     try
                         data = map((x)->signed_constants[x], data)
                     end
-                elseif basetype == Uint32
+                elseif basetype == UInt32
                     try
                         data = map((x)->unsigned_constants[x], data)
                     end
-                elseif basetype == Uint8
-                    data = chop(string(char(data)...))
+                elseif basetype == UInt8
+                    data = chop(ascii(data))
                     if search(data,',')>0
                         data = split(data,", ")
                     end
@@ -126,7 +126,7 @@ function getproperties_guts(args, suffix::ASCIIString, warning::Bool)
             catch
                 settable=false
             end
-            ret_val[string(cfunction)[9+length(suffix):end]] = (data, settable)
+            ret_val[string(cfunction)[15+length(suffix):end]] = (data, settable)
         end
     end
     ret_val
@@ -137,7 +137,7 @@ function getproperties(; warning=false)
 end
 
 function getproperties(device::ASCIIString; warning=false)
-    getproperties_guts((convert(Ptr{Uint8},device),), "Dev", warning)
+    getproperties_guts((pointer(device),), "Dev", warning)
 end
 
 function getproperties(t::Task; warning=false)
@@ -152,14 +152,14 @@ function getproperties(t::Task, channel::ASCIIString; warning=false)
     kind = channel_types[ find(channel_type(t, channel)[1] .==
             map((x)->getfield(NIDAQ,symbol(x)), channel_types))[1]][end-1:end]
 
-    getproperties_guts((t.th, convert(Ptr{Uint8},channel)), kind, warning)
+    getproperties_guts((t.th, pointer(channel)), kind, warning)
 end
 
 function setproperty!(t::Task, channel::ASCIIString, property::ASCIIString, value)
     kind = channel_types[ find(channel_type(t, channel)[1] .==
             map((x)->getfield(NIDAQ,symbol(x)), channel_types))[1]][end-1:end]
 
-    @eval ret = $(symbol("DAQmxSet"*kind*property))($t.th, convert(Ptr{Uint8},$channel), $value)
+    @eval ret = $(symbol("DAQmxSet"*kind*property))($t.th, pointer($channel), $value)
     catch_error(ret, "DAQmxSet$kind$property: ")
     nothing
 end

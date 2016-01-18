@@ -1,34 +1,34 @@
 function count_edges(channel::ASCIIString;
-        edge::String="rising", initial_count::Integer=0, direction::String="up")
+        edge::AbstractString="rising", initial_count::Integer=0, direction::AbstractString="up")
     t = CITask()
-    if edge ∉ {"rising", "falling"}
+    if edge ∉ ("rising", "falling")
         error("edge must either be \"rising\" or \"falling\"")
     end
-    if direction ∉ {"up", "down"}
+    if direction ∉ ("up", "down")
         error("direction must either be \"up\" or \"down\"")
     end
     catch_error( CreateCICountEdgesChan(t.th,
-        convert(Ptr{Uint8},channel),
-        convert(Ptr{Uint8},""),
+        pointer(channel),
+        pointer(""),
         edge == "rising" ? Val_Rising : Val_Falling,
-        uint32(initial_count),
+        UInt32(initial_count),
         direction == "up" ? Val_CountUp : Val_CountDown) )
     t
 end
 
 # broken
-function measure_duty_cycle(channel::ASCIIString;  units::String="seconds")
+function measure_duty_cycle(channel::ASCIIString;  units::AbstractString="seconds")
     t = CITask()
     if units == "seconds"
         ret = CreateCIPulseChanTime(t.th,
-                convert(Ptr{Uint8},channel), convert(Ptr{Uint8},""),
+                pointer(channel), pointer(""),
                 2.0, 1000.0,
                 Val_Seconds)
     elseif units == "ticks"
         ret = CreateCIPulseChanTicks(t.th,
-                convert(Ptr{Uint8},channel),
-                convert(Ptr{Uint8},""),
-                convert(Ptr{Uint8},""),
+                pointer(channel),
+                pointer(""),
+                pointer(""),
                 2.0, 1000.0)
     else
         error("units must either be \"seconds\" or \"ticks\"")
@@ -40,49 +40,49 @@ end
 function quadrature_input(channel::ASCIIString;  z_enable::Bool=true)
     t = CITask()
     ret = CreateCIAngEncoderChan(t.th,
-            convert(Ptr{Uint8},channel),
-            convert(Ptr{Uint8},""),
+            pointer(channel),
+            pointer(""),
             Val_X4,
-            reinterpret(Bool32, uint32(z_enable)),
+            reinterpret(Bool32, UInt32(z_enable)),
             0.0,
             Val_AHighBHigh,
             Val_Ticks,
-            uint32(1), 0.0,
-            convert(Ptr{Uint8},""))
+            UInt32(1), 0.0,
+            pointer(""))
     ret>0 && warn(error(ret))
     ret<0 && error(error(ret))
     t
 end
 
 function line_to_line(channel::ASCIIString;
-        units::String="seconds", edge1::String="rising", edge2::String="rising")
+        units::AbstractString="seconds", edge1::AbstractString="rising", edge2::AbstractString="rising")
     t = CITask()
-    if units ∉ {"seconds", "ticks"}
+    if units ∉ ("seconds", "ticks")
         error("units must either be \"seconds\" or \"ticks\"")
     end
-    if edge1 ∉ {"rising", "falling"}
+    if edge1 ∉ ("rising", "falling")
         error("edge1 must either be \"rising\" or \"falling\"")
     end
-    if edge2 ∉ {"rising", "falling"}
+    if edge2 ∉ ("rising", "falling")
         error("edge2 must either be \"rising\" or \"falling\"")
     end
     catch_error( CreateCITwoEdgeSepChan(t.th,
-            convert(Ptr{Uint8},channel),
-            convert(Ptr{Uint8},""),
+            pointer(channel),
+            pointer(""),
             1.0, 1000.0, 
             units == "seconds" ? Val_Seconds : Val_Ticks,
             edge1 == "rising" ? Val_Rising : Val_Falling,
             edge2 == "rising" ? Val_Rising : Val_Falling,
-            convert(Ptr{Uint8},"")) )
+            pointer("")) )
     t
 end
 
 function generate_pulses{T<:Number}(channel::ASCIIString, low::T=2, high::T=2; delay::T=0)
     t = COTask()
-    if T<:FloatingPoint
+    if T<:AbstractFloat
         ret = CreateCOPulseChanTime(t.th,
-                convert(Ptr{Uint8},channel),
-                convert(Ptr{Uint8},""),
+                pointer(channel),
+                pointer(""),
                 Val_Seconds,
                 Val_Low,
                 convert(Float64,delay),
@@ -90,9 +90,9 @@ function generate_pulses{T<:Number}(channel::ASCIIString, low::T=2, high::T=2; d
                 convert(Float64,high))
     elseif T<:Integer
         ret = CreateCOPulseChanTicks(t.th,
-                convert(Ptr{Uint8},channel),
-                convert(Ptr{Uint8},""),
-                convert(Ptr{Uint8},""),
+                pointer(channel),
+                pointer(""),
+                pointer(""),
                 Val_Low,
                 convert(Int32,delay),
                 convert(Int32,low),
@@ -109,7 +109,7 @@ function read(t::CITask, channel::ASCIIString, num_samples::Integer = -1)
 
     #function read_counter_scalar(precision::DataType, cfunction::Function)
     #    data = precision[0]
-    #    ret = cfunction(t, 1.0, convert(Ptr{precision},data), convert(Ptr{Uint32},C_NULL))
+    #    ret = cfunction(t, 1.0, pointer(data), pointer(C_NULL))
     #    ret>0 && warn("NIDAQmx: $ret")
     #    ret<0 && error("NIDAQmx: $ret")
     #    data
@@ -121,9 +121,9 @@ function read(t::CITask, channel::ASCIIString, num_samples::Integer = -1)
         catch_error( cfunction(t.th,
             convert(Int32,num_samples),
             1.0,
-            convert(Ptr{precision},data),
-            convert(Uint32,num_samples),
-            convert(Ptr{Int32},num_samples_read),
+            pointer(data),
+            convert(UInt32,num_samples),
+            pointer(num_samples_read),
             reinterpret(Ptr{Bool32},C_NULL)) )
         data = data[1:num_samples_read[1]]
         reshape(data, (num_samples, div(length(data),num_samples)))
@@ -137,10 +137,10 @@ function read(t::CITask, channel::ASCIIString, num_samples::Integer = -1)
             convert(Int32,num_samples),
             1.0,
             Val_GroupByChannel,
-            convert(Ptr{Float64},high),
-            convert(Ptr{Float64},low),
-            convert(Uint32,num_samples),
-            convert(Ptr{Int32},num_samples_read),
+            pointer(high),
+            pointer(low),
+            convert(UInt32,num_samples),
+            pointer(num_samples_read),
             reinterpret(Ptr{Bool32},C_NULL)) )
         high = high[1:num_samples_read[1]]
         low = low[1:num_samples_read[1]]
@@ -150,21 +150,21 @@ function read(t::CITask, channel::ASCIIString, num_samples::Integer = -1)
 
     tmp = channel_type(t.th, channel)
     if tmp[2] == Val_CountEdges
-        data = read_counter_vector(Uint32, ReadCounterU32)
+        data = read_counter_vector(UInt32, ReadCounterU32)
     elseif tmp[2] == Val_PulseTime
         data = read_counter_2vectors(Float64, ReadCtrTime)
     elseif tmp[2] == Val_PulseTicks
-        data = read_counter_2vectors(Uint32, ReadCtrTicks)
+        data = read_counter_2vectors(UInt32, ReadCtrTicks)
     elseif tmp[2] == Val_Position_AngEncoder
-        data = read_counter_vector(Uint32, ReadCounterU32)
+        data = read_counter_vector(UInt32, ReadCounterU32)
     elseif tmp[2] == Val_TwoEdgeSep  # might be broken
         val = Cint[0]
         catch_error( GetCITwoEdgeSepUnits(t.th,
-                convert(Ptr{Uint8},channel),
-                convert(Ptr{Int32},val)) )
+                pointer(channel),
+                pointer(val)) )
         if val[1] == Val_Ticks
-            data = read_counter_vector(Uint32, ReadCounterU32)
-            #data = read_counter_scalar(Uint32, ReadCounterScalarU32)
+            data = read_counter_vector(UInt32, ReadCounterU32)
+            #data = read_counter_scalar(UInt32, ReadCounterScalarU32)
         elseif val[1] == Val_Seconds
             data = read_counter_vector(Float64, ReadCounterF64)
             #data = read_counter_scalar(Float64, ReadCounterScalarF64)

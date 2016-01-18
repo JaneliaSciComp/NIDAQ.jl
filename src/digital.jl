@@ -8,17 +8,17 @@ for (cfunction, jfunction, ntask) in (
     end
     @eval function $jfunction(t::$ntask, channel::ASCIIString)
         catch_error( $cfunction(t.th,
-                convert(Ptr{Uint8},channel),
-                convert(Ptr{Uint8},""),
+                pointer(channel),
+                pointer(""),
                 Val_ChanPerLine) )
         nothing
     end
 end
 
-read_digital_cfunctions = {
-    (Uint8 => ReadDigitalU8),
-    (Uint16 => ReadDigitalU16),
-    (Uint32 => ReadDigitalU32) }
+read_digital_cfunctions = Dict{Type,Function}(
+    UInt8 => ReadDigitalU8,
+    UInt16 => ReadDigitalU16,
+    UInt32 => ReadDigitalU32 )
 
 function read(t::DITask, precision::DataType, num_samples_per_chan::Integer = -1)
     num_channels = getproperties(t)["NumChans"][1]
@@ -29,29 +29,29 @@ function read(t::DITask, precision::DataType, num_samples_per_chan::Integer = -1
         convert(Int32,num_samples_per_chan),
         1.0,
         reinterpret(Bool32,Val_GroupByChannel),
-        convert(Ptr{precision},data),
-        convert(Uint32,num_samples_per_chan*num_channels),
-        convert(Ptr{Int32},num_samples_per_chan_read),
+        pointer(data),
+        convert(UInt32,num_samples_per_chan*num_channels),
+        pointer(num_samples_per_chan_read),
         reinterpret(Ptr{Bool32},C_NULL)) )
     data = data[1:num_samples_per_chan_read[1]*num_channels]
     num_channels==1 ? data : reshape(data, (num_samples_per_chan, convert(Int64,num_channels)))
 end 
     
 for (cfunction, types) in (
-        (WriteDigitalU8,  Uint8),
-        (WriteDigitalU16, Uint16),
-        (WriteDigitalU32, Uint32))
+        (WriteDigitalU8,  UInt8),
+        (WriteDigitalU16, UInt16),
+        (WriteDigitalU32, UInt32))
     @eval function write(t::DOTask, data::Matrix{$types})
         num_samples_per_chan::Int32 = size(data, 1)
         data = reshape(data, length(data))
         num_samples_per_chan_written = Int32[0]
         catch_error( $cfunction(t.th,
             num_samples_per_chan,
-            reinterpret(Bool32,uint32(false)),
+            reinterpret(Bool32,UInt32(false)),
             1.0,
             reinterpret(Bool32,Val_GroupByChannel),
-            convert(Ptr{$types},data),
-            convert(Ptr{Int32},num_samples_per_chan_written),
+            pointer(data),
+            pointer(num_samples_per_chan_written),
             reinterpret(Ptr{Bool32},C_NULL)) )
         num_samples_per_chan_written[1]
     end

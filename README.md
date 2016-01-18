@@ -18,7 +18,8 @@ Installation
 ============
 
 First download and install NI-DAQmx version
-[14.1.0](http://www.ni.com/download/ni-daqmx-14.1/4953/en/) (or
+[15.1.1](http://www.ni.com/download/ni-daqmx-15.1.1/5665/en/) (or for Julia v3,
+[14.1.0](http://www.ni.com/download/ni-daqmx-14.1/4953/en/),
 [14.0.0](http://www.ni.com/download/ni-daqmx-14.0/4918/en/),
 [9.6.0](http://www.ni.com/download/ni-daqmx-9.6/3423/en/)) from National
 Instruments.  Then on the Julia command line:
@@ -322,8 +323,8 @@ julia> names(NIDAQ)
 
 NIDAQmx is a powerful interface, and while NIDAQ.jl provides wrappers
 for all of it's functions, it only abstracts a few of them.  If these
-don't suit your needs you'll have to dive deep into src/functions_V*.jl
-and src/constants_V*.jl.  Complete documentation of this low-level API
+don't suit your needs you'll have to dive deep into `src/functions_V*.jl`
+and `src/constants_V*.jl`.  Complete documentation of this low-level API
 is [here](http://zone.ni.com/reference/en-XX/help/370466V-01/) and
 [here](http://zone.ni.com/reference/en-XX/help/370471W-01/).
 
@@ -370,11 +371,9 @@ $ mv common.jl src/constants_V<version>.jl
 
 The following manual edits are then necessary:
 
-+ In `constants_V<version>.jl` comment out `const CVICALLBACK = CVICDECL`.
-
-+ For Julia v3, in `constants_V<version>.jl` change `typealias bool32 uInt32`
-to `typealias bool32 Bool32`.
-
++ In `constants_V<version>.jl`
+  + comment out `const CVICALLBACK = CVICDECL`,
+  + change `typealias bool32 uInt32` to `typealias bool32 Bool32`.
 + For NI-DAQmx v9.6.0 in `NIDAQmx.h` change 
 `defined(__linux__)` to `defined(__linux__) || defined(__APPLE__)`.
 
