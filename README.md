@@ -374,6 +374,7 @@ The following manual edits are then necessary:
 + In `constants_V<version>.jl`
   + comment out `const CVICALLBACK = CVICDECL`,
   + change `typealias bool32 uInt32` to `typealias bool32 Bool32`.
+  + in NI-DAQmx v15.1.1 comment out `using Compat`
 + For NI-DAQmx v9.6.0 in `NIDAQmx.h` change 
 `defined(__linux__)` to `defined(__linux__) || defined(__APPLE__)`.
 
