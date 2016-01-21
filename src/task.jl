@@ -23,4 +23,8 @@ for (cfunction, jfunction) in (
         catch_error( $cfunction(t.th) )
         nothing
     end
+
+    @eval @doc $(string("`", jfunction, """(task)`
+
+    """,jfunction," the specified NIDAQ task")) $jfunction
 end

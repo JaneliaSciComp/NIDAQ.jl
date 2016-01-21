@@ -1,3 +1,8 @@
+"""
+`count_edges(channel; edge="rising",initial_count=0,direction="up") -> task`
+
+create a NIDAQ counter input channel
+"""
 function count_edges(channel::ASCIIString;
         edge::AbstractString="rising", initial_count::Integer=0, direction::AbstractString="up")
     t = CITask()
@@ -16,7 +21,7 @@ function count_edges(channel::ASCIIString;
     t
 end
 
-# broken
+#= broken
 function measure_duty_cycle(channel::ASCIIString;  units::AbstractString="seconds")
     t = CITask()
     if units == "seconds"
@@ -36,8 +41,14 @@ function measure_duty_cycle(channel::ASCIIString;  units::AbstractString="second
     catch_error(ret)
     t
 end
+=#
 
-function quadrature_input(channel::ASCIIString;  z_enable::Bool=true)
+"""
+`quadrature_input(channel; z_enable=true) -> task`
+
+create a NIDAQ counter input channel
+"""
+function quadrature_input(channel::ASCIIString; z_enable::Bool=true)
     t = CITask()
     ret = CreateCIAngEncoderChan(t.th,
             pointer(channel),
@@ -54,6 +65,11 @@ function quadrature_input(channel::ASCIIString;  z_enable::Bool=true)
     t
 end
 
+"""
+`line_to_line(channel; units="seconds",edge1="rising",edge2="rising") -> task`
+
+create a NIDAQ counter input channel
+"""
 function line_to_line(channel::ASCIIString;
         units::AbstractString="seconds", edge1::AbstractString="rising", edge2::AbstractString="rising")
     t = CITask()
@@ -77,7 +93,12 @@ function line_to_line(channel::ASCIIString;
     t
 end
 
-function generate_pulses{T<:Number}(channel::ASCIIString, low::T=2, high::T=2; delay::T=0)
+"""
+`generate_pulses(channel; low=2,high=2,delay=0) -> task`
+
+create a NIDAQ counter output channel
+"""
+function generate_pulses{T<:Number}(channel::ASCIIString; low::T=2, high::T=2, delay::T=0)
     t = COTask()
     if T<:AbstractFloat
         ret = CreateCOPulseChanTime(t.th,
@@ -104,7 +125,11 @@ function generate_pulses{T<:Number}(channel::ASCIIString, low::T=2, high::T=2; d
     t
 end
 
-function read(t::CITask, channel::ASCIIString, num_samples::Integer = -1)
+"""`read(task,channel; nsamples=-1) -> Vector[, Vector]`
+
+receive data from the specified counter channel in the specified NIDAQ task
+"""
+function read(t::CITask, channel::ASCIIString; num_samples::Integer = -1)
     if num_samples==-1;  num_samples=1024;  end
 
     #function read_counter_scalar(precision::DataType, cfunction::Function)

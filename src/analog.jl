@@ -3,6 +3,13 @@ analog_input_configs = Dict{AbstractString,Number}(
     "non-referenced single-ended" => Val_NRSE,
     "differential" => Val_Diff )
 
+"""
+`analog_input(channel, config, range) -> task`
+
+`analog_input(task, channel, config, range)`
+
+create an analog input channel, and a new task if one is not specified
+"""
 function analog_input(channel::ASCIIString; terminal_config="differential", range=nothing)
     t = AITask()
     analog_input(t, channel, terminal_config=terminal_config, range=range)
@@ -25,6 +32,13 @@ function analog_input(t::AITask, channel::ASCIIString;
     nothing
 end
 
+"""
+`analog_output(channel, range) -> task`
+
+`analog_output(task, channel, range)`
+
+create an analog output channel, and a new NIDAQ task if one is not specified
+"""
 function analog_output(channel::ASCIIString; range=nothing)
     t = AOTask()
     analog_output(t, channel, range=range)

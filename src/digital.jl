@@ -15,6 +15,22 @@ for (cfunction, jfunction, ntask) in (
     end
 end
 
+@doc """
+`digital_output(channel) -> task`
+
+`digital_output(task, channel)`
+
+create a digital output channel, and a new NIDAQ task if one is not specified
+""" digital_output
+
+@doc """
+`digital_input(channel) -> task`
+
+`digital_input(task, channel)`
+
+create a digital input channel, and a new task if one is not specified
+""" digital_input
+
 read_digital_cfunctions = Dict{Type,Function}(
     UInt8 => ReadDigitalU8,
     UInt16 => ReadDigitalU16,

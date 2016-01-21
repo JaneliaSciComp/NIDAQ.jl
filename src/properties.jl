@@ -1,3 +1,8 @@
+"""
+`devices() -> Vector{String}`
+
+get a list of available NIDAQ devices
+"""
 function devices()
     sz = GetSysDevNames(convert(Ptr{UInt8},C_NULL), UInt32(0))
     data=zeros(UInt8,sz)
@@ -25,6 +30,13 @@ for (jfunction, cfunction) in (
         length(d)!=1 && error("NIDAQmx: more than one device")
         $(symbol(jfunction))(d[1])
     end
+
+    @eval @doc $(string("`", jfunction, """() -> Vector{String}`
+
+    `""", jfunction, """(device) -> Vector{String}`
+
+    get a list of available channels for either the only available NIDAQ device or for the specified NIDAQ device
+    """)) $jfunction
 end
 
 for (jfunction, cfunction) in (
@@ -43,8 +55,20 @@ for (jfunction, cfunction) in (
         length(d)!=1 && error("NIDAQmx: more than one device")
         $jfunction(d[1])
     end
+
+    @eval @doc $(string("`", jfunction, """() -> Matrix`
+
+    `""", jfunction, """(device) -> Matrix`
+
+    get a list of available ranges for either the only available NIDAQ device or for the specified NIDAQ device
+    """)) $jfunction
 end
 
+"""
+`channel_type(task,channel) -> channel_type, measurement/output_type`
+
+get the type of the specified NIDAQ channel
+"""
 function channel_type(t::Task, channel::ASCIIString)
     val1 = Cint[0]
     catch_error(
@@ -132,14 +156,29 @@ function getproperties_guts(args, suffix::ASCIIString, warning::Bool)
     ret_val
 end
 
+"""
+`getproperties(warning=false) -> Dict`
+
+get the NIDAQ system properties
+"""
 function getproperties(; warning=false)
     getproperties_guts((), "Sys", warning)
 end
 
+"""
+`getproperties(device; warning=false) -> Dict`
+
+get the properties of the specified NIDAQ device
+"""
 function getproperties(device::ASCIIString; warning=false)
     getproperties_guts((pointer(device),), "Dev", warning)
 end
 
+"""
+`getproperties(task; warning=false) -> Dict`
+
+get the properties of the specified NIDAQ task
+"""
 function getproperties(t::Task; warning=false)
     getproperties_guts((t.th,), "Task", warning)
 end
@@ -148,6 +187,11 @@ channel_types = ["Val_AI", "Val_AO",
                  "Val_DI", "Val_DO",
                  "Val_CI", "Val_CO"]
 
+"""
+`getproperties(task,channel; warning=false) -> Dict`
+
+get the properties of the specified NIDAQ channel
+"""
 function getproperties(t::Task, channel::ASCIIString; warning=false)
     kind = channel_types[ find(channel_type(t, channel)[1] .==
             map((x)->getfield(NIDAQ,symbol(x)), channel_types))[1]][end-1:end]
@@ -155,6 +199,11 @@ function getproperties(t::Task, channel::ASCIIString; warning=false)
     getproperties_guts((t.th, pointer(channel)), kind, warning)
 end
 
+"""
+`setproperty!(task,channel,property,value)`
+
+set the specified NIDAQ property to value
+"""
 function setproperty!(t::Task, channel::ASCIIString, property::ASCIIString, value)
     kind = channel_types[ find(channel_type(t, channel)[1] .==
             map((x)->getfield(NIDAQ,symbol(x)), channel_types))[1]][end-1:end]
