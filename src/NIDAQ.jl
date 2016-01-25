@@ -6,7 +6,7 @@ module NIDAQ
 import Base.write, Base.read, Base.start
 gtk_absent = true
 try
-  import Gtk.setproperty!
+  Gtk.setproperty!
   gtk_absent = false
 end
 
