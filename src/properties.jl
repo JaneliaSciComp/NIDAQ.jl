@@ -104,8 +104,8 @@ function getproperties_guts(args, suffix::ASCIIString, warning::Bool)
             cfunction = getfield(NIDAQ, sym)
             signature = cfunction.env.defs.sig
             try
-		basetype = eltype(signature.types[1+length(args)])
-		if length(signature.types)==1+length(args)
+		        basetype = eltype(signature.types[1+length(args)])
+		        if length(signature.types)==1+length(args)
                     data = Array(basetype,1)
                     ret = cfunction(args..., pointer(data))
                     data = data[1]
@@ -134,7 +134,12 @@ function getproperties_guts(args, suffix::ASCIIString, warning::Bool)
                     data = chop(ascii(data))
                     if search(data,',')>0
                         data = split(data,", ")
+                    else
+                        if data == ""
+                            data = ASCIIString[]
+                        end
                     end
+
                 end
             catch
                 if warning
