@@ -4,16 +4,28 @@ info("NIDAQ: Checking installation - no measurement hardware is needed for this 
 @test typeof(getproperties()) == Dict{ASCIIString,Tuple{Any,Bool}}
 @test haskey(getproperties(), "NIDAQMajorVersion")
 d = devices()
-device_available = false
+
 if length(d) == 0
     info("NIDAQ: no measurement HW found, skipping rest of the test suite")
+    device_available = false
 else
     d=d[1]
     info("NIDAQ: found at least one measurement HW: $(d)")
     @test typeof(getproperties(d)) == Dict{ASCIIString,Tuple{Any,Bool}}
     pr = getproperties(d)
     device_available = true
+
+    @test typeof(getproperties(d)) == Dict{ASCIIString,Tuple{Any,Bool}}
+    @test typeof(analog_input_channels()) == Vector{ASCIIString}
+    @test typeof(analog_output_channels()) == Vector{ASCIIString}
+    @test typeof(digital_input_channels()) == Vector{ASCIIString}
+    @test typeof(digital_output_channels()) == Vector{ASCIIString}
+    @test typeof(counter_input_channels()) == Vector{ASCIIString}
+    @test typeof(counter_output_channels()) == Vector{ASCIIString}
+    @test typeof(analog_input_ranges()) == Matrix{Float64}
+    @test typeof(analog_output_ranges()) == Matrix{Float64}
 end
+
 
 if !(device_available && length(pr["AIPhysicalChans"][1]) > 0)
     info("NIDAQ: measurement HW does not support any AIPhysicalChans, skipping part of the suite")
