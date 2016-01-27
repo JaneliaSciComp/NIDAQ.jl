@@ -15,7 +15,7 @@ else
     device_available = true
 end
 
-if !(device_available && length(pr["AIPhysicalChans"]) == 0)
+if !(device_available && length(pr["AIPhysicalChans"][1]) > 0)
     info("NIDAQ: measurement HW does not support any AIPhysicalChans, skipping part of the suite")
 else
     t = analog_input(d*"/ai0")
@@ -32,7 +32,7 @@ else
     @test clear(t) == nothing
 end
 
-if !(device_available && length(pr["AOPhysicalChans"]) == 0)
+if !(device_available && length(pr["AOPhysicalChans"][1]) > 0)
     info("NIDAQ: measurement HW does not support any AOPhysicalChans, skipping part of the suite")
 else
     t = analog_output(d*"/ao0")
@@ -47,7 +47,7 @@ else
     @test clear(t) == nothing
 end
 
-if !(device_available && length(pr["DILines"]) == 0)
+if !(device_available && length(pr["DILines"][1]) > 0)
     info("NIDAQ: measurement HW does not support DILines, skipping part of the suite")
 else
     t = digital_input(d*"/Port0/Line0")
@@ -60,20 +60,23 @@ else
     @test length(read(t, UInt8, 6)) == 12
     @test stop(t) == nothing
     @test clear(t) == nothing
-
+end
+if !(device_available && length(pr["DOLines"][1]) > 0)
+    info("NIDAQ: measurement HW does not support DILines, skipping part of the suite")
+else
     t = digital_output(d*"/Port0/Line0")
     @test typeof(t) == NIDAQ.DOTask
     @test start(t) == nothing
-    @test write(t, UInt32([1,0,1,0,1,0])) == 6
+    @test write(t, round(UInt32, [1,0,1,0,1,0])) == 6
     @test stop(t) == nothing
     @test digital_output(t, d*"/Port0/Line1") == nothing
     @test start(t) == nothing
-    @test write(t, UInt8([1 0; 0 0; 1 0; 0 1; 1 1; 0 1])) == 6
+    @test write(t, round(UInt8, [1 0; 0 0; 1 0; 0 1; 1 1; 0 1])) == 6
     @test stop(t) == nothing
     @test clear(t) == nothing
 end
 
-if !(device_available && length(pr["COPhysicalChans"]) == 0)
+if !(device_available && length(pr["COPhysicalChans"][1]) > 0)
     info("NIDAQ: measurement HW does not support COPhysicalChans, skipping part of the suite")
 else
     t = generate_pulses(d*"/ctr0")
