@@ -1,11 +1,12 @@
 VERSION >= v"0.4.0-dev+6521" && __precompile__()
 
+"`NIDAQ.jl` provides an interface to NI-DAQmx--- National Instruments' driver for their data acquisition boards"
 module NIDAQ
 
 import Base.write, Base.read, Base.start
 gtk_absent = true
 try
-  import Gtk.setproperty!
+  Gtk.setproperty!
   gtk_absent = false
 end
 
@@ -14,7 +15,7 @@ export stop, clear
 
 # channels
 export analog_input, analog_output, digital_input, digital_output
-export count_edges, measure_duty_cycle, quadrature_input, line_to_line, generate_pulses
+export count_edges, quadrature_input, line_to_line, generate_pulses
 
 # properties
 export devices, channel_type, getproperties
@@ -86,5 +87,15 @@ include("analog.jl")
 include("digital.jl")
 include("counter.jl")
 include("properties.jl")
+
+@doc """`read(task, precision, nsamples) -> Matrix`
+
+receive data from all analog or digital channels in a NIDAQ task
+""" read
+
+@doc """`write(task, data)`
+
+send data to all analog or digital channels in a NIDAQ task
+""" write
 
 end

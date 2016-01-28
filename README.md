@@ -1,7 +1,7 @@
 National Instruments Data Acquisition Interface
 ===============================================
 
-This package provides an interface to NIDAQmx-- National Instruments' driver
+This package provides an interface to NI-DAQmx--- National Instruments' driver
 for their data acquisition boards.  Their entire C header file was ported
 using [Clang.jl](https://github.com/ihnorton/Clang.jl), and a rudimentary
 higher-level API is provided for ease of use.
@@ -301,7 +301,6 @@ julia> names(NIDAQ)
  :counter_input_channels 
  :counter_output_channels
  :NIDAQ                  
- :measure_duty_cycle     
  :analog_input_ranges    
  :digital_input          
  :stop                   
