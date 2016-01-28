@@ -2,7 +2,9 @@ function devices()
     sz = GetSysDevNames(convert(Ptr{UInt8},C_NULL), UInt32(0))
     data=zeros(UInt8,sz)
     catch_error(GetSysDevNames(pointer(data), UInt32(sz)))
-    map((x)->convert(ASCIIString,x), split(chop(ascii(data)),", "))
+    devs = map((x)->convert(ASCIIString,x), split(chop(ascii(data)),", "))
+    devs[devs .!= ""]
+
 end
 
 for (jfunction, cfunction) in (
@@ -49,7 +51,7 @@ function channel_type(t::Task, channel::ASCIIString)
     val1 = Cint[0]
     catch_error(
         GetChanType(t.th, pointer(channel), pointer(val1)) )
-      
+
     val2 = Cint[0]
     if val1[1] == Val_AI
         ret = GetAIMeasType(t.th, pointer(channel), pointer(val2))
@@ -78,8 +80,8 @@ function getproperties_guts(args, suffix::ASCIIString, warning::Bool)
             cfunction = getfield(NIDAQ, sym)
             signature = cfunction.env.defs.sig
             try
-		basetype = eltype(signature.types[1+length(args)])
-		if length(signature.types)==1+length(args)
+		        basetype = eltype(signature.types[1+length(args)])
+		        if length(signature.types)==1+length(args)
                     data = Array(basetype,1)
                     ret = cfunction(args..., pointer(data))
                     data = data[1]
@@ -108,7 +110,12 @@ function getproperties_guts(args, suffix::ASCIIString, warning::Bool)
                     data = chop(ascii(data))
                     if search(data,',')>0
                         data = split(data,", ")
+                    else
+                        if data == ""
+                            data = ASCIIString[]
+                        end
                     end
+
                 end
             catch
                 if warning
