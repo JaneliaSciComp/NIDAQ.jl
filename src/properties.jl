@@ -131,14 +131,7 @@ function getproperties_guts(args, suffix::ASCIIString, warning::Bool)
                         data = map((x)->unsigned_constants[x], data)
                     end
                 elseif basetype == UInt8
-                    data = chop(ascii(data))
-                    if search(data,',')>0
-                        data = split(data,", ")
-                    else
-                        if data == ""
-                            data = ASCIIString[]
-                        end
-                    end
+                    data = split(chop(ascii(data)),", ")
 
                 end
             catch
