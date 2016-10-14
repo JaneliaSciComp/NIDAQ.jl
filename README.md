@@ -18,9 +18,10 @@ Installation
 ============
 
 First download and install NI-DAQmx version
-[15.1.1](http://www.ni.com/download/ni-daqmx-15.1.1/5665/en/) (or for Julia v3,
+[16.0.0](http://www.ni.com/download/ni-daqmx-16.0/6120/en/) (or for Julia v4,
+[15.1.1](http://www.ni.com/download/ni-daqmx-15.1.1/5665/en/); or for Julia v3,
 [14.1.0](http://www.ni.com/download/ni-daqmx-14.1/4953/en/),
-[14.0.0](http://www.ni.com/download/ni-daqmx-14.0/4918/en/),
+[14.0.0](http://www.ni.com/download/ni-daqmx-14.0/4918/en/), or
 [9.6.0](http://www.ni.com/download/ni-daqmx-9.6/3423/en/)) from National
 Instruments.  Then on the Julia command line:
 
@@ -36,103 +37,91 @@ With no input arguments, the high-level `getproperties` function can
 be used to query the system:
 
 ```
+julia> using NIDAQ
+
 julia> getproperties()
-Dict{Any,Any} with 7 entries:
-  "Tasks"              => ("",false)
+Dict{String,Tuple{Any,Bool}} with 7 entries:
+  "DevNames"           => (SubString{String}["Dev1"],false)
+  "GlobalChans"        => (SubString{String}[""],false)
+  "NIDAQMajorVersion"  => (0x00000010,false)
+  "NIDAQMinorVersion"  => (0x00000000,false)
   "NIDAQUpdateVersion" => (0x00000000,false)
-  "NIDAQMinorVersion"  => (0x00000001,false)
-  "Scales"             => ("",false)
-  "NIDAQMajorVersion"  => (0x0000000e,false)
-  "GlobalChans"        => ("",false)
-  "DevNames"           => ("Dev1",false)
+  "Scales"             => (SubString{String}[""],false)
+  "Tasks"              => (SubString{String}[""],false)
 ```
 
-Returned is a Dict of tuples, the first member indicating the property value and
-the second a Bool indicating whether the former is mutable.
+Returned is a dictionary of tuples, the first member indicating the property value and
+the second a boolean indicating whether the former is mutable.
 
-`getproperties` can also input a String containing the name of a device:
+`getproperties` can also input a string containing the name of a data acquisition device:
 
 ```
 julia> getproperties("Dev1")
-Dict{Any,Any} with 69 entries:
-  "CITrigUsage"                     => (42,false)
-  "COPhysicalChans"                 => (SubString{ASCIIString}["Dev1/ctr0","Dev1/ctr1","Dev1/ctr2","Dev1/ctr3","Dev1/freqout"],false)
-  "COSampClkSupported"              => (true,false)
-  "AOCurrentRngs"                   => ([],false)
-  "AICurrentRngs"                   => ([],false)
-  "AIMaxMultiChanRate"              => (2.0e6,false)
-  "COSupportedOutputTypes"          => ([:Val_Pulse_Freq,:Val_Pulse_Ticks,:Val_Pulse_Time],false)
-  "AIFreqRngs"                      => ([],false)
-  "AOSupportedOutputTypes"          => ([:Val_Voltage],false)
-  "COTrigUsage"                     => (42,false)
-  "CIMaxTimebase"                   => (1.0e8,false)
-  "DILines"                         => (SubString{ASCIIString}["Dev1/port0/line0","Dev1/port0/line1","Dev1/port0/line2","Dev1/port0/line3","Dev1/port0/lin.
-
-  "PXISlotNum"                      => (0xffffffff,false)
-  "AICouplings"                     => (:Val_Task_Verify,false)
-  "CIMaxSize"                       => (0x00000020,false)
-  "BusType"                         => (:Val_USB,false)
-  "CISampClkSupported"              => (true,false)
-  "AILowpassCutoffFreqDiscreteVals" => ([],false)
-  "AILowpassCutoffFreqRangeVals"    => ([],false)
-  "ProductCategory"                 => (:Val_XSeriesDAQ,false)
-  "AIBridgeRngs"                    => ([],false)
-  "DIMaxRate"                       => (1.0e7,false)
-  "COSampModes"                     => ([:Val_FiniteSamps,:Val_ContSamps],false)
-  "AOPhysicalChans"                 => (SubString{ASCIIString}["Dev1/ao0","Dev1/ao1"],false)
-  "AOGains"                         => ([],false)
-  "PXIChassisNum"                   => (0xffffffff,false)
-  "AIPhysicalChans"                 => (SubString{ASCIIString}["Dev1/ai0","Dev1/ai1","Dev1/ai2","Dev1/ai3","Dev1/ai4","Dev1/ai5","Dev1/ai6","Dev1/ai7"],fa.
-
-  "AOMaxRate"                       => (3.3333333333333335e6,false)
-  "DOPorts"                         => (SubString{ASCIIString}["Dev1/port0","Dev1/port1","Dev1/port2"],false)
-  "AccessoryProductNums"            => (Uint32[0],false)
-  "NumDMAChans"                     => (0x00000000,false)
-  "COMaxTimebase"                   => (1.0e8,false)
-  "AIResistanceRngs"                => ([],false)
-  "Terminals"                       => (SubString{ASCIIString}["/Dev1/PFI0","/Dev1/PFI1","/Dev1/PFI2","/Dev1/PFI3","/Dev1/PFI4","/Dev1/PFI5","/Dev1/PFI6",.
-
-  "AOMinRate"                       => (0.023283064370807974,false)
-  "AISupportedMeasTypes"            => ([:Val_Current,:Val_Resistance,:Val_Strain_Gage,:Val_Temp_RTD,:Val_Temp_Thrmstr,:DAQm.
-
-  "DITrigUsage"                     => (14,false)
-  "AIVoltageRngs"                   => ([-1.0,1.0,-2.0,2.0,-5.0,5.0,-10.0,10.0],false)
-  "AnlgTrigSupported"               => (true,false)
-  "COMaxSize"                       => (0x00000020,false)
-  "DOLines"                         => (SubString{ASCIIString}["Dev1/port0/line0","Dev1/port0/line1","Dev1/port0/line2","Dev1/port0/line3","Dev1/port0/lin.
-
-  "TEDSHWTEDSSupported"             => (false,false)
-  "AccessorySerialNums"             => (Uint32[0],false)
-  "AOTrigUsage"                     => (10,false)
-  "AIVoltageIntExcitRangeVals"      => ([],false)
-  "CISupportedMeasTypes"            => ([:Val_CountEdges,:Val_Freq,:Val_Period,:Val_TwoEdgeSep,:Val_SemiPeriod,:Val_Pu.
-
-  "AOSampModes"                     => ([:Val_FiniteSamps,:Val_ContSamps],false)
-  "IsSimulated"                     => (false,false)
-  "AOSampClkSupported"              => (true,false)
-  "DIPorts"                         => (SubString{ASCIIString}["Dev1/port0","Dev1/port1","Dev1/port2"],false)
-  "SerialNum"                       => (0x01719e54,false)
-  "AIMaxSingleChanRate"             => (2.0e6,false)
-  "DigTrigSupported"                => (true,false)
-  "DOMaxRate"                       => (1.0e7,false)
-  "AITrigUsage"                     => (14,false)
-  "AIMinRate"                       => (0.023283064370807974,false)
-  "ProductType"                     => ("USB-6366 (64 MS) (Mass Termination)",false)
-  "AccessoryProductTypes"           => ("",false)
-  "AISimultaneousSamplingSupported" => (true,false)
-  "DOTrigUsage"                     => (10,false)
-  "ChassisModuleDevNames"           => ("",false)
-  "CISampModes"                     => ([:Val_FiniteSamps,:Val_ContSamps],false)
-  "CIPhysicalChans"                 => (SubString{ASCIIString}["Dev1/ctr0","Dev1/ctr1","Dev1/ctr2","Dev1/ctr3"],false)
-  "AISampModes"                     => ([:Val_FiniteSamps,:Val_ContSamps],false)
-  "AOVoltageRngs"                   => ([-5.0,5.0,-10.0,10.0],false)
-  "ProductNum"                      => (0x000075a1,false)
-  "AICurrentIntExcitDiscreteVals"   => ([],false)
-  "AIVoltageIntExcitDiscreteVals"   => ([],false)
-  "AIGains"                         => ([],false)
+Dict{String,Tuple{Any,Bool}} with 61 entries:
+  "AIBridgeRngs"                           => (Float64[],false)
+  "AICouplings"                            => (:Val_Transferred_From_Buffer,false)
+  "AICurrentIntExcitDiscreteVals"          => (Float64[],false)
+  "AICurrentRngs"                          => (Float64[],false)
+  "AIDigFltrLowpassCutoffFreqDiscreteVals" => (Float64[],false)
+  "AIDigFltrLowpassCutoffFreqRangeVals"    => (Float64[],false)
+  "AIFreqRngs"                             => (Float64[],false)
+  "AIGains"                                => (Float64[],false)
+  "AILowpassCutoffFreqDiscreteVals"        => (Float64[],false)
+  "AILowpassCutoffFreqRangeVals"           => (Float64[],false)
+  "AIMaxMultiChanRate"                     => (2.0e6,false)
+  "AIMaxSingleChanRate"                    => (2.0e6,false)
+  "AIMinRate"                              => (0.0232831,false)
+  "AIPhysicalChans"                        => (SubString{String}["Dev1/ai0","Dev1/ai1","Dev1/ai2",".
+  "AIResistanceRngs"                       => (Float64[],false)
+  "AISampModes"                            => (Symbol[:Val_FiniteSamps,:Val_ContSamps],false)
+  "AISupportedMeasTypes"                   => (Symbol[:Val_Current,:Val_Resistance,:Val_Strain_Gage.
+  "AITrigUsage"                            => (14,false)
+  "AIVoltageIntExcitDiscreteVals"          => (Float64[],false)
+  "AIVoltageIntExcitRangeVals"             => (Float64[],false)
+  "AIVoltageRngs"                          => ([-1.0,1.0,-2.0,2.0,-5.0,5.0,-10.0,10.0],false)
+  "AOCurrentRngs"                          => (Float64[],false)
+  "AOGains"                                => (Float64[],false)
+  "AOMaxRate"                              => (3.33333e6,false)
+  "AOMinRate"                              => (0.0232831,false)
+  "AOPhysicalChans"                        => (SubString{String}["Dev1/ao0","Dev1/ao1"],false)
+  "AOSampModes"                            => (Symbol[:Val_FiniteSamps,:Val_ContSamps],false)
+  "AOSupportedOutputTypes"                 => (Symbol[:Val_Voltage],false)
+  "AOTrigUsage"                            => (10,false)
+  "AOVoltageRngs"                          => ([-5.0,5.0,-10.0,10.0],false)
+  "AccessoryProductNums"                   => (UInt32[0x00000000],false)
+  "AccessoryProductTypes"                  => (SubString{String}[""],false)
+  "AccessorySerialNums"                    => (UInt32[0x00000000],false)
+  "BusType"                                => (:Val_USB,false)
+  "CIMaxSize"                              => (0x00000020,false)
+  "CIMaxTimebase"                          => (1.0e8,false)
+  "CIPhysicalChans"                        => (SubString{String}["Dev1/ctr0","Dev1/ctr1","Dev1/ctr2.
+  "CISampModes"                            => (Symbol[:Val_FiniteSamps,:Val_ContSamps],false)
+  "CISupportedMeasTypes"                   => (Symbol[:Val_CountEdges,:Val_Freq,:Val_Period,:Val_Tw.
+  "CITrigUsage"                            => (42,false)
+  "COMaxSize"                              => (0x00000020,false)
+  "COMaxTimebase"                          => (1.0e8,false)
+  "COPhysicalChans"                        => (SubString{String}["Dev1/ctr0","Dev1/ctr1","Dev1/ctr2.
+  "COSampModes"                            => (Symbol[:Val_FiniteSamps,:Val_ContSamps],false)
+  "COSupportedOutputTypes"                 => (Symbol[:Val_Pulse_Freq,:Val_Pulse_Ticks,:Val_Pulse_T.
+  "COTrigUsage"                            => (42,false)
+  "ChassisModuleDevNames"                  => (SubString{String}[""],false)
+  "DILines"                                => (SubString{String}["Dev1/port0/line0","Dev1/port0/lin.
+  "DIMaxRate"                              => (1.0e7,false)
+  "DIPorts"                                => (SubString{String}["Dev1/port0","Dev1/port1","Dev1/po.
+  "DITrigUsage"                            => (14,false)
+  "DOLines"                                => (SubString{String}["Dev1/port0/line0","Dev1/port0/lin.
+  "DOMaxRate"                              => (1.0e7,false)
+  "DOPorts"                                => (SubString{String}["Dev1/port0","Dev1/port1","Dev1/po.
+  "DOTrigUsage"                            => (10,false)
+  "NumDMAChans"                            => (0x00000000,false)
+  "ProductCategory"                        => (:Val_XSeriesDAQ,false)
+  "ProductNum"                             => (0x000075a1,false)
+  "ProductType"                            => (SubString{String}["USB-6366 (64 MS) (Mass Terminatio.
+  "SerialNum"                              => (0x01719e54,false)
+  "Terminals"                              => (SubString{String}["/Dev1/PFI0","/Dev1/PFI1","/Dev1/P.
 ```
 
-One can index into the Dict to get a list of channels:
+One can index into the dictionary to get a list of channels:
 
 ```
 julia> getproperties("Dev1")["AIPhysicalChans"]
@@ -140,11 +129,11 @@ julia> getproperties("Dev1")["AIPhysicalChans"]
 ```
 
 A bit simpler in this case though is to use another high-level function
-which returns just the String Array:
+which returns just the string Array:
 
 ```
 julia> analog_input_channels("Dev1")
-8-element Array{ASCIIString,1}:
+8-element Array{String,1}:
  "Dev1/ai0"
  "Dev1/ai1"
  "Dev1/ai2"
@@ -159,100 +148,91 @@ To add, for example, analog input channels, use the high-level `analog_input` fu
 
 ```
 julia> t = analog_input("Dev1/ai0:1")
-AITask(Ptr{Void} @0x0000000025d18600)
+NIDAQ.AITask(Ptr{Void} @0x0000000025d18600)
 
 julia> typeof(t)
-AITask (constructor with 3 methods)
+NIDAQ.AITask (constructor with 3 methods)
 
-julia> super(AITask)
-Task
+julia> supertype(NIDAQ.AITask)
+NIDAQ.Task
 ```
 
 Two channels were added above using the `:` notation.  Additional
-channels can be added later by inputing the returned Task:
+channels can be added later by inputing the returned `Task`:
 
 ```
 julia> analog_input(t, "Dev1/ai2")
 ```
 
-`getproperties` can also input a Task:
+`getproperties` can also input a `Task`:
 
 ```
 julia> getproperties(t)
-Dict{Any,Any} with 6 entries:
-  "NumDevices" => (0x00000001,false)
+Dict{String,Tuple{Any,Bool}} with 5 entries:
+  "Devices"    => (SubString{String}["Dev1"],false)
+  "Channels"   => (SubString{String}["Dev1/ai0","Dev1/ai1","Dev1/ai2"],false)
+  "Name"       => (SubString{String}["_unnamedTask<0>"],false)
   "NumChans"   => (0x00000003,false)
-  "Devices"    => ("Dev1",false)
-  "Channels"   => (SubString{ASCIIString}["Dev1/ai0","Dev1/ai1","Dev1/ai2"],false)
-  "Name"       => ("_unnamedTask<1>",false)
-  "Complete"   => (true,false)
+  "NumDevices" => (0x00000001,false)
 ```
 
-as well as a channel:
+as well as a string containing the name of the channel:
 
 ```
 julia> getproperties(t, "Dev1/ai0")
-Dict{Any,Any} with 60 entries:
-  "LowpassEnable"                     => (false,true)
-  "CurrentACRMSUnits"                 => (:Val_Amps,true)
-  "ResolutionUnits"                   => (:Val_Bits,false)
-  "ChanCalApplyCalIfExp"              => (false,true)
-  "Max"                               => (10.0,true)
-  "UsbXferReqCount"                   => (0x00000004,true)
-  "EddyCurrentProxProbeUnits"         => (:Val_Meters,true)
-  "VoltageUnits"                      => (:Val_Volts,true)
+Dict{String,Tuple{Any,Bool}} with 52 entries:
+  "AccelUnits"                        => (:Val_g,false)
+  "AutoZeroMode"                      => (:Val_None,false)
+  "BridgeUnits"                       => (:Val_VoltsPerVolt,false)
+  "ChanCalDesc"                       => (SubString{String}[""],false)
+  "ChanCalOperatorName"               => (SubString{String}[""],false)
+  "ChanCalPolyForwardCoeff"           => (Float64[],false)
+  "ChanCalPolyReverseCoeff"           => (Float64[],false)
+  "ChanCalScaleType"                  => (:Val_Table,false)
+  "ChanCalTablePreScaledVals"         => (Float64[],false)
+  "ChanCalTableScaledVals"            => (Float64[],false)
+  "ChanCalVerifAcqVals"               => (Float64[],false)
+  "ChanCalVerifRefVals"               => (Float64[],false)
+  "Coupling"                          => (:Val_DC,false)
+  "CurrentACRMSUnits"                 => (:Val_Amps,false)
+  "CurrentUnits"                      => (:Val_Amps,false)
+  "CustomScaleName"                   => (SubString{String}[""],false)
+  "DataXferMech"                      => (:Val_ProgrammedIO,false)
+  "DataXferReqCond"                   => (:Val_OnBrdMemNotEmpty,false)
+  "DevScalingCoeff"                   => ([0.000102924,0.000312673,5.87393e-14,-3.31855e-19],false)
+  "EddyCurrentProxProbeUnits"         => (:Val_Meters,false)
+  "ForceUnits"                        => (:Val_Newtons,false)
+  "FreqUnits"                         => (:Val_Hz,false)
+  "Gain"                              => (1.0,false)
+  "InputSrc"                          => (SubString{String}["_external_channel"],false)
+  "LVDTUnits"                         => (:Val_Meters,false)
+  "LossyLSBRemovalCompressedSampSize" => (0x00000010,false)
+  "Max"                               => (10.0,false)
   "MeasType"                          => (:Val_Voltage,false)
-  "ChanCalPolyForwardCoeff"           => ([],true)
-  "TorqueUnits"                       => (:Val_NewtonMeters,true)
-  "ChanCalDesc"                       => ("",true)
-  "ChanCalVerifRefVals"               => ([],true)
-  "Gain"                              => (1.0,true)
-  "ChanCalTablePreScaledVals"         => ([],true)
-  "ChanCalScaleType"                  => (:Val_Table,true)
-  "AccelUnits"                        => (:Val_g,true)
-  "RngHigh"                           => (10.0,true)
-  "LossyLSBRemovalCompressedSampSize" => (0x00000010,true)
-  "IsTEDS"                            => (false,false)
-  "Coupling"                          => (:Val_DC,true)
-  "SoundPressureUnits"                => (:Val_Pascals,true)
-  "StrainGageCfg"                     => (:Val_FullBridgeI,true)
-  "MemMapEnable"                      => (false,true)
-  "ChanCalVerifAcqVals"               => ([],true)
-  "VelocityUnits"                     => (:Val_MetersPerSecond,true)
-  "RngLow"                            => (-10.0,true)
-  "ResistanceUnits"                   => (:Val_Ohms,true)
-  "FreqUnits"                         => (:Val_Hz,true)
-  "CustomScaleName"                   => ("",true)
-  "DataXferReqCond"                   => (:Val_OnBrdMemNotEmpty,true)
-  "VoltageACRMSUnits"                 => (:Val_Volts,true)
-  "Min"                               => (-10.0,true)
-  "ChanCalHasValidCalInfo"            => (false,false)
-  "CurrentUnits"                      => (:Val_Amps,true)
-  "DitherEnable"                      => (true,true)
-  "BridgeUnits"                       => (:Val_VoltsPerVolt,true)
-  "StrainUnits"                       => (:Val_Strain,true)
-  "ChanCalEnableCal"                  => (false,true)
-  "Resolution"                        => (16.0,false)
+  "Min"                               => (-10.0,false)
+  "PressureUnits"                     => (:Val_PoundsPerSquareInch,false)
+  "RVDTUnits"                         => (:Val_Degrees,false)
+  "RawDataCompressionType"            => (:Val_None,false)
   "RawSampJustification"              => (:Val_RightJustified,false)
-  "ChanCalPolyReverseCoeff"           => ([],true)
-  "DevScalingCoeff"                   => ([0.00010292415409129518,0.0003126729979278514,5.87392931606528e-14,-3.3185468161982717e-19],false)
-  "TempUnits"                         => (:Val_DegC,true)
   "RawSampSize"                       => (0x00000010,false)
-  "UsbXferReqSize"                    => (0x00008000,true)
-  "ForceReadFromChan"                 => (false,true)
-  "ChanCalTableScaledVals"            => ([],true)
-  "ForceUnits"                        => (:Val_Newtons,true)
-  "RVDTUnits"                         => (:Val_Degrees,true)
-  "RawDataCompressionType"            => (:Val_None,true)
-  "ThrmcplCJCVal"                     => (25.0,true)
-  "AutoZeroMode"                      => (:Val_None,true)
-  "PressureUnits"                     => (:Val_PoundsPerSquareInch,true)
-  "VoltagedBRef"                      => (1.0,true)
-  "TermCfg"                           => (:Val_Diff,true)
-  "LVDTUnits"                         => (:Val_Meters,true)
-  "ChanCalOperatorName"               => ("",true)
-  "InputSrc"                          => ("_external_channel",true)
-  "DataXferMech"                      => (:Val_ProgrammedIO,true)
+  "ResistanceUnits"                   => (:Val_Ohms,false)
+  "Resolution"                        => (16.0,false)
+  "ResolutionUnits"                   => (:Val_Bits,false)
+  "RngHigh"                           => (10.0,false)
+  "RngLow"                            => (-10.0,false)
+  "SoundPressureUnits"                => (:Val_Pascals,false)
+  "StrainGageCfg"                     => (:Val_FullBridgeI,false)
+  "StrainUnits"                       => (:Val_Strain,false)
+  "TempUnits"                         => (:Val_DegC,false)
+  "TermCfg"                           => (:Val_Diff,false)
+  "ThrmcplCJCVal"                     => (25.0,false)
+  "TorqueUnits"                       => (:Val_NewtonMeters,false)
+  "UsbXferReqCount"                   => (0x00000004,false)
+  "UsbXferReqSize"                    => (0x00008000,false)
+  "VelocityUnits"                     => (:Val_MetersPerSecond,false)
+  "VoltageACRMSUnits"                 => (:Val_Volts,false)
+  "VoltageUnits"                      => (:Val_Volts,false)
+  "VoltagedBRef"                      => (1.0,false)
 ```
 
 Use `setproperty!` to change a mutable property:
@@ -284,40 +264,40 @@ julia> stop(t)
 julia> clear(t)
 ```
 
-`read` can also return `Int16`, `Int32`, `Uint16`, and `Uint32`.
+`read` can also return `Int16`, `Int32`, `UInt16`, and `UInt32`.
 
 Similar work flows exist for `analog_output`, `digital_input`,
 and `digital_output`.  The high-level API also supports many counter
-functions, including `count_edges` and `generate_pulses`.  For a
+functions too, including `count_edges` and `generate_pulses`.  For a
 full list of convenience functions use the `names` function in Julia Base:
 
 ```
 julia> names(NIDAQ)
 25-element Array{Symbol,1}:
- :analog_output_channels 
- :digital_input_channels 
- :setproperty!           
- :line_to_line           
- :counter_input_channels 
- :counter_output_channels
- :NIDAQ                  
- :analog_input_ranges    
- :digital_input          
- :stop                   
- :generate_pulses        
- :count_edges            
- :digital_output_channels
- :analog_input           
- :channel_type           
- :analog_output_ranges   
- :devices                
- :digital_output         
- :getproperties          
- :quadrature_input       
- :analog_input_channels  
- :analog_output          
- :Bool32                 
- :clear                  
+  :analog_output_channels 
+  :digital_input_channels 
+  :setproperty!           
+  :line_to_line           
+  :counter_input_channels 
+  :counter_output_channels
+  :NIDAQ                  
+  :analog_input_ranges    
+  :digital_input          
+  :stop                   
+  :generate_pulses        
+  :count_edges            
+  :digital_output_channels
+  :analog_input           
+  :channel_type           
+  :analog_output_ranges   
+  :devices                
+  :digital_output         
+  :getproperties          
+  :quadrature_input       
+  :analog_input_channels  
+  :analog_output          
+  :Bool32                 
+  :clear                  
 ```
 
 NIDAQmx is a powerful interface, and while NIDAQ.jl provides wrappers
@@ -332,21 +312,22 @@ continous output of pulses using a counter:
 
 ```
 julia> t = generate_pulses("Dev1/ctr0")
-COTask(Ptr{Void} @0x00000000059d8790)
+NIDAQ.COTask(Ptr{Void} @0x00000000059d8790)
 
-julia> names(t)
+julia> fieldnames(t)
 1-element Array{Symbol,1}:
  :th
 
-julia> NIDAQ.CfgImplicitTiming(t.th, NIDAQ.Val_ContSamps, uint64(1))
+julia> NIDAQ.CfgImplicitTiming(t.th, NIDAQ.Val_ContSamps, UInt64(1))
 0
 ```
 
 Note that tasks consist of just a single field `th`, and that this "task
-handle" is what must be passed into many low-level routines.  For brevity
-NIDAQ.jl strips the "DAQmx" prefix to all functions and constants in NI-DAQmx,
-and converts the latter to 32 bits.  One must still take care to caste the
-other inputs appropriately though.
+handle" is what must be passed into many low-level routines.
+
+Also, for brevity NIDAQ.jl strips the "DAQmx" prefix to all functions and
+constants in NI-DAQmx, and converts the latter to 32 bits.  One must still
+take care to caste the other inputs appropriately though.
 
 
 Adding Support for a Version of NI-DAQmx
@@ -358,8 +339,8 @@ is most easily ensured by compiling Julia from source and setting
 `BUILD_LLVM_CLANG=1` in Make.user, instead of using a pre-compiled
 distribution.
 
-Checkout Clang version 34da43c656f8a2451c2f7d63b38a5cc62f22f15a, as the
-most current versions do not type arguments that are pointers.
+One must also checkout Clang version 34da43c656f8a2451c2f7d63b38a5cc62f22f15a,
+as the most current versions do not type arguments that are pointers.
 
 Then,
 
@@ -376,12 +357,12 @@ $ mv common.jl src/constants_V<version>.jl
 
 The following manual edits are then necessary:
 
++ For NI-DAQmx v9.6.0 in `NIDAQmx.h` change 
+`defined(__linux__)` to `defined(__linux__) || defined(__APPLE__)`.
 + In `constants_V<version>.jl`
   + comment out `const CVICALLBACK = CVICDECL`,
   + change `typealias bool32 uInt32` to `typealias bool32 Bool32`.
   + in NI-DAQmx v15.1.1 and v16.0.0 comment out `using Compat`
-+ For NI-DAQmx v9.6.0 in `NIDAQmx.h` change 
-`defined(__linux__)` to `defined(__linux__) || defined(__APPLE__)`.
 + In `functions_V<version>.jl`
   + globally search for `Ptr` and replace with `Ref`, then globally
 search for `CallbackRef` and replace with `CallbackPtr`.
