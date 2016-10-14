@@ -1,12 +1,12 @@
 for (cfunction, jfunction, ntask) in (
         (CreateDIChan, :digital_input, :DITask),
         (CreateDOChan, :digital_output, :DOTask))
-    @eval function $jfunction(channel::ASCIIString)
+    @eval function $jfunction(channel::String)
       t = $ntask()
       $jfunction(t, channel)
       t
     end
-    @eval function $jfunction(t::$ntask, channel::ASCIIString)
+    @eval function $jfunction(t::$ntask, channel::String)
         catch_error( $cfunction(t.th,
                 pointer(channel),
                 pointer(""),
