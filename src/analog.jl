@@ -10,16 +10,16 @@ analog_input_configs = Dict{AbstractString,Number}(
 
 create an analog input channel, and a new task if one is not specified
 """
-function analog_input(channel::ASCIIString; terminal_config="differential", range=nothing)
+function analog_input(channel::String; terminal_config="differential", range=nothing)
     t = AITask()
     analog_input(t, channel, terminal_config=terminal_config, range=range)
     t
 end
 
-function analog_input(t::AITask, channel::ASCIIString;
+function analog_input(t::AITask, channel::String;
         terminal_config="differential", range=nothing)
     if range==nothing
-        device::ASCIIString = split(channel,'/')[1]
+        device::String = split(channel,'/')[1]
         range=float(analog_input_ranges(device)[end,:])
     end
     catch_error( CreateAIVoltageChan(t.th,
@@ -39,15 +39,15 @@ end
 
 create an analog output channel, and a new NIDAQ task if one is not specified
 """
-function analog_output(channel::ASCIIString; range=nothing)
+function analog_output(channel::String; range=nothing)
     t = AOTask()
     analog_output(t, channel, range=range)
     t
 end
 
-function analog_output(t::AOTask, channel::ASCIIString; range=nothing)
+function analog_output(t::AOTask, channel::String; range=nothing)
     if range==nothing
-        device::ASCIIString = split(channel,'/')[1]
+        device::String = split(channel,'/')[1]
         range=float(analog_output_ranges(device)[end,:])
     end
     catch_error( CreateAOVoltageChan(t.th,

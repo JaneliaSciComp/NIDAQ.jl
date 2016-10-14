@@ -356,14 +356,20 @@ Julia must be built with the same version of Clang as
 [Clang.jl](https://github.com/ihnorton/Clang.jl) uses to parse NIDAQmx.h.  This
 is most easily ensured by compiling Julia from source and setting
 `BUILD_LLVM_CLANG=1` in Make.user, instead of using a pre-compiled
-distribution.  Then,
+distribution.
+
+Checkout Clang version 34da43c656f8a2451c2f7d63b38a5cc62f22f15a, as the
+most current versions do not type arguments that are pointers.
+
+Then,
 
 ```
 julia> using Clang
 julia> context = wrap_c.init()
-julia> context.common_file="common.jl"
-julia> wrap_c.wrap_c_headers(context, {"NIDAQmx.h"})
-$ mv NIDAQmx.h src/functions_V<version>.h
+julia> context.common_file = "common.jl"
+julia> context.headers = ["NIDAQmx.h"])
+julia> run(context)
+$ mv NIDAQmx.h src/NIDAQmx_V<version>.h
 $ mv NIDAQmx.jl src/functions_V<version>.jl
 $ mv common.jl src/constants_V<version>.jl
 ```
@@ -373,9 +379,12 @@ The following manual edits are then necessary:
 + In `constants_V<version>.jl`
   + comment out `const CVICALLBACK = CVICDECL`,
   + change `typealias bool32 uInt32` to `typealias bool32 Bool32`.
-  + in NI-DAQmx v15.1.1 comment out `using Compat`
+  + in NI-DAQmx v15.1.1 and v16.0.0 comment out `using Compat`
 + For NI-DAQmx v9.6.0 in `NIDAQmx.h` change 
 `defined(__linux__)` to `defined(__linux__) || defined(__APPLE__)`.
++ In `functions_V<version>.jl`
+  + globally search for `Ptr` and replace with `Ref`, then globally
+search for `CallbackRef` and replace with `CallbackPtr`.
 
 
 Author

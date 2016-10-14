@@ -1,7 +1,7 @@
 using NIDAQ, Base.Test
 
 info("NIDAQ: Checking installation - no measurement hardware is needed for this section")
-@test typeof(getproperties()) == Dict{ASCIIString,Tuple{Any,Bool}}
+@test typeof(getproperties()) == Dict{String,Tuple{Any,Bool}}
 @test haskey(getproperties(), "NIDAQMajorVersion")
 d = devices()
 
@@ -11,17 +11,17 @@ if length(d) == 0
 else
     d=d[1]
     info("NIDAQ: found at least one measurement HW: $(d)")
-    @test typeof(getproperties(d)) == Dict{ASCIIString,Tuple{Any,Bool}}
+    @test typeof(getproperties(d)) == Dict{String,Tuple{Any,Bool}}
     pr = getproperties(d)
     device_available = true
 
-    @test typeof(getproperties(d)) == Dict{ASCIIString,Tuple{Any,Bool}}
-    @test typeof(analog_input_channels()) == Vector{ASCIIString}
-    @test typeof(analog_output_channels()) == Vector{ASCIIString}
-    @test typeof(digital_input_channels()) == Vector{ASCIIString}
-    @test typeof(digital_output_channels()) == Vector{ASCIIString}
-    @test typeof(counter_input_channels()) == Vector{ASCIIString}
-    @test typeof(counter_output_channels()) == Vector{ASCIIString}
+    @test typeof(getproperties(d)) == Dict{String,Tuple{Any,Bool}}
+    @test typeof(analog_input_channels()) == Vector{String}
+    @test typeof(analog_output_channels()) == Vector{String}
+    @test typeof(digital_input_channels()) == Vector{String}
+    @test typeof(digital_output_channels()) == Vector{String}
+    @test typeof(counter_input_channels()) == Vector{String}
+    @test typeof(counter_output_channels()) == Vector{String}
     @test typeof(analog_input_ranges()) == Matrix{Float64}
     @test typeof(analog_output_ranges()) == Matrix{Float64}
 end
@@ -31,8 +31,8 @@ if !(device_available && length(pr["AIPhysicalChans"][1]) > 0)
     info("NIDAQ: measurement HW does not support any AIPhysicalChans, skipping part of the suite")
 else
     t = analog_input(d*"/ai0")
-    @test typeof(getproperties(t)) == Dict{ASCIIString,Tuple{Any,Bool}}
-    @test typeof(getproperties(t,d*"/ai0")) == Dict{ASCIIString,Tuple{Any,Bool}}
+    @test typeof(getproperties(t)) == Dict{String,Tuple{Any,Bool}}
+    @test typeof(getproperties(t,d*"/ai0")) == Dict{String,Tuple{Any,Bool}}
     @test typeof(t) == NIDAQ.AITask
     @test start(t) == nothing
     @test length(read(t, Float64, 3)) == 3

@@ -1,14 +1,14 @@
 abstract Task
 
 for pre in ("AI", "AO", "DI", "DO", "CI", "CO")
-  @eval type $(symbol(pre*"Task")) <: Task
+  @eval type $(Symbol(pre*"Task")) <: Task
       th::TaskHandle
   end
-  @eval $(symbol(pre*"Task"))() = $(symbol(pre*"Task"))(task())
-  @eval $(symbol(pre*"Task"))(s) = $(symbol(pre*"Task"))(task(s))
+  @eval $(Symbol(pre*"Task"))() = $(Symbol(pre*"Task"))(task())
+  @eval $(Symbol(pre*"Task"))(s::String) = $(Symbol(pre*"Task"))(task(s))
 end
 
-function task(name::ASCIIString)
+function task(name::String)
     t = TaskHandle[0]
     catch_error( DAQmxCreateTask(pointer(name), pointer(t)) )
     t[1]

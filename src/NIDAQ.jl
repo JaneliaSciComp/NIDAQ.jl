@@ -26,6 +26,7 @@ export Bool32
 
 try
   global ver
+  global major, minor, update  # bug in Julia v0.5 on windows?
   major = Ref{UInt32}(0)
   ccall((:DAQmxGetSysNIDAQMajorVersion,NIDAQmx),Int32,(Ref{UInt32},),major)
   minor = Ref{UInt32}(0)
@@ -54,24 +55,24 @@ for sym in names(NIDAQ,true)
     sym_str = sym_str[6:end]
     sym_str[1]=='_' && (sym_str = sym_str[2:end])
     if @eval typeof($sym) <: Unsigned
-        @eval $(symbol(sym_str)) = UInt32($sym)
-        unsigned_constants[eval(:($sym))] = symbol(sym_str)
+        @eval $(Symbol(sym_str)) = UInt32($sym)
+        unsigned_constants[eval(:($sym))] = Symbol(sym_str)
     elseif @eval typeof($sym) <: Signed
         sym_str[1:min(end,4)]=="Val_" || continue
-        @eval $(symbol(sym_str)) = convert(Int32,$sym)
-        signed_constants[eval(:($sym))] = symbol(sym_str)
-    elseif eval(:(typeof($sym)==Function))
-        @eval $(symbol(sym_str)) = $sym
+        @eval $(Symbol(sym_str)) = convert(Int32,$sym)
+        signed_constants[eval(:($sym))] = Symbol(sym_str)
+    elseif eval(:(typeof($sym)<:Function))
+        @eval $(Symbol(sym_str)) = $sym
     end
 end
 
-function catch_error(code::Int32, extra::ASCIIString=""; err_fcn=error)
+function catch_error(code::Int32, extra::String=""; err_fcn=error)
     sz = DAQmxGetErrorString(code, convert(Ptr{UInt8},C_NULL), convert(UInt32,0))
     data = zeros(UInt8,sz)
     ret = DAQmxGetErrorString(code, pointer(data), convert(UInt32,sz))
     ret>0 && warn("DAQmxGetErrorString error $ret")
     ret<0 && err_fcn("DAQmxGetErrorString error $ret")
-    data = chop(convert(ASCIIString, data))
+    data = chop(convert(String, data))
     code>0 && warn("NIDAQmx: "*extra*data)
     code<0 && err_fcn("NIDAQmx: "*extra*data)
 end
