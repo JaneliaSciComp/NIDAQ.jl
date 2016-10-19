@@ -1,6 +1,25 @@
 VERSION >= v"0.4.0-dev+6521" && __precompile__()
 
-"`NIDAQ.jl` provides an interface to NI-DAQmx--- National Instruments' driver for their data acquisition boards"
+"""
+`NIDAQ.jl` provides an interface to NI-DAQmx--- National Instruments' driver
+for their data acquisition boards.  See the README.md for documentation.
+
+# Examples
+```julia
+t = analog_input("Dev1/ai0:1")
+getproperties(t)
+setproperty!(t, "Dev1/ai0", "Max", 5.0)
+start(t)
+read(t, Float64, 10)
+stop(t)
+clear(t)
+
+t = generate_pulses("Dev1/ctr0")
+NIDAQ.CfgImplicitTiming(t.th, NIDAQ.Val_ContSamps, UInt64(1))
+```
+
+More examples are in tests/.
+"""
 module NIDAQ
 
 import Base.write, Base.read, Base.start
