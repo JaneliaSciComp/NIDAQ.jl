@@ -69,18 +69,18 @@ read_analog_cfunctions = Dict{Type,Function}(
 function read(t::AITask, precision::DataType, num_samples_per_chan::Integer = -1)
     num_channels = getproperties(t)["NumChans"][1]
     num_samples_per_chan_read = Int32[0]
-    if num_samples_per_chan==-1;  num_samples_per_chan=1024;  end
-    data = Array(precision, num_samples_per_chan*num_channels)
+    buffer_size = num_samples_per_chan==-1 ? 1024 : num_samples_per_chan
+    data = Array(precision, buffer_size*num_channels)
     catch_error( read_analog_cfunctions[precision](t.th,
         convert(Int32,num_samples_per_chan),
         1.0,
         reinterpret(Bool32,Val_GroupByChannel),
         pointer(data),
-        convert(UInt32,num_samples_per_chan*num_channels),
+        convert(UInt32,buffer_size*num_channels),
         pointer(num_samples_per_chan_read),
         reinterpret(Ptr{Bool32},C_NULL)) )
     data = data[1:num_samples_per_chan_read[1]*num_channels]
-    num_channels==1 ? data : reshape(data, (num_samples_per_chan, convert(Int64,num_channels)))
+    num_channels==1 ? data : reshape(data, (div(length(data),num_channels), convert(Int64,num_channels)))
 end
 
 for (cfunction, types) in (
