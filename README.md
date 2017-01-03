@@ -6,6 +6,9 @@ for their data acquisition boards.  Their entire C header file was ported
 using [Clang.jl](https://github.com/ihnorton/Clang.jl), and a rudimentary
 higher-level API is provided for ease of use.
 
+Similar functionality for the Python language is provided by
+[PyDAQmx](https://pythonhosted.org/PyDAQmx).
+
 
 System Requirements
 ===================
