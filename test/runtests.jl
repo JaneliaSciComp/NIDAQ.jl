@@ -135,7 +135,7 @@ end
 end
 
 @testset "counter output" begin
-if length(props["COPhysicalChans"][1]) == 0
+if isempty(props["COPhysicalChans"][1][1])
     info("$dev does not support COPhysicalChans")
 else
     t = generate_pulses(dev*"/ctr0")
