@@ -106,11 +106,11 @@ else
     t = digital_output(dev*"/Port0/Line0")
     @test typeof(t) == NIDAQ.DOTask
     @test start(t) == nothing
-    @test write(t, round(UInt32, [1,0,1,0,1,0])) == 6
+    @test write(t, round.(UInt32, [1,0,1,0,1,0])) == 6
     @test stop(t) == nothing
     @test digital_output(t, dev*"/Port0/Line1") == nothing
     @test start(t) == nothing
-    @test write(t, round(UInt8, [1 0; 0 0; 1 0; 0 1; 1 1; 0 1])) == 6
+    @test write(t, round.(UInt8, [1 0; 0 0; 1 0; 0 1; 1 1; 0 1])) == 6
     @test stop(t) == nothing
     @test NIDAQ.CfgSampClkTiming(t.th, convert(Ref{UInt8},b""), 100.0, NIDAQ.Val_Rising,
               NIDAQ.Val_FiniteSamps, UInt64(10)) == 0

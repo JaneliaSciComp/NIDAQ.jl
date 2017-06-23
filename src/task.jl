@@ -1,4 +1,4 @@
-abstract Task
+abstract type Task end
 
 for pre in ("AI", "AO", "DI", "DO", "CI", "CO")
   @eval type $(Symbol(pre*"Task")) <: Task

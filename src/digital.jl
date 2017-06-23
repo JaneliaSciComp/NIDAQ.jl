@@ -40,7 +40,7 @@ function read(t::DITask, precision::DataType, num_samples_per_chan::Integer = -1
     num_channels = getproperties(t)["NumChans"][1]
     num_samples_per_chan_read = Int32[0]
     buffer_size = num_samples_per_chan==-1 ? 1024 : num_samples_per_chan
-    data = Array(precision, buffer_size*num_channels)
+    data = Array{precision}(buffer_size*num_channels)
     catch_error( read_digital_cfunctions[precision](t.th,
         convert(Int32,num_samples_per_chan),
         1.0,

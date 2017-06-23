@@ -1,4 +1,4 @@
-VERSION >= v"0.4.0-dev+6521" && __precompile__()
+__precompile__()
 
 """
 `NIDAQ.jl` provides an interface to NI-DAQmx--- National Instruments' driver
@@ -40,7 +40,7 @@ export counter_input_channels, counter_output_channels
 
 const NIDAQmx = "C:\\Windows\\System32\\nicaiu.dll"
 
-bitstype 32 Bool32 <: Integer
+primitive type Bool32<:Integer 32 end
 export Bool32
 
 try
