@@ -20,10 +20,10 @@ Instruments card of course.
 Installation
 ============
 
-First download and install NI-DAQmx version
-[16.0.0](http://www.ni.com/download/ni-daqmx-16.0/6120/en/) (or for Julia v4,
-[15.1.1](http://www.ni.com/download/ni-daqmx-15.1.1/5665/en/); or for Julia v3,
-[14.1.0](http://www.ni.com/download/ni-daqmx-14.1/4953/en/),
+First download and install NI-DAQmx version [17.1.0](http://www.ni.com/download/ni-daqmx-17.1/6836/en/)
+(or for Julia v5, [16.0.0](http://www.ni.com/download/ni-daqmx-16.0/6120/en/);
+or for Julia v4, [15.1.1](http://www.ni.com/download/ni-daqmx-15.1.1/5665/en/);
+or for Julia v3, [14.1.0](http://www.ni.com/download/ni-daqmx-14.1/4953/en/),
 [14.0.0](http://www.ni.com/download/ni-daqmx-14.0/4918/en/), or
 [9.6.0](http://www.ni.com/download/ni-daqmx-9.6/3423/en/)) from National
 Instruments.  Then on the Julia command line:
@@ -336,14 +336,18 @@ take care to caste the other inputs appropriately though.
 Adding Support for a Version of NI-DAQmx
 ========================================
 
-Julia must be built with the same version of Clang as
-[Clang.jl](https://github.com/ihnorton/Clang.jl) uses to parse NIDAQmx.h.  This
-is most easily ensured by compiling Julia from source and setting
+[Clang.jl](https://github.com/ihnorton/Clang.jl) defaults to parsing NIDAQmx.h
+using the system installed libclang, which must be the same version as the
+version of LLVM used by Julia.  If you can't install a matching version
+on your system, try compiling Julia from source after setting
 `BUILD_LLVM_CLANG=1` in Make.user, instead of using a pre-compiled
 distribution.
 
-One must also checkout Clang version 34da43c656f8a2451c2f7d63b38a5cc62f22f15a,
-as the most current versions do not type arguments that are pointers.
+Make sure that `llvm-config` is on your `PATH`, and that `libclang` can be found,
+as described in the Clang.jl README.
+
+Find `NIDAQmx.h`, which usually lives in
+`C:\Program Files (x86)\National Instruments\NI-DAQ\DAQmx ANSI C Dev\include`.
 
 Then,
 
@@ -364,6 +368,7 @@ The following manual edits are then necessary:
 `defined(__linux__)` to `defined(__linux__) || defined(__APPLE__)`.
 + In `constants_V<version>.jl`
   + comment out `const CVICALLBACK = CVICDECL`,
+  + in NI-DAQmx v17.1.0 comment out `const CVIAbsoluteTime = VOID`
   + change `typealias bool32 uInt32` to `typealias bool32 Bool32`.
   + in NI-DAQmx v15.1.1 and v16.0.0 comment out `using Compat`
 + In `functions_V<version>.jl`
