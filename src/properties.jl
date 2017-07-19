@@ -102,11 +102,10 @@ function _getproperties(args, suffix::String, warning::Bool)
         eval(:(!issubtype(typeof(NIDAQ.$sym),Function))) && continue
         if string(sym)[1:min(end,8+length(suffix))]=="DAQmxGet"*suffix
             cfunction = getfield(NIDAQ, sym)
-            mlist = methods(cfunction)
-            signature = mlist.ms[1].sig
+	    ccall_args = code_lowered(cfunction)[1].code[end].args[1].args[3]
             try
-                basetype = eltype(signature.types[2+length(args)])
-                if length(signature.types)==2+length(args)
+                basetype = eltype(ccall_args[1+length(args)])
+                if length(ccall_args)==1+length(args)
                     data = Ref{basetype}(0)
                     ret = cfunction(args..., data)
                     data = data[]
@@ -140,7 +139,7 @@ function _getproperties(args, suffix::String, warning::Bool)
                     if ret!=0
                         catch_error(ret, string(cfunction)*": ", err_fcn=warn)
                     else
-                        warn("can't handle function signature for $cfunction: $signature")
+                        warn("can't handle function signature for $cfunction: $ccall_args")
                     end
                 end
                 continue
