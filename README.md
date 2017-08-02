@@ -366,7 +366,7 @@ The following manual edits are then necessary:
   + comment out `const CVICALLBACK = CVICDECL`,
   + in NI-DAQmx v17.1.0 comment out `const CVIAbsoluteTime = VOID`
   + change `typealias bool32 uInt32` to `typealias bool32 Bool32`.
-  + in NI-DAQmx v15.1.1 and v16.0.0 comment out `using Compat`
+  + in NI-DAQmx v15.1.1 and greater comment out `using Compat`
 + In `functions_V<version>.jl`
   + globally search for `Ptr` and replace with `Ref`, then globally
 search for `CallbackRef` and replace with `CallbackPtr`.
