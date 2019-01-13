@@ -1,6 +1,7 @@
 analog_input_configs = Dict{AbstractString,Number}(
     "referenced single-ended" => Val_RSE,
     "non-referenced single-ended" => Val_NRSE,
+    "pseudo-differential" => Val_PseudoDiff,
     "differential" => Val_Diff )
 
 """
