@@ -98,8 +98,8 @@ function _getproperties(args, suffix::String, warning::Bool)
     local settable
     local data
     local ret
-    for sym in names(NIDAQ,true)
-        eval(:(!issubtype(typeof(NIDAQ.$sym),Function))) && continue
+    for sym in names(NIDAQ, all=true)
+        eval(:(!typeof(NIDAQ.$sym) <:Function)) && continue
         if string(sym)[1:min(end,8+length(suffix))]=="DAQmxGet"*suffix
             cfunction = getfield(NIDAQ, sym)
 	    ccall_args = code_lowered(cfunction)[1].code[end].args[1].args[3]
@@ -125,10 +125,12 @@ function _getproperties(args, suffix::String, warning::Bool)
                 elseif basetype == Int32
                     try
                         data = map((x)->signed_constants[x], data)
+                    catch
                     end
                 elseif basetype == UInt32
                     try
                         data = map((x)->unsigned_constants[x], data)
+                    catch
                     end
                 elseif basetype == UInt8
                     data = split(chop(ascii(String(data))),", ")
@@ -145,7 +147,7 @@ function _getproperties(args, suffix::String, warning::Bool)
                 continue
             end
             try
-                getfield(NIDAQ, Symbol(replace(string(cfunction),"Get"*suffix,"Set"*suffix)))
+                getfield(NIDAQ, Symbol(replace(string(cfunction),"Get"*suffix =>"Set"*suffix)))
                 settable=true
             catch
                 settable=false
@@ -193,7 +195,7 @@ channel_types = ["Val_AI", "Val_AO",
 get the properties of the specified NIDAQ channel
 """
 function getproperties(t::Task, channel::String; warning=false)
-    kind = channel_types[ find(channel_type(t, channel)[1] .==
+    kind = channel_types[ findall(channel_type(t, channel)[1] .==
             map((x)->getfield(NIDAQ,Symbol(x)), channel_types))[1]][end-1:end]
 
     _getproperties((t.th, pointer(channel)), kind, warning)
@@ -205,7 +207,7 @@ end
 set the specified NIDAQ property to value
 """
 function setproperty!(t::Task, channel::String, property::String, value)
-    kind = channel_types[ find(channel_type(t, channel)[1] .==
+    kind = channel_types[ findall(channel_type(t, channel)[1] .==
             map((x)->getfield(NIDAQ,Symbol(x)), channel_types))[1]][end-1:end]
 
     @eval ret = $(Symbol("DAQmxSet"*kind*property))($t.th, pointer($channel), $value)

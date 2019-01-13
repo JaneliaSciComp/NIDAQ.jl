@@ -1,5 +1,3 @@
-__precompile__()
-
 """
 `NIDAQ.jl` provides an interface to NI-DAQmx--- National Instruments' driver
 for their data acquisition boards.  See the README.md for documentation.
@@ -67,7 +65,7 @@ end
 unsigned_constants = Dict{UInt64,Symbol}()
 signed_constants = Dict{Int64,Symbol}()
 
-for sym in names(NIDAQ,true)
+for sym in names(NIDAQ, all=true)
     isdefined(sym) || continue
     sym_str = string(sym)
     (length(sym_str)<5 || sym_str[1:5]!="DAQmx") && continue

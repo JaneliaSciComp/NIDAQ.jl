@@ -98,7 +98,7 @@ end
 
 create a NIDAQ counter output channel
 """
-function generate_pulses{T<:Number}(channel::String; low::T=2, high::T=2, delay::T=0)
+function generate_pulses(channel::String; low::T=2, high::T=2, delay::T=0) where T<:Number
     t = COTask()
     if T<:AbstractFloat
         ret = CreateCOPulseChanTime(t.th,

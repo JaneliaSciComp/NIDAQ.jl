@@ -1,4 +1,4 @@
-using NIDAQ, Base.Test
+using NIDAQ, Test
 
 @testset "installation" begin
 @test typeof(getproperties()) == Dict{String,Tuple{Any,Bool}}
@@ -8,7 +8,7 @@ end
 
 @testset "device" begin
 if length(dev) == 0
-    info("no data acquisition devices found")
+    @info("no data acquisition devices found")
     exit()
 else
     info("found $(dev).  testing with $(dev[1])")
@@ -100,7 +100,7 @@ else
 	@test stop(t) == nothing
 	@test clear(t) == nothing
     else
-        info("Device does not support clocked (buffered) digital input")
+        @info("Device does not support clocked (buffered) digital input")
     end
 end
 end
@@ -129,7 +129,7 @@ else
         @test stop(t) == nothing
         @test clear(t) == nothing
     else
-        info("Device does not support clocked (buffered) digital output")
+        @info("Device does not support clocked (buffered) digital output")
     end
 end
 end
