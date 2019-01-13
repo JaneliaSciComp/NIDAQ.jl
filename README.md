@@ -20,8 +20,9 @@ Instruments card of course.
 Installation
 ============
 
-First download and install NI-DAQmx version [17.1.0](http://www.ni.com/download/ni-daqmx-17.1/6836/en/)
-(or for Julia v5, [16.0.0](http://www.ni.com/download/ni-daqmx-16.0/6120/en/);
+First download and install NI-DAQmx version [18.6](http://www.ni.com/en-us/support/downloads/drivers/download/unpackaged.ni-daqmx.291872.html) (
+or for julia v6, [17.1.0](http://www.ni.com/download/ni-daqmx-17.1/6836/en/);
+or for Julia v5, [16.0.0](http://www.ni.com/download/ni-daqmx-16.0/6120/en/);
 or for Julia v4, [15.1.1](http://www.ni.com/download/ni-daqmx-15.1.1/5665/en/);
 or for Julia v3, [14.1.0](http://www.ni.com/download/ni-daqmx-14.1/4953/en/),
 [14.0.0](http://www.ni.com/download/ni-daqmx-14.0/4918/en/), or
@@ -29,7 +30,7 @@ or for Julia v3, [14.1.0](http://www.ni.com/download/ni-daqmx-14.1/4953/en/),
 Instruments.  Then on the Julia command line:
 
 ```
-Pkg.add("NIDAQ")
+]add NIDAQ
 ```
 
 
@@ -151,7 +152,7 @@ To add, for example, analog input channels, use the high-level `analog_input` fu
 
 ```
 julia> t = analog_input("Dev1/ai0:1")
-NIDAQ.AITask(Ptr{Void} @0x0000000025d18600)
+NIDAQ.AITask(Ptr{Nothing} @0x0000000025d18600)
 
 julia> typeof(t)
 NIDAQ.AITask (constructor with 3 methods)
@@ -315,11 +316,10 @@ continous output of pulses using a counter:
 
 ```
 julia> t = generate_pulses("Dev1/ctr0")
-NIDAQ.COTask(Ptr{Void} @0x00000000059d8790)
+NIDAQ.COTask(Ptr{Nothing} @0x00000000059d8790)
 
-julia> fieldnames(t)
-1-element Array{Symbol,1}:
- :th
+julia> fieldnames(typeof(t))
+(:th,)
 
 julia> NIDAQ.CfgImplicitTiming(t.th, NIDAQ.Val_ContSamps, UInt64(1))
 0
