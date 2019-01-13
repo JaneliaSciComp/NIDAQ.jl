@@ -20,8 +20,9 @@ Instruments card of course.
 Installation
 ============
 
-First download and install NI-DAQmx version [17.1.0](http://www.ni.com/download/ni-daqmx-17.1/6836/en/)
-(or for Julia v5, [16.0.0](http://www.ni.com/download/ni-daqmx-16.0/6120/en/);
+First download and install NI-DAQmx version [18.6](http://www.ni.com/en-us/support/downloads/drivers/download/unpackaged.ni-daqmx.291872.html) (
+or for julia v6, [17.1.0](http://www.ni.com/download/ni-daqmx-17.1/6836/en/);
+or for Julia v5, [16.0.0](http://www.ni.com/download/ni-daqmx-16.0/6120/en/);
 or for Julia v4, [15.1.1](http://www.ni.com/download/ni-daqmx-15.1.1/5665/en/);
 or for Julia v3, [14.1.0](http://www.ni.com/download/ni-daqmx-14.1/4953/en/),
 [14.0.0](http://www.ni.com/download/ni-daqmx-14.0/4918/en/), or
