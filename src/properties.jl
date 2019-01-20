@@ -7,7 +7,7 @@ function devices()
     sz = GetSysDevNames(convert(Ptr{UInt8},C_NULL), UInt32(0))
     data=zeros(UInt8,sz)
     catch_error(GetSysDevNames(pointer(data), UInt32(sz)))
-    devs = map((x)->convert(String,x), split(chop(ascii(String(data))),", "))
+    devs = map((x)->convert(String,x), split(safechop(ascii(String(data))),", "))
     devs[devs .!= ""]
 
 end
@@ -24,7 +24,7 @@ for (jfunction, cfunction) in (
         data=zeros(UInt8,sz)
         catch_error( $cfunction(pointer(device), pointer(data),
                 UInt32(sz)) )
-        map((x)->convert(String,x), split(chop(ascii(String(data))),", "))
+        map((x)->convert(String,x), split(safechop(ascii(String(data))),", "))
     end
 
     @eval function $jfunction()
@@ -99,10 +99,10 @@ function _getproperties(args, suffix::String, warning::Bool)
     local data
     local ret
     for sym in names(NIDAQ, all=true)
-        eval(:(!typeof(NIDAQ.$sym) <:Function)) && continue
+        eval(:(!(typeof(NIDAQ.$sym) <:Function))) && continue
         if string(sym)[1:min(end,8+length(suffix))]=="DAQmxGet"*suffix
             cfunction = getfield(NIDAQ, sym)
-	    ccall_args = code_lowered(cfunction)[1].code[end].args[1].args[3]
+	    ccall_args = code_lowered(cfunction)[1].code[end-1].args[3]
             try
                 basetype = eltype(ccall_args[1+length(args)])
                 if length(ccall_args)==1+length(args)
@@ -133,15 +133,15 @@ function _getproperties(args, suffix::String, warning::Bool)
                     catch
                     end
                 elseif basetype == UInt8
-                    data = split(chop(ascii(String(data))),", ")
+                    data = split(safechop(ascii(String(data))),", ")
 
                 end
             catch
                 if warning
                     if ret!=0
-                        catch_error(ret, string(cfunction)*": ", err_fcn=warn)
+                        catch_error(ret, string(cfunction)*": ", err_fcn=x->@warn(x))
                     else
-                        warn("can't handle function signature for $cfunction: $ccall_args")
+                        @warn("can't handle function signature for $cfunction: $ccall_args")
                     end
                 end
                 continue
