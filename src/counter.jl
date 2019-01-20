@@ -60,7 +60,7 @@ function quadrature_input(channel::String; z_enable::Bool=true)
             Val_Ticks,
             UInt32(1), 0.0,
             pointer(""))
-    ret>0 && warn(error(ret))
+    ret>0 && @warn(error(ret))
     ret<0 && error(error(ret))
     t
 end
@@ -135,7 +135,7 @@ function read(t::CITask, channel::String; num_samples::Integer = -1)
     #function read_counter_scalar(precision::DataType, cfunction::Function)
     #    data = precision[0]
     #    ret = cfunction(t, 1.0, pointer(data), pointer(C_NULL))
-    #    ret>0 && warn("NIDAQmx: $ret")
+    #    ret>0 && @warn("NIDAQmx: $ret")
     #    ret<0 && error("NIDAQmx: $ret")
     #    data
     #end

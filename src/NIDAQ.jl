@@ -20,7 +20,13 @@ More examples are in tests/.
 """
 module NIDAQ
 
-import Base.write, Base.read, Base.start
+import Base.write, Base.read
+
+if VERSION < v"1.0.0"
+    import Base.start
+else
+    export start
+end
 
 # tasks
 export stop, clear
@@ -66,7 +72,7 @@ unsigned_constants = Dict{UInt64,Symbol}()
 signed_constants = Dict{Int64,Symbol}()
 
 for sym in names(NIDAQ, all=true)
-    isdefined(sym) || continue
+    @isdefined(sym) || continue
     sym_str = string(sym)
     (length(sym_str)<5 || sym_str[1:5]!="DAQmx") && continue
     sym_str = sym_str[6:end]
@@ -82,15 +88,16 @@ for sym in names(NIDAQ, all=true)
         @eval $(Symbol(sym_str)) = $sym
     end
 end
+safechop(str::AbstractString) = isempty(str) ? str : chop(str)
 
 function catch_error(code::Int32, extra::String=""; err_fcn=error)
     sz = DAQmxGetErrorString(code, convert(Ptr{UInt8},C_NULL), convert(UInt32,0))
     data = zeros(UInt8,sz)
     ret = DAQmxGetErrorString(code, pointer(data), convert(UInt32,sz))
-    ret>0 && warn("DAQmxGetErrorString error $ret")
+    ret>0 && @warn("DAQmxGetErrorString error $ret")
     ret<0 && err_fcn("DAQmxGetErrorString error $ret")
-    data = chop(convert(String, data))
-    code>0 && warn("NIDAQmx: "*extra*data)
+    data = safechop(String(data))
+    code>0 && @warn("NIDAQmx: "*extra*data)
     code<0 && err_fcn("NIDAQmx: "*extra*data)
 end
 
