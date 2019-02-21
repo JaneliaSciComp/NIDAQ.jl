@@ -89,7 +89,7 @@ else
     @test stop(t) == nothing
     @test digital_input(t, dev*"/Port0/Line1") == nothing
     @test start(t) == nothing
-    @test length(read(t, UInt8, 6)) == 12
+    @test length(read(t, UInt32, 6)) == 12
     @test stop(t) == nothing
     rslt = Ref{UInt32}(0)
     NIDAQ.DAQmxGetBufInputOnbrdBufSize(t.th, rslt)
@@ -119,7 +119,7 @@ else
     @test stop(t) == nothing
     @test digital_output(t, dev*"/Port0/Line1") == nothing
     @test start(t) == nothing
-    @test write(t, round.(UInt8, [1 0; 0 0; 1 0; 0 1; 1 1; 0 1])) == 6
+    @test write(t, round.(UInt32, [1 0; 0 0; 1 0; 0 1; 1 1; 0 1])) == 6
     @test stop(t) == nothing
     rslt = Ref{UInt32}(0)
     NIDAQ.DAQmxGetBufOutputOnbrdBufSize(t.th, rslt)
