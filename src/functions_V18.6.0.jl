@@ -1,7 +1,6 @@
 # Julia wrapper for header: NIDAQmx.h
 # Automatically generated using Clang.jl wrap_c
 
-
 function DAQmxLoadTask(taskName, taskHandle)
     ccall((:DAQmxLoadTask, NIDAQmx), int32, (Ref{UInt8}, Ref{TaskHandle}), taskName, taskHandle)
 end
@@ -1103,7 +1102,7 @@ function DAQmxDisconnectSCExpressCalAccChans(calHandle)
 end
 
 function DAQmxGetPossibleSCExpressCalAccConnections(deviceName, channelNames, connections, connectionsBufferSize)
-    ccall((:DAQmxGetPossibleSCExpressCalAccConnections, NIDAQmx), int32, (Ref{UInt8}, Ref{UInt8}, Cstring, uInt32), deviceName, channelNames, connections, connectionsBufferSize)
+    ccall((:DAQmxGetPossibleSCExpressCalAccConnections, NIDAQmx), int32, (Ref{UInt8}, Ref{UInt8}, SafeCstring, uInt32), deviceName, channelNames, connections, connectionsBufferSize)
 end
 
 function DAQmxSetSCExpressCalAccBridgeOutput(calHandle, voltsPerVolt)
@@ -1779,11 +1778,11 @@ function DAQmxSetDigitalLogicFamilyPowerUpState(deviceName, logicFamily)
 end
 
 function DAQmxGetDigitalLogicFamilyPowerUpState(deviceName, logicFamily)
-    ccall((:DAQmxGetDigitalLogicFamilyPowerUpState, NIDAQmx), int32, (Ref{UInt8}, Ptr{int32}), deviceName, logicFamily)
+    ccall((:DAQmxGetDigitalLogicFamilyPowerUpState, NIDAQmx), int32, (Ref{UInt8}, Ref{int32}), deviceName, logicFamily)
 end
 
 function DAQmxAddNetworkDevice(IPAddress, deviceName, attemptReservation, timeout, deviceNameOut, deviceNameOutBufferSize)
-    ccall((:DAQmxAddNetworkDevice, NIDAQmx), int32, (Ref{UInt8}, Ptr{UInt8}, bool32, float64, Ptr{UInt8}, uInt32), IPAddress, deviceName, attemptReservation, timeout, deviceNameOut, deviceNameOutBufferSize)
+    ccall((:DAQmxAddNetworkDevice, NIDAQmx), int32, (Ref{UInt8}, Ref{UInt8}, bool32, float64, Ref{UInt8}, uInt32), IPAddress, deviceName, attemptReservation, timeout, deviceNameOut, deviceNameOutBufferSize)
 end
 
 function DAQmxDeleteNetworkDevice(deviceName)
@@ -1807,7 +1806,7 @@ function DAQmxGetAutoConfiguredCDAQSyncConnections(portList, portListSize)
 end
 
 function DAQmxAreConfiguredCDAQSyncPortsDisconnected(chassisDevicesPorts, timeout, disconnectedPortsExist)
-    ccall((:DAQmxAreConfiguredCDAQSyncPortsDisconnected, NIDAQmx), int32, (Ref{UInt8}, float64, Ptr{bool32}), chassisDevicesPorts, timeout, disconnectedPortsExist)
+    ccall((:DAQmxAreConfiguredCDAQSyncPortsDisconnected, NIDAQmx), int32, (Ref{UInt8}, float64, Ref{bool32}), chassisDevicesPorts, timeout, disconnectedPortsExist)
 end
 
 function DAQmxGetDisconnectedCDAQSyncPorts(portList, portListSize)
@@ -1871,39 +1870,39 @@ function DAQmxResetBufOutputOnbrdBufSize(taskHandle)
 end
 
 function DAQmxGetSelfCalSupported(deviceName, data)
-    ccall((:DAQmxGetSelfCalSupported, NIDAQmx), int32, (Ref{UInt8}, Ptr{bool32}), deviceName, data)
+    ccall((:DAQmxGetSelfCalSupported, NIDAQmx), int32, (Ref{UInt8}, Ref{bool32}), deviceName, data)
 end
 
 function DAQmxGetSelfCalLastTemp(deviceName, data)
-    ccall((:DAQmxGetSelfCalLastTemp, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), deviceName, data)
+    ccall((:DAQmxGetSelfCalLastTemp, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), deviceName, data)
 end
 
 function DAQmxGetExtCalRecommendedInterval(deviceName, data)
-    ccall((:DAQmxGetExtCalRecommendedInterval, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}), deviceName, data)
+    ccall((:DAQmxGetExtCalRecommendedInterval, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}), deviceName, data)
 end
 
 function DAQmxGetExtCalLastTemp(deviceName, data)
-    ccall((:DAQmxGetExtCalLastTemp, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), deviceName, data)
+    ccall((:DAQmxGetExtCalLastTemp, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), deviceName, data)
 end
 
 function DAQmxGetCalUserDefinedInfo(deviceName, data, bufferSize)
-    ccall((:DAQmxGetCalUserDefinedInfo, NIDAQmx), int32, (Ref{UInt8}, Cstring, uInt32), deviceName, data, bufferSize)
+    ccall((:DAQmxGetCalUserDefinedInfo, NIDAQmx), int32, (Ref{UInt8}, SafeCstring, uInt32), deviceName, data, bufferSize)
 end
 
 function DAQmxSetCalUserDefinedInfo(deviceName, data)
-    ccall((:DAQmxSetCalUserDefinedInfo, NIDAQmx), int32, (Ref{UInt8}, Cstring), deviceName, data)
+    ccall((:DAQmxSetCalUserDefinedInfo, NIDAQmx), int32, (Ref{UInt8}, SafeCstring), deviceName, data)
 end
 
 function DAQmxGetCalUserDefinedInfoMaxSize(deviceName, data)
-    ccall((:DAQmxGetCalUserDefinedInfoMaxSize, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}), deviceName, data)
+    ccall((:DAQmxGetCalUserDefinedInfoMaxSize, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}), deviceName, data)
 end
 
 function DAQmxGetCalDevTemp(deviceName, data)
-    ccall((:DAQmxGetCalDevTemp, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), deviceName, data)
+    ccall((:DAQmxGetCalDevTemp, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), deviceName, data)
 end
 
 function DAQmxGetCalAccConnectionCount(deviceName, data)
-    ccall((:DAQmxGetCalAccConnectionCount, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}), deviceName, data)
+    ccall((:DAQmxGetCalAccConnectionCount, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}), deviceName, data)
 end
 
 function DAQmxSetCalAccConnectionCount(deviceName, data)
@@ -1911,11 +1910,11 @@ function DAQmxSetCalAccConnectionCount(deviceName, data)
 end
 
 function DAQmxGetCalRecommendedAccConnectionCountLimit(deviceName, data)
-    ccall((:DAQmxGetCalRecommendedAccConnectionCountLimit, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}), deviceName, data)
+    ccall((:DAQmxGetCalRecommendedAccConnectionCountLimit, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}), deviceName, data)
 end
 
 function DAQmxGetAIMax(taskHandle, channel, data)
-    ccall((:DAQmxGetAIMax, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIMax, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIMax(taskHandle, channel, data)
@@ -1927,7 +1926,7 @@ function DAQmxResetAIMax(taskHandle, channel)
 end
 
 function DAQmxGetAIMin(taskHandle, channel, data)
-    ccall((:DAQmxGetAIMin, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIMin, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIMin(taskHandle, channel, data)
@@ -1939,11 +1938,11 @@ function DAQmxResetAIMin(taskHandle, channel)
 end
 
 function DAQmxGetAICustomScaleName(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetAICustomScaleName, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetAICustomScaleName, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetAICustomScaleName(taskHandle, channel, data)
-    ccall((:DAQmxSetAICustomScaleName, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetAICustomScaleName, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetAICustomScaleName(taskHandle, channel)
@@ -1951,11 +1950,11 @@ function DAQmxResetAICustomScaleName(taskHandle, channel)
 end
 
 function DAQmxGetAIMeasType(taskHandle, channel, data)
-    ccall((:DAQmxGetAIMeasType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIMeasType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxGetAIVoltageUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetAIVoltageUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIVoltageUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIVoltageUnits(taskHandle, channel, data)
@@ -1967,7 +1966,7 @@ function DAQmxResetAIVoltageUnits(taskHandle, channel)
 end
 
 function DAQmxGetAIVoltagedBRef(taskHandle, channel, data)
-    ccall((:DAQmxGetAIVoltagedBRef, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIVoltagedBRef, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIVoltagedBRef(taskHandle, channel, data)
@@ -1979,7 +1978,7 @@ function DAQmxResetAIVoltagedBRef(taskHandle, channel)
 end
 
 function DAQmxGetAIVoltageACRMSUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetAIVoltageACRMSUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIVoltageACRMSUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIVoltageACRMSUnits(taskHandle, channel, data)
@@ -1991,7 +1990,7 @@ function DAQmxResetAIVoltageACRMSUnits(taskHandle, channel)
 end
 
 function DAQmxGetAITempUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetAITempUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAITempUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAITempUnits(taskHandle, channel, data)
@@ -2003,7 +2002,7 @@ function DAQmxResetAITempUnits(taskHandle, channel)
 end
 
 function DAQmxGetAIThrmcplType(taskHandle, channel, data)
-    ccall((:DAQmxGetAIThrmcplType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIThrmcplType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIThrmcplType(taskHandle, channel, data)
@@ -2015,7 +2014,7 @@ function DAQmxResetAIThrmcplType(taskHandle, channel)
 end
 
 function DAQmxGetAIThrmcplScaleType(taskHandle, channel, data)
-    ccall((:DAQmxGetAIThrmcplScaleType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIThrmcplScaleType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIThrmcplScaleType(taskHandle, channel, data)
@@ -2027,11 +2026,11 @@ function DAQmxResetAIThrmcplScaleType(taskHandle, channel)
 end
 
 function DAQmxGetAIThrmcplCJCSrc(taskHandle, channel, data)
-    ccall((:DAQmxGetAIThrmcplCJCSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIThrmcplCJCSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxGetAIThrmcplCJCVal(taskHandle, channel, data)
-    ccall((:DAQmxGetAIThrmcplCJCVal, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIThrmcplCJCVal, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIThrmcplCJCVal(taskHandle, channel, data)
@@ -2043,11 +2042,11 @@ function DAQmxResetAIThrmcplCJCVal(taskHandle, channel)
 end
 
 function DAQmxGetAIThrmcplCJCChan(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetAIThrmcplCJCChan, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetAIThrmcplCJCChan, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxGetAIRTDType(taskHandle, channel, data)
-    ccall((:DAQmxGetAIRTDType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIRTDType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIRTDType(taskHandle, channel, data)
@@ -2059,7 +2058,7 @@ function DAQmxResetAIRTDType(taskHandle, channel)
 end
 
 function DAQmxGetAIRTDR0(taskHandle, channel, data)
-    ccall((:DAQmxGetAIRTDR0, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIRTDR0, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIRTDR0(taskHandle, channel, data)
@@ -2071,7 +2070,7 @@ function DAQmxResetAIRTDR0(taskHandle, channel)
 end
 
 function DAQmxGetAIRTDA(taskHandle, channel, data)
-    ccall((:DAQmxGetAIRTDA, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIRTDA, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIRTDA(taskHandle, channel, data)
@@ -2083,7 +2082,7 @@ function DAQmxResetAIRTDA(taskHandle, channel)
 end
 
 function DAQmxGetAIRTDB(taskHandle, channel, data)
-    ccall((:DAQmxGetAIRTDB, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIRTDB, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIRTDB(taskHandle, channel, data)
@@ -2095,7 +2094,7 @@ function DAQmxResetAIRTDB(taskHandle, channel)
 end
 
 function DAQmxGetAIRTDC(taskHandle, channel, data)
-    ccall((:DAQmxGetAIRTDC, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIRTDC, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIRTDC(taskHandle, channel, data)
@@ -2107,7 +2106,7 @@ function DAQmxResetAIRTDC(taskHandle, channel)
 end
 
 function DAQmxGetAIThrmstrA(taskHandle, channel, data)
-    ccall((:DAQmxGetAIThrmstrA, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIThrmstrA, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIThrmstrA(taskHandle, channel, data)
@@ -2119,7 +2118,7 @@ function DAQmxResetAIThrmstrA(taskHandle, channel)
 end
 
 function DAQmxGetAIThrmstrB(taskHandle, channel, data)
-    ccall((:DAQmxGetAIThrmstrB, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIThrmstrB, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIThrmstrB(taskHandle, channel, data)
@@ -2131,7 +2130,7 @@ function DAQmxResetAIThrmstrB(taskHandle, channel)
 end
 
 function DAQmxGetAIThrmstrC(taskHandle, channel, data)
-    ccall((:DAQmxGetAIThrmstrC, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIThrmstrC, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIThrmstrC(taskHandle, channel, data)
@@ -2143,7 +2142,7 @@ function DAQmxResetAIThrmstrC(taskHandle, channel)
 end
 
 function DAQmxGetAIThrmstrR1(taskHandle, channel, data)
-    ccall((:DAQmxGetAIThrmstrR1, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIThrmstrR1, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIThrmstrR1(taskHandle, channel, data)
@@ -2155,7 +2154,7 @@ function DAQmxResetAIThrmstrR1(taskHandle, channel)
 end
 
 function DAQmxGetAIForceReadFromChan(taskHandle, channel, data)
-    ccall((:DAQmxGetAIForceReadFromChan, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIForceReadFromChan, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIForceReadFromChan(taskHandle, channel, data)
@@ -2167,7 +2166,7 @@ function DAQmxResetAIForceReadFromChan(taskHandle, channel)
 end
 
 function DAQmxGetAICurrentUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetAICurrentUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAICurrentUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAICurrentUnits(taskHandle, channel, data)
@@ -2179,7 +2178,7 @@ function DAQmxResetAICurrentUnits(taskHandle, channel)
 end
 
 function DAQmxGetAICurrentACRMSUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetAICurrentACRMSUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAICurrentACRMSUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAICurrentACRMSUnits(taskHandle, channel, data)
@@ -2191,7 +2190,7 @@ function DAQmxResetAICurrentACRMSUnits(taskHandle, channel)
 end
 
 function DAQmxGetAIStrainUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetAIStrainUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIStrainUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIStrainUnits(taskHandle, channel, data)
@@ -2203,7 +2202,7 @@ function DAQmxResetAIStrainUnits(taskHandle, channel)
 end
 
 function DAQmxGetAIStrainGageForceReadFromChan(taskHandle, channel, data)
-    ccall((:DAQmxGetAIStrainGageForceReadFromChan, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIStrainGageForceReadFromChan, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIStrainGageForceReadFromChan(taskHandle, channel, data)
@@ -2215,7 +2214,7 @@ function DAQmxResetAIStrainGageForceReadFromChan(taskHandle, channel)
 end
 
 function DAQmxGetAIStrainGageGageFactor(taskHandle, channel, data)
-    ccall((:DAQmxGetAIStrainGageGageFactor, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIStrainGageGageFactor, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIStrainGageGageFactor(taskHandle, channel, data)
@@ -2227,7 +2226,7 @@ function DAQmxResetAIStrainGageGageFactor(taskHandle, channel)
 end
 
 function DAQmxGetAIStrainGagePoissonRatio(taskHandle, channel, data)
-    ccall((:DAQmxGetAIStrainGagePoissonRatio, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIStrainGagePoissonRatio, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIStrainGagePoissonRatio(taskHandle, channel, data)
@@ -2239,7 +2238,7 @@ function DAQmxResetAIStrainGagePoissonRatio(taskHandle, channel)
 end
 
 function DAQmxGetAIStrainGageCfg(taskHandle, channel, data)
-    ccall((:DAQmxGetAIStrainGageCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIStrainGageCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIStrainGageCfg(taskHandle, channel, data)
@@ -2251,11 +2250,11 @@ function DAQmxResetAIStrainGageCfg(taskHandle, channel)
 end
 
 function DAQmxGetAIRosetteStrainGageRosetteType(taskHandle, channel, data)
-    ccall((:DAQmxGetAIRosetteStrainGageRosetteType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIRosetteStrainGageRosetteType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxGetAIRosetteStrainGageOrientation(taskHandle, channel, data)
-    ccall((:DAQmxGetAIRosetteStrainGageOrientation, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIRosetteStrainGageOrientation, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIRosetteStrainGageOrientation(taskHandle, channel, data)
@@ -2267,11 +2266,11 @@ function DAQmxResetAIRosetteStrainGageOrientation(taskHandle, channel)
 end
 
 function DAQmxGetAIRosetteStrainGageStrainChans(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetAIRosetteStrainGageStrainChans, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetAIRosetteStrainGageStrainChans, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxGetAIRosetteStrainGageRosetteMeasType(taskHandle, channel, data)
-    ccall((:DAQmxGetAIRosetteStrainGageRosetteMeasType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIRosetteStrainGageRosetteMeasType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIRosetteStrainGageRosetteMeasType(taskHandle, channel, data)
@@ -2283,7 +2282,7 @@ function DAQmxResetAIRosetteStrainGageRosetteMeasType(taskHandle, channel)
 end
 
 function DAQmxGetAIResistanceUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetAIResistanceUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIResistanceUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIResistanceUnits(taskHandle, channel, data)
@@ -2295,7 +2294,7 @@ function DAQmxResetAIResistanceUnits(taskHandle, channel)
 end
 
 function DAQmxGetAIFreqUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetAIFreqUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIFreqUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIFreqUnits(taskHandle, channel, data)
@@ -2307,7 +2306,7 @@ function DAQmxResetAIFreqUnits(taskHandle, channel)
 end
 
 function DAQmxGetAIFreqThreshVoltage(taskHandle, channel, data)
-    ccall((:DAQmxGetAIFreqThreshVoltage, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIFreqThreshVoltage, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIFreqThreshVoltage(taskHandle, channel, data)
@@ -2319,7 +2318,7 @@ function DAQmxResetAIFreqThreshVoltage(taskHandle, channel)
 end
 
 function DAQmxGetAIFreqHyst(taskHandle, channel, data)
-    ccall((:DAQmxGetAIFreqHyst, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIFreqHyst, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIFreqHyst(taskHandle, channel, data)
@@ -2331,7 +2330,7 @@ function DAQmxResetAIFreqHyst(taskHandle, channel)
 end
 
 function DAQmxGetAILVDTUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetAILVDTUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAILVDTUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAILVDTUnits(taskHandle, channel, data)
@@ -2343,7 +2342,7 @@ function DAQmxResetAILVDTUnits(taskHandle, channel)
 end
 
 function DAQmxGetAILVDTSensitivity(taskHandle, channel, data)
-    ccall((:DAQmxGetAILVDTSensitivity, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAILVDTSensitivity, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAILVDTSensitivity(taskHandle, channel, data)
@@ -2355,7 +2354,7 @@ function DAQmxResetAILVDTSensitivity(taskHandle, channel)
 end
 
 function DAQmxGetAILVDTSensitivityUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetAILVDTSensitivityUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAILVDTSensitivityUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAILVDTSensitivityUnits(taskHandle, channel, data)
@@ -2367,7 +2366,7 @@ function DAQmxResetAILVDTSensitivityUnits(taskHandle, channel)
 end
 
 function DAQmxGetAIRVDTUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetAIRVDTUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIRVDTUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIRVDTUnits(taskHandle, channel, data)
@@ -2379,7 +2378,7 @@ function DAQmxResetAIRVDTUnits(taskHandle, channel)
 end
 
 function DAQmxGetAIRVDTSensitivity(taskHandle, channel, data)
-    ccall((:DAQmxGetAIRVDTSensitivity, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIRVDTSensitivity, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIRVDTSensitivity(taskHandle, channel, data)
@@ -2391,7 +2390,7 @@ function DAQmxResetAIRVDTSensitivity(taskHandle, channel)
 end
 
 function DAQmxGetAIRVDTSensitivityUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetAIRVDTSensitivityUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIRVDTSensitivityUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIRVDTSensitivityUnits(taskHandle, channel, data)
@@ -2403,7 +2402,7 @@ function DAQmxResetAIRVDTSensitivityUnits(taskHandle, channel)
 end
 
 function DAQmxGetAIEddyCurrentProxProbeUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetAIEddyCurrentProxProbeUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIEddyCurrentProxProbeUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIEddyCurrentProxProbeUnits(taskHandle, channel, data)
@@ -2415,7 +2414,7 @@ function DAQmxResetAIEddyCurrentProxProbeUnits(taskHandle, channel)
 end
 
 function DAQmxGetAIEddyCurrentProxProbeSensitivity(taskHandle, channel, data)
-    ccall((:DAQmxGetAIEddyCurrentProxProbeSensitivity, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIEddyCurrentProxProbeSensitivity, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIEddyCurrentProxProbeSensitivity(taskHandle, channel, data)
@@ -2427,7 +2426,7 @@ function DAQmxResetAIEddyCurrentProxProbeSensitivity(taskHandle, channel)
 end
 
 function DAQmxGetAIEddyCurrentProxProbeSensitivityUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetAIEddyCurrentProxProbeSensitivityUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIEddyCurrentProxProbeSensitivityUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIEddyCurrentProxProbeSensitivityUnits(taskHandle, channel, data)
@@ -2439,7 +2438,7 @@ function DAQmxResetAIEddyCurrentProxProbeSensitivityUnits(taskHandle, channel)
 end
 
 function DAQmxGetAISoundPressureMaxSoundPressureLvl(taskHandle, channel, data)
-    ccall((:DAQmxGetAISoundPressureMaxSoundPressureLvl, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAISoundPressureMaxSoundPressureLvl, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAISoundPressureMaxSoundPressureLvl(taskHandle, channel, data)
@@ -2451,7 +2450,7 @@ function DAQmxResetAISoundPressureMaxSoundPressureLvl(taskHandle, channel)
 end
 
 function DAQmxGetAISoundPressureUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetAISoundPressureUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAISoundPressureUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAISoundPressureUnits(taskHandle, channel, data)
@@ -2463,7 +2462,7 @@ function DAQmxResetAISoundPressureUnits(taskHandle, channel)
 end
 
 function DAQmxGetAISoundPressuredBRef(taskHandle, channel, data)
-    ccall((:DAQmxGetAISoundPressuredBRef, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAISoundPressuredBRef, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAISoundPressuredBRef(taskHandle, channel, data)
@@ -2475,7 +2474,7 @@ function DAQmxResetAISoundPressuredBRef(taskHandle, channel)
 end
 
 function DAQmxGetAIMicrophoneSensitivity(taskHandle, channel, data)
-    ccall((:DAQmxGetAIMicrophoneSensitivity, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIMicrophoneSensitivity, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIMicrophoneSensitivity(taskHandle, channel, data)
@@ -2487,7 +2486,7 @@ function DAQmxResetAIMicrophoneSensitivity(taskHandle, channel)
 end
 
 function DAQmxGetAIAccelUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetAIAccelUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIAccelUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIAccelUnits(taskHandle, channel, data)
@@ -2499,7 +2498,7 @@ function DAQmxResetAIAccelUnits(taskHandle, channel)
 end
 
 function DAQmxGetAIAcceldBRef(taskHandle, channel, data)
-    ccall((:DAQmxGetAIAcceldBRef, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIAcceldBRef, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIAcceldBRef(taskHandle, channel, data)
@@ -2511,7 +2510,7 @@ function DAQmxResetAIAcceldBRef(taskHandle, channel)
 end
 
 function DAQmxGetAIAccel4WireDCVoltageSensitivity(taskHandle, channel, data)
-    ccall((:DAQmxGetAIAccel4WireDCVoltageSensitivity, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIAccel4WireDCVoltageSensitivity, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIAccel4WireDCVoltageSensitivity(taskHandle, channel, data)
@@ -2523,7 +2522,7 @@ function DAQmxResetAIAccel4WireDCVoltageSensitivity(taskHandle, channel)
 end
 
 function DAQmxGetAIAccel4WireDCVoltageSensitivityUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetAIAccel4WireDCVoltageSensitivityUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIAccel4WireDCVoltageSensitivityUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIAccel4WireDCVoltageSensitivityUnits(taskHandle, channel, data)
@@ -2535,7 +2534,7 @@ function DAQmxResetAIAccel4WireDCVoltageSensitivityUnits(taskHandle, channel)
 end
 
 function DAQmxGetAIAccelSensitivity(taskHandle, channel, data)
-    ccall((:DAQmxGetAIAccelSensitivity, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIAccelSensitivity, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIAccelSensitivity(taskHandle, channel, data)
@@ -2547,7 +2546,7 @@ function DAQmxResetAIAccelSensitivity(taskHandle, channel)
 end
 
 function DAQmxGetAIAccelSensitivityUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetAIAccelSensitivityUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIAccelSensitivityUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIAccelSensitivityUnits(taskHandle, channel, data)
@@ -2559,7 +2558,7 @@ function DAQmxResetAIAccelSensitivityUnits(taskHandle, channel)
 end
 
 function DAQmxGetAIAccelChargeSensitivity(taskHandle, channel, data)
-    ccall((:DAQmxGetAIAccelChargeSensitivity, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIAccelChargeSensitivity, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIAccelChargeSensitivity(taskHandle, channel, data)
@@ -2571,7 +2570,7 @@ function DAQmxResetAIAccelChargeSensitivity(taskHandle, channel)
 end
 
 function DAQmxGetAIAccelChargeSensitivityUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetAIAccelChargeSensitivityUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIAccelChargeSensitivityUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIAccelChargeSensitivityUnits(taskHandle, channel, data)
@@ -2583,7 +2582,7 @@ function DAQmxResetAIAccelChargeSensitivityUnits(taskHandle, channel)
 end
 
 function DAQmxGetAIVelocityUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetAIVelocityUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIVelocityUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIVelocityUnits(taskHandle, channel, data)
@@ -2595,7 +2594,7 @@ function DAQmxResetAIVelocityUnits(taskHandle, channel)
 end
 
 function DAQmxGetAIVelocityIEPESensordBRef(taskHandle, channel, data)
-    ccall((:DAQmxGetAIVelocityIEPESensordBRef, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIVelocityIEPESensordBRef, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIVelocityIEPESensordBRef(taskHandle, channel, data)
@@ -2607,7 +2606,7 @@ function DAQmxResetAIVelocityIEPESensordBRef(taskHandle, channel)
 end
 
 function DAQmxGetAIVelocityIEPESensorSensitivity(taskHandle, channel, data)
-    ccall((:DAQmxGetAIVelocityIEPESensorSensitivity, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIVelocityIEPESensorSensitivity, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIVelocityIEPESensorSensitivity(taskHandle, channel, data)
@@ -2619,7 +2618,7 @@ function DAQmxResetAIVelocityIEPESensorSensitivity(taskHandle, channel)
 end
 
 function DAQmxGetAIVelocityIEPESensorSensitivityUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetAIVelocityIEPESensorSensitivityUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIVelocityIEPESensorSensitivityUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIVelocityIEPESensorSensitivityUnits(taskHandle, channel, data)
@@ -2631,7 +2630,7 @@ function DAQmxResetAIVelocityIEPESensorSensitivityUnits(taskHandle, channel)
 end
 
 function DAQmxGetAIForceUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetAIForceUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIForceUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIForceUnits(taskHandle, channel, data)
@@ -2643,7 +2642,7 @@ function DAQmxResetAIForceUnits(taskHandle, channel)
 end
 
 function DAQmxGetAIForceIEPESensorSensitivity(taskHandle, channel, data)
-    ccall((:DAQmxGetAIForceIEPESensorSensitivity, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIForceIEPESensorSensitivity, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIForceIEPESensorSensitivity(taskHandle, channel, data)
@@ -2655,7 +2654,7 @@ function DAQmxResetAIForceIEPESensorSensitivity(taskHandle, channel)
 end
 
 function DAQmxGetAIForceIEPESensorSensitivityUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetAIForceIEPESensorSensitivityUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIForceIEPESensorSensitivityUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIForceIEPESensorSensitivityUnits(taskHandle, channel, data)
@@ -2667,7 +2666,7 @@ function DAQmxResetAIForceIEPESensorSensitivityUnits(taskHandle, channel)
 end
 
 function DAQmxGetAIPressureUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetAIPressureUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIPressureUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIPressureUnits(taskHandle, channel, data)
@@ -2679,7 +2678,7 @@ function DAQmxResetAIPressureUnits(taskHandle, channel)
 end
 
 function DAQmxGetAITorqueUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetAITorqueUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAITorqueUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAITorqueUnits(taskHandle, channel, data)
@@ -2691,7 +2690,7 @@ function DAQmxResetAITorqueUnits(taskHandle, channel)
 end
 
 function DAQmxGetAIBridgeUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetAIBridgeUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIBridgeUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIBridgeUnits(taskHandle, channel, data)
@@ -2703,7 +2702,7 @@ function DAQmxResetAIBridgeUnits(taskHandle, channel)
 end
 
 function DAQmxGetAIBridgeElectricalUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetAIBridgeElectricalUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIBridgeElectricalUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIBridgeElectricalUnits(taskHandle, channel, data)
@@ -2715,7 +2714,7 @@ function DAQmxResetAIBridgeElectricalUnits(taskHandle, channel)
 end
 
 function DAQmxGetAIBridgePhysicalUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetAIBridgePhysicalUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIBridgePhysicalUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIBridgePhysicalUnits(taskHandle, channel, data)
@@ -2727,7 +2726,7 @@ function DAQmxResetAIBridgePhysicalUnits(taskHandle, channel)
 end
 
 function DAQmxGetAIBridgeScaleType(taskHandle, channel, data)
-    ccall((:DAQmxGetAIBridgeScaleType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIBridgeScaleType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIBridgeScaleType(taskHandle, channel, data)
@@ -2739,7 +2738,7 @@ function DAQmxResetAIBridgeScaleType(taskHandle, channel)
 end
 
 function DAQmxGetAIBridgeTwoPointLinFirstElectricalVal(taskHandle, channel, data)
-    ccall((:DAQmxGetAIBridgeTwoPointLinFirstElectricalVal, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIBridgeTwoPointLinFirstElectricalVal, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIBridgeTwoPointLinFirstElectricalVal(taskHandle, channel, data)
@@ -2751,7 +2750,7 @@ function DAQmxResetAIBridgeTwoPointLinFirstElectricalVal(taskHandle, channel)
 end
 
 function DAQmxGetAIBridgeTwoPointLinFirstPhysicalVal(taskHandle, channel, data)
-    ccall((:DAQmxGetAIBridgeTwoPointLinFirstPhysicalVal, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIBridgeTwoPointLinFirstPhysicalVal, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIBridgeTwoPointLinFirstPhysicalVal(taskHandle, channel, data)
@@ -2763,7 +2762,7 @@ function DAQmxResetAIBridgeTwoPointLinFirstPhysicalVal(taskHandle, channel)
 end
 
 function DAQmxGetAIBridgeTwoPointLinSecondElectricalVal(taskHandle, channel, data)
-    ccall((:DAQmxGetAIBridgeTwoPointLinSecondElectricalVal, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIBridgeTwoPointLinSecondElectricalVal, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIBridgeTwoPointLinSecondElectricalVal(taskHandle, channel, data)
@@ -2775,7 +2774,7 @@ function DAQmxResetAIBridgeTwoPointLinSecondElectricalVal(taskHandle, channel)
 end
 
 function DAQmxGetAIBridgeTwoPointLinSecondPhysicalVal(taskHandle, channel, data)
-    ccall((:DAQmxGetAIBridgeTwoPointLinSecondPhysicalVal, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIBridgeTwoPointLinSecondPhysicalVal, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIBridgeTwoPointLinSecondPhysicalVal(taskHandle, channel, data)
@@ -2787,11 +2786,11 @@ function DAQmxResetAIBridgeTwoPointLinSecondPhysicalVal(taskHandle, channel)
 end
 
 function DAQmxGetAIBridgeTableElectricalVals(taskHandle, channel, data, arraySizeInElements)
-    ccall((:DAQmxGetAIBridgeTableElectricalVals, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
+    ccall((:DAQmxGetAIBridgeTableElectricalVals, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
 end
 
 function DAQmxSetAIBridgeTableElectricalVals(taskHandle, channel, data, arraySizeInElements)
-    ccall((:DAQmxSetAIBridgeTableElectricalVals, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
+    ccall((:DAQmxSetAIBridgeTableElectricalVals, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
 end
 
 function DAQmxResetAIBridgeTableElectricalVals(taskHandle, channel)
@@ -2799,11 +2798,11 @@ function DAQmxResetAIBridgeTableElectricalVals(taskHandle, channel)
 end
 
 function DAQmxGetAIBridgeTablePhysicalVals(taskHandle, channel, data, arraySizeInElements)
-    ccall((:DAQmxGetAIBridgeTablePhysicalVals, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
+    ccall((:DAQmxGetAIBridgeTablePhysicalVals, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
 end
 
 function DAQmxSetAIBridgeTablePhysicalVals(taskHandle, channel, data, arraySizeInElements)
-    ccall((:DAQmxSetAIBridgeTablePhysicalVals, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
+    ccall((:DAQmxSetAIBridgeTablePhysicalVals, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
 end
 
 function DAQmxResetAIBridgeTablePhysicalVals(taskHandle, channel)
@@ -2811,11 +2810,11 @@ function DAQmxResetAIBridgeTablePhysicalVals(taskHandle, channel)
 end
 
 function DAQmxGetAIBridgePolyForwardCoeff(taskHandle, channel, data, arraySizeInElements)
-    ccall((:DAQmxGetAIBridgePolyForwardCoeff, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
+    ccall((:DAQmxGetAIBridgePolyForwardCoeff, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
 end
 
 function DAQmxSetAIBridgePolyForwardCoeff(taskHandle, channel, data, arraySizeInElements)
-    ccall((:DAQmxSetAIBridgePolyForwardCoeff, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
+    ccall((:DAQmxSetAIBridgePolyForwardCoeff, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
 end
 
 function DAQmxResetAIBridgePolyForwardCoeff(taskHandle, channel)
@@ -2823,11 +2822,11 @@ function DAQmxResetAIBridgePolyForwardCoeff(taskHandle, channel)
 end
 
 function DAQmxGetAIBridgePolyReverseCoeff(taskHandle, channel, data, arraySizeInElements)
-    ccall((:DAQmxGetAIBridgePolyReverseCoeff, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
+    ccall((:DAQmxGetAIBridgePolyReverseCoeff, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
 end
 
 function DAQmxSetAIBridgePolyReverseCoeff(taskHandle, channel, data, arraySizeInElements)
-    ccall((:DAQmxSetAIBridgePolyReverseCoeff, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
+    ccall((:DAQmxSetAIBridgePolyReverseCoeff, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
 end
 
 function DAQmxResetAIBridgePolyReverseCoeff(taskHandle, channel)
@@ -2835,7 +2834,7 @@ function DAQmxResetAIBridgePolyReverseCoeff(taskHandle, channel)
 end
 
 function DAQmxGetAIChargeUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetAIChargeUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIChargeUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIChargeUnits(taskHandle, channel, data)
@@ -2847,15 +2846,15 @@ function DAQmxResetAIChargeUnits(taskHandle, channel)
 end
 
 function DAQmxGetAIIsTEDS(taskHandle, channel, data)
-    ccall((:DAQmxGetAIIsTEDS, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIIsTEDS, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxGetAITEDSUnits(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetAITEDSUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetAITEDSUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxGetAICoupling(taskHandle, channel, data)
-    ccall((:DAQmxGetAICoupling, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAICoupling, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAICoupling(taskHandle, channel, data)
@@ -2867,7 +2866,7 @@ function DAQmxResetAICoupling(taskHandle, channel)
 end
 
 function DAQmxGetAIImpedance(taskHandle, channel, data)
-    ccall((:DAQmxGetAIImpedance, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIImpedance, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIImpedance(taskHandle, channel, data)
@@ -2879,7 +2878,7 @@ function DAQmxResetAIImpedance(taskHandle, channel)
 end
 
 function DAQmxGetAITermCfg(taskHandle, channel, data)
-    ccall((:DAQmxGetAITermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAITermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAITermCfg(taskHandle, channel, data)
@@ -2891,11 +2890,11 @@ function DAQmxResetAITermCfg(taskHandle, channel)
 end
 
 function DAQmxGetAIInputSrc(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetAIInputSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetAIInputSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetAIInputSrc(taskHandle, channel, data)
-    ccall((:DAQmxSetAIInputSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetAIInputSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetAIInputSrc(taskHandle, channel)
@@ -2903,7 +2902,7 @@ function DAQmxResetAIInputSrc(taskHandle, channel)
 end
 
 function DAQmxGetAIResistanceCfg(taskHandle, channel, data)
-    ccall((:DAQmxGetAIResistanceCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIResistanceCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIResistanceCfg(taskHandle, channel, data)
@@ -2915,7 +2914,7 @@ function DAQmxResetAIResistanceCfg(taskHandle, channel)
 end
 
 function DAQmxGetAILeadWireResistance(taskHandle, channel, data)
-    ccall((:DAQmxGetAILeadWireResistance, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAILeadWireResistance, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAILeadWireResistance(taskHandle, channel, data)
@@ -2927,7 +2926,7 @@ function DAQmxResetAILeadWireResistance(taskHandle, channel)
 end
 
 function DAQmxGetAIBridgeCfg(taskHandle, channel, data)
-    ccall((:DAQmxGetAIBridgeCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIBridgeCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIBridgeCfg(taskHandle, channel, data)
@@ -2939,7 +2938,7 @@ function DAQmxResetAIBridgeCfg(taskHandle, channel)
 end
 
 function DAQmxGetAIBridgeNomResistance(taskHandle, channel, data)
-    ccall((:DAQmxGetAIBridgeNomResistance, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIBridgeNomResistance, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIBridgeNomResistance(taskHandle, channel, data)
@@ -2951,7 +2950,7 @@ function DAQmxResetAIBridgeNomResistance(taskHandle, channel)
 end
 
 function DAQmxGetAIBridgeInitialVoltage(taskHandle, channel, data)
-    ccall((:DAQmxGetAIBridgeInitialVoltage, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIBridgeInitialVoltage, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIBridgeInitialVoltage(taskHandle, channel, data)
@@ -2963,7 +2962,7 @@ function DAQmxResetAIBridgeInitialVoltage(taskHandle, channel)
 end
 
 function DAQmxGetAIBridgeInitialRatio(taskHandle, channel, data)
-    ccall((:DAQmxGetAIBridgeInitialRatio, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIBridgeInitialRatio, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIBridgeInitialRatio(taskHandle, channel, data)
@@ -2975,7 +2974,7 @@ function DAQmxResetAIBridgeInitialRatio(taskHandle, channel)
 end
 
 function DAQmxGetAIBridgeShuntCalEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetAIBridgeShuntCalEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIBridgeShuntCalEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIBridgeShuntCalEnable(taskHandle, channel, data)
@@ -2987,7 +2986,7 @@ function DAQmxResetAIBridgeShuntCalEnable(taskHandle, channel)
 end
 
 function DAQmxGetAIBridgeShuntCalSelect(taskHandle, channel, data)
-    ccall((:DAQmxGetAIBridgeShuntCalSelect, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIBridgeShuntCalSelect, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIBridgeShuntCalSelect(taskHandle, channel, data)
@@ -2999,7 +2998,7 @@ function DAQmxResetAIBridgeShuntCalSelect(taskHandle, channel)
 end
 
 function DAQmxGetAIBridgeShuntCalShuntCalASrc(taskHandle, channel, data)
-    ccall((:DAQmxGetAIBridgeShuntCalShuntCalASrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIBridgeShuntCalShuntCalASrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIBridgeShuntCalShuntCalASrc(taskHandle, channel, data)
@@ -3011,7 +3010,7 @@ function DAQmxResetAIBridgeShuntCalShuntCalASrc(taskHandle, channel)
 end
 
 function DAQmxGetAIBridgeShuntCalGainAdjust(taskHandle, channel, data)
-    ccall((:DAQmxGetAIBridgeShuntCalGainAdjust, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIBridgeShuntCalGainAdjust, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIBridgeShuntCalGainAdjust(taskHandle, channel, data)
@@ -3023,7 +3022,7 @@ function DAQmxResetAIBridgeShuntCalGainAdjust(taskHandle, channel)
 end
 
 function DAQmxGetAIBridgeShuntCalShuntCalAResistance(taskHandle, channel, data)
-    ccall((:DAQmxGetAIBridgeShuntCalShuntCalAResistance, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIBridgeShuntCalShuntCalAResistance, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIBridgeShuntCalShuntCalAResistance(taskHandle, channel, data)
@@ -3035,7 +3034,7 @@ function DAQmxResetAIBridgeShuntCalShuntCalAResistance(taskHandle, channel)
 end
 
 function DAQmxGetAIBridgeShuntCalShuntCalAActualResistance(taskHandle, channel, data)
-    ccall((:DAQmxGetAIBridgeShuntCalShuntCalAActualResistance, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIBridgeShuntCalShuntCalAActualResistance, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIBridgeShuntCalShuntCalAActualResistance(taskHandle, channel, data)
@@ -3047,7 +3046,7 @@ function DAQmxResetAIBridgeShuntCalShuntCalAActualResistance(taskHandle, channel
 end
 
 function DAQmxGetAIBridgeShuntCalShuntCalBResistance(taskHandle, channel, data)
-    ccall((:DAQmxGetAIBridgeShuntCalShuntCalBResistance, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIBridgeShuntCalShuntCalBResistance, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIBridgeShuntCalShuntCalBResistance(taskHandle, channel, data)
@@ -3059,7 +3058,7 @@ function DAQmxResetAIBridgeShuntCalShuntCalBResistance(taskHandle, channel)
 end
 
 function DAQmxGetAIBridgeShuntCalShuntCalBActualResistance(taskHandle, channel, data)
-    ccall((:DAQmxGetAIBridgeShuntCalShuntCalBActualResistance, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIBridgeShuntCalShuntCalBActualResistance, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIBridgeShuntCalShuntCalBActualResistance(taskHandle, channel, data)
@@ -3071,7 +3070,7 @@ function DAQmxResetAIBridgeShuntCalShuntCalBActualResistance(taskHandle, channel
 end
 
 function DAQmxGetAIBridgeBalanceCoarsePot(taskHandle, channel, data)
-    ccall((:DAQmxGetAIBridgeBalanceCoarsePot, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIBridgeBalanceCoarsePot, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIBridgeBalanceCoarsePot(taskHandle, channel, data)
@@ -3083,7 +3082,7 @@ function DAQmxResetAIBridgeBalanceCoarsePot(taskHandle, channel)
 end
 
 function DAQmxGetAIBridgeBalanceFinePot(taskHandle, channel, data)
-    ccall((:DAQmxGetAIBridgeBalanceFinePot, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIBridgeBalanceFinePot, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIBridgeBalanceFinePot(taskHandle, channel, data)
@@ -3095,7 +3094,7 @@ function DAQmxResetAIBridgeBalanceFinePot(taskHandle, channel)
 end
 
 function DAQmxGetAICurrentShuntLoc(taskHandle, channel, data)
-    ccall((:DAQmxGetAICurrentShuntLoc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAICurrentShuntLoc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAICurrentShuntLoc(taskHandle, channel, data)
@@ -3107,7 +3106,7 @@ function DAQmxResetAICurrentShuntLoc(taskHandle, channel)
 end
 
 function DAQmxGetAICurrentShuntResistance(taskHandle, channel, data)
-    ccall((:DAQmxGetAICurrentShuntResistance, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAICurrentShuntResistance, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAICurrentShuntResistance(taskHandle, channel, data)
@@ -3119,7 +3118,7 @@ function DAQmxResetAICurrentShuntResistance(taskHandle, channel)
 end
 
 function DAQmxGetAIExcitSense(taskHandle, channel, data)
-    ccall((:DAQmxGetAIExcitSense, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIExcitSense, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIExcitSense(taskHandle, channel, data)
@@ -3131,7 +3130,7 @@ function DAQmxResetAIExcitSense(taskHandle, channel)
 end
 
 function DAQmxGetAIExcitSrc(taskHandle, channel, data)
-    ccall((:DAQmxGetAIExcitSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIExcitSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIExcitSrc(taskHandle, channel, data)
@@ -3143,7 +3142,7 @@ function DAQmxResetAIExcitSrc(taskHandle, channel)
 end
 
 function DAQmxGetAIExcitVal(taskHandle, channel, data)
-    ccall((:DAQmxGetAIExcitVal, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIExcitVal, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIExcitVal(taskHandle, channel, data)
@@ -3155,7 +3154,7 @@ function DAQmxResetAIExcitVal(taskHandle, channel)
 end
 
 function DAQmxGetAIExcitUseForScaling(taskHandle, channel, data)
-    ccall((:DAQmxGetAIExcitUseForScaling, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIExcitUseForScaling, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIExcitUseForScaling(taskHandle, channel, data)
@@ -3167,7 +3166,7 @@ function DAQmxResetAIExcitUseForScaling(taskHandle, channel)
 end
 
 function DAQmxGetAIExcitUseMultiplexed(taskHandle, channel, data)
-    ccall((:DAQmxGetAIExcitUseMultiplexed, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIExcitUseMultiplexed, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIExcitUseMultiplexed(taskHandle, channel, data)
@@ -3179,7 +3178,7 @@ function DAQmxResetAIExcitUseMultiplexed(taskHandle, channel)
 end
 
 function DAQmxGetAIExcitActualVal(taskHandle, channel, data)
-    ccall((:DAQmxGetAIExcitActualVal, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIExcitActualVal, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIExcitActualVal(taskHandle, channel, data)
@@ -3191,7 +3190,7 @@ function DAQmxResetAIExcitActualVal(taskHandle, channel)
 end
 
 function DAQmxGetAIExcitDCorAC(taskHandle, channel, data)
-    ccall((:DAQmxGetAIExcitDCorAC, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIExcitDCorAC, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIExcitDCorAC(taskHandle, channel, data)
@@ -3203,7 +3202,7 @@ function DAQmxResetAIExcitDCorAC(taskHandle, channel)
 end
 
 function DAQmxGetAIExcitVoltageOrCurrent(taskHandle, channel, data)
-    ccall((:DAQmxGetAIExcitVoltageOrCurrent, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIExcitVoltageOrCurrent, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIExcitVoltageOrCurrent(taskHandle, channel, data)
@@ -3215,7 +3214,7 @@ function DAQmxResetAIExcitVoltageOrCurrent(taskHandle, channel)
 end
 
 function DAQmxGetAIExcitIdleOutputBehavior(taskHandle, channel, data)
-    ccall((:DAQmxGetAIExcitIdleOutputBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIExcitIdleOutputBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIExcitIdleOutputBehavior(taskHandle, channel, data)
@@ -3227,7 +3226,7 @@ function DAQmxResetAIExcitIdleOutputBehavior(taskHandle, channel)
 end
 
 function DAQmxGetAIACExcitFreq(taskHandle, channel, data)
-    ccall((:DAQmxGetAIACExcitFreq, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIACExcitFreq, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIACExcitFreq(taskHandle, channel, data)
@@ -3239,7 +3238,7 @@ function DAQmxResetAIACExcitFreq(taskHandle, channel)
 end
 
 function DAQmxGetAIACExcitSyncEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetAIACExcitSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIACExcitSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIACExcitSyncEnable(taskHandle, channel, data)
@@ -3251,7 +3250,7 @@ function DAQmxResetAIACExcitSyncEnable(taskHandle, channel)
 end
 
 function DAQmxGetAIACExcitWireMode(taskHandle, channel, data)
-    ccall((:DAQmxGetAIACExcitWireMode, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIACExcitWireMode, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIACExcitWireMode(taskHandle, channel, data)
@@ -3263,7 +3262,7 @@ function DAQmxResetAIACExcitWireMode(taskHandle, channel)
 end
 
 function DAQmxGetAISensorPowerVoltage(taskHandle, channel, data)
-    ccall((:DAQmxGetAISensorPowerVoltage, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAISensorPowerVoltage, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAISensorPowerVoltage(taskHandle, channel, data)
@@ -3275,7 +3274,7 @@ function DAQmxResetAISensorPowerVoltage(taskHandle, channel)
 end
 
 function DAQmxGetAISensorPowerCfg(taskHandle, channel, data)
-    ccall((:DAQmxGetAISensorPowerCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAISensorPowerCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAISensorPowerCfg(taskHandle, channel, data)
@@ -3287,7 +3286,7 @@ function DAQmxResetAISensorPowerCfg(taskHandle, channel)
 end
 
 function DAQmxGetAISensorPowerType(taskHandle, channel, data)
-    ccall((:DAQmxGetAISensorPowerType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAISensorPowerType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAISensorPowerType(taskHandle, channel, data)
@@ -3299,7 +3298,7 @@ function DAQmxResetAISensorPowerType(taskHandle, channel)
 end
 
 function DAQmxGetAIOpenThrmcplDetectEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetAIOpenThrmcplDetectEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIOpenThrmcplDetectEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIOpenThrmcplDetectEnable(taskHandle, channel, data)
@@ -3311,7 +3310,7 @@ function DAQmxResetAIOpenThrmcplDetectEnable(taskHandle, channel)
 end
 
 function DAQmxGetAIThrmcplLeadOffsetVoltage(taskHandle, channel, data)
-    ccall((:DAQmxGetAIThrmcplLeadOffsetVoltage, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIThrmcplLeadOffsetVoltage, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIThrmcplLeadOffsetVoltage(taskHandle, channel, data)
@@ -3323,7 +3322,7 @@ function DAQmxResetAIThrmcplLeadOffsetVoltage(taskHandle, channel)
 end
 
 function DAQmxGetAIAtten(taskHandle, channel, data)
-    ccall((:DAQmxGetAIAtten, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIAtten, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIAtten(taskHandle, channel, data)
@@ -3335,7 +3334,7 @@ function DAQmxResetAIAtten(taskHandle, channel)
 end
 
 function DAQmxGetAIProbeAtten(taskHandle, channel, data)
-    ccall((:DAQmxGetAIProbeAtten, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIProbeAtten, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIProbeAtten(taskHandle, channel, data)
@@ -3347,7 +3346,7 @@ function DAQmxResetAIProbeAtten(taskHandle, channel)
 end
 
 function DAQmxGetAILowpassEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetAILowpassEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAILowpassEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAILowpassEnable(taskHandle, channel, data)
@@ -3359,7 +3358,7 @@ function DAQmxResetAILowpassEnable(taskHandle, channel)
 end
 
 function DAQmxGetAILowpassCutoffFreq(taskHandle, channel, data)
-    ccall((:DAQmxGetAILowpassCutoffFreq, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAILowpassCutoffFreq, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAILowpassCutoffFreq(taskHandle, channel, data)
@@ -3371,7 +3370,7 @@ function DAQmxResetAILowpassCutoffFreq(taskHandle, channel)
 end
 
 function DAQmxGetAILowpassSwitchCapClkSrc(taskHandle, channel, data)
-    ccall((:DAQmxGetAILowpassSwitchCapClkSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAILowpassSwitchCapClkSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAILowpassSwitchCapClkSrc(taskHandle, channel, data)
@@ -3383,7 +3382,7 @@ function DAQmxResetAILowpassSwitchCapClkSrc(taskHandle, channel)
 end
 
 function DAQmxGetAILowpassSwitchCapExtClkFreq(taskHandle, channel, data)
-    ccall((:DAQmxGetAILowpassSwitchCapExtClkFreq, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAILowpassSwitchCapExtClkFreq, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAILowpassSwitchCapExtClkFreq(taskHandle, channel, data)
@@ -3395,7 +3394,7 @@ function DAQmxResetAILowpassSwitchCapExtClkFreq(taskHandle, channel)
 end
 
 function DAQmxGetAILowpassSwitchCapExtClkDiv(taskHandle, channel, data)
-    ccall((:DAQmxGetAILowpassSwitchCapExtClkDiv, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAILowpassSwitchCapExtClkDiv, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAILowpassSwitchCapExtClkDiv(taskHandle, channel, data)
@@ -3407,7 +3406,7 @@ function DAQmxResetAILowpassSwitchCapExtClkDiv(taskHandle, channel)
 end
 
 function DAQmxGetAILowpassSwitchCapOutClkDiv(taskHandle, channel, data)
-    ccall((:DAQmxGetAILowpassSwitchCapOutClkDiv, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAILowpassSwitchCapOutClkDiv, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAILowpassSwitchCapOutClkDiv(taskHandle, channel, data)
@@ -3419,7 +3418,7 @@ function DAQmxResetAILowpassSwitchCapOutClkDiv(taskHandle, channel)
 end
 
 function DAQmxGetAIDigFltrEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetAIDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIDigFltrEnable(taskHandle, channel, data)
@@ -3431,7 +3430,7 @@ function DAQmxResetAIDigFltrEnable(taskHandle, channel)
 end
 
 function DAQmxGetAIDigFltrType(taskHandle, channel, data)
-    ccall((:DAQmxGetAIDigFltrType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIDigFltrType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIDigFltrType(taskHandle, channel, data)
@@ -3443,7 +3442,7 @@ function DAQmxResetAIDigFltrType(taskHandle, channel)
 end
 
 function DAQmxGetAIDigFltrResponse(taskHandle, channel, data)
-    ccall((:DAQmxGetAIDigFltrResponse, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIDigFltrResponse, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIDigFltrResponse(taskHandle, channel, data)
@@ -3455,7 +3454,7 @@ function DAQmxResetAIDigFltrResponse(taskHandle, channel)
 end
 
 function DAQmxGetAIDigFltrOrder(taskHandle, channel, data)
-    ccall((:DAQmxGetAIDigFltrOrder, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIDigFltrOrder, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIDigFltrOrder(taskHandle, channel, data)
@@ -3467,7 +3466,7 @@ function DAQmxResetAIDigFltrOrder(taskHandle, channel)
 end
 
 function DAQmxGetAIDigFltrLowpassCutoffFreq(taskHandle, channel, data)
-    ccall((:DAQmxGetAIDigFltrLowpassCutoffFreq, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIDigFltrLowpassCutoffFreq, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIDigFltrLowpassCutoffFreq(taskHandle, channel, data)
@@ -3479,7 +3478,7 @@ function DAQmxResetAIDigFltrLowpassCutoffFreq(taskHandle, channel)
 end
 
 function DAQmxGetAIDigFltrHighpassCutoffFreq(taskHandle, channel, data)
-    ccall((:DAQmxGetAIDigFltrHighpassCutoffFreq, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIDigFltrHighpassCutoffFreq, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIDigFltrHighpassCutoffFreq(taskHandle, channel, data)
@@ -3491,7 +3490,7 @@ function DAQmxResetAIDigFltrHighpassCutoffFreq(taskHandle, channel)
 end
 
 function DAQmxGetAIDigFltrBandpassCenterFreq(taskHandle, channel, data)
-    ccall((:DAQmxGetAIDigFltrBandpassCenterFreq, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIDigFltrBandpassCenterFreq, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIDigFltrBandpassCenterFreq(taskHandle, channel, data)
@@ -3503,7 +3502,7 @@ function DAQmxResetAIDigFltrBandpassCenterFreq(taskHandle, channel)
 end
 
 function DAQmxGetAIDigFltrBandpassWidth(taskHandle, channel, data)
-    ccall((:DAQmxGetAIDigFltrBandpassWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIDigFltrBandpassWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIDigFltrBandpassWidth(taskHandle, channel, data)
@@ -3515,7 +3514,7 @@ function DAQmxResetAIDigFltrBandpassWidth(taskHandle, channel)
 end
 
 function DAQmxGetAIDigFltrNotchCenterFreq(taskHandle, channel, data)
-    ccall((:DAQmxGetAIDigFltrNotchCenterFreq, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIDigFltrNotchCenterFreq, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIDigFltrNotchCenterFreq(taskHandle, channel, data)
@@ -3527,7 +3526,7 @@ function DAQmxResetAIDigFltrNotchCenterFreq(taskHandle, channel)
 end
 
 function DAQmxGetAIDigFltrNotchWidth(taskHandle, channel, data)
-    ccall((:DAQmxGetAIDigFltrNotchWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIDigFltrNotchWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIDigFltrNotchWidth(taskHandle, channel, data)
@@ -3539,11 +3538,11 @@ function DAQmxResetAIDigFltrNotchWidth(taskHandle, channel)
 end
 
 function DAQmxGetAIDigFltrCoeff(taskHandle, channel, data, arraySizeInElements)
-    ccall((:DAQmxGetAIDigFltrCoeff, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
+    ccall((:DAQmxGetAIDigFltrCoeff, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
 end
 
 function DAQmxSetAIDigFltrCoeff(taskHandle, channel, data, arraySizeInElements)
-    ccall((:DAQmxSetAIDigFltrCoeff, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
+    ccall((:DAQmxSetAIDigFltrCoeff, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
 end
 
 function DAQmxResetAIDigFltrCoeff(taskHandle, channel)
@@ -3551,7 +3550,7 @@ function DAQmxResetAIDigFltrCoeff(taskHandle, channel)
 end
 
 function DAQmxGetAIFilterEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetAIFilterEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIFilterEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIFilterEnable(taskHandle, channel, data)
@@ -3563,7 +3562,7 @@ function DAQmxResetAIFilterEnable(taskHandle, channel)
 end
 
 function DAQmxGetAIFilterFreq(taskHandle, channel, data)
-    ccall((:DAQmxGetAIFilterFreq, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIFilterFreq, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIFilterFreq(taskHandle, channel, data)
@@ -3575,7 +3574,7 @@ function DAQmxResetAIFilterFreq(taskHandle, channel)
 end
 
 function DAQmxGetAIFilterResponse(taskHandle, channel, data)
-    ccall((:DAQmxGetAIFilterResponse, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIFilterResponse, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIFilterResponse(taskHandle, channel, data)
@@ -3587,7 +3586,7 @@ function DAQmxResetAIFilterResponse(taskHandle, channel)
 end
 
 function DAQmxGetAIFilterOrder(taskHandle, channel, data)
-    ccall((:DAQmxGetAIFilterOrder, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIFilterOrder, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIFilterOrder(taskHandle, channel, data)
@@ -3599,11 +3598,11 @@ function DAQmxResetAIFilterOrder(taskHandle, channel)
 end
 
 function DAQmxGetAIFilterDelay(taskHandle, channel, data)
-    ccall((:DAQmxGetAIFilterDelay, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIFilterDelay, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxGetAIFilterDelayUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetAIFilterDelayUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIFilterDelayUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIFilterDelayUnits(taskHandle, channel, data)
@@ -3615,7 +3614,7 @@ function DAQmxResetAIFilterDelayUnits(taskHandle, channel)
 end
 
 function DAQmxGetAIRemoveFilterDelay(taskHandle, channel, data)
-    ccall((:DAQmxGetAIRemoveFilterDelay, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIRemoveFilterDelay, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIRemoveFilterDelay(taskHandle, channel, data)
@@ -3627,7 +3626,7 @@ function DAQmxResetAIRemoveFilterDelay(taskHandle, channel)
 end
 
 function DAQmxGetAIFilterDelayAdjustment(taskHandle, channel, data)
-    ccall((:DAQmxGetAIFilterDelayAdjustment, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIFilterDelayAdjustment, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIFilterDelayAdjustment(taskHandle, channel, data)
@@ -3639,7 +3638,7 @@ function DAQmxResetAIFilterDelayAdjustment(taskHandle, channel)
 end
 
 function DAQmxGetAIAveragingWinSize(taskHandle, channel, data)
-    ccall((:DAQmxGetAIAveragingWinSize, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIAveragingWinSize, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIAveragingWinSize(taskHandle, channel, data)
@@ -3651,23 +3650,23 @@ function DAQmxResetAIAveragingWinSize(taskHandle, channel)
 end
 
 function DAQmxGetAIResolutionUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetAIResolutionUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIResolutionUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxGetAIResolution(taskHandle, channel, data)
-    ccall((:DAQmxGetAIResolution, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIResolution, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxGetAIRawSampSize(taskHandle, channel, data)
-    ccall((:DAQmxGetAIRawSampSize, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIRawSampSize, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxGetAIRawSampJustification(taskHandle, channel, data)
-    ccall((:DAQmxGetAIRawSampJustification, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIRawSampJustification, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxGetAIADCTimingMode(taskHandle, channel, data)
-    ccall((:DAQmxGetAIADCTimingMode, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIADCTimingMode, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIADCTimingMode(taskHandle, channel, data)
@@ -3679,7 +3678,7 @@ function DAQmxResetAIADCTimingMode(taskHandle, channel)
 end
 
 function DAQmxGetAIADCCustomTimingMode(taskHandle, channel, data)
-    ccall((:DAQmxGetAIADCCustomTimingMode, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIADCCustomTimingMode, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIADCCustomTimingMode(taskHandle, channel, data)
@@ -3691,7 +3690,7 @@ function DAQmxResetAIADCCustomTimingMode(taskHandle, channel)
 end
 
 function DAQmxGetAIDitherEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetAIDitherEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIDitherEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIDitherEnable(taskHandle, channel, data)
@@ -3703,11 +3702,11 @@ function DAQmxResetAIDitherEnable(taskHandle, channel)
 end
 
 function DAQmxGetAIChanCalHasValidCalInfo(taskHandle, channel, data)
-    ccall((:DAQmxGetAIChanCalHasValidCalInfo, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIChanCalHasValidCalInfo, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxGetAIChanCalEnableCal(taskHandle, channel, data)
-    ccall((:DAQmxGetAIChanCalEnableCal, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIChanCalEnableCal, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIChanCalEnableCal(taskHandle, channel, data)
@@ -3719,7 +3718,7 @@ function DAQmxResetAIChanCalEnableCal(taskHandle, channel)
 end
 
 function DAQmxGetAIChanCalApplyCalIfExp(taskHandle, channel, data)
-    ccall((:DAQmxGetAIChanCalApplyCalIfExp, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIChanCalApplyCalIfExp, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIChanCalApplyCalIfExp(taskHandle, channel, data)
@@ -3731,7 +3730,7 @@ function DAQmxResetAIChanCalApplyCalIfExp(taskHandle, channel)
 end
 
 function DAQmxGetAIChanCalScaleType(taskHandle, channel, data)
-    ccall((:DAQmxGetAIChanCalScaleType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIChanCalScaleType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIChanCalScaleType(taskHandle, channel, data)
@@ -3743,11 +3742,11 @@ function DAQmxResetAIChanCalScaleType(taskHandle, channel)
 end
 
 function DAQmxGetAIChanCalTablePreScaledVals(taskHandle, channel, data, arraySizeInElements)
-    ccall((:DAQmxGetAIChanCalTablePreScaledVals, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
+    ccall((:DAQmxGetAIChanCalTablePreScaledVals, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
 end
 
 function DAQmxSetAIChanCalTablePreScaledVals(taskHandle, channel, data, arraySizeInElements)
-    ccall((:DAQmxSetAIChanCalTablePreScaledVals, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
+    ccall((:DAQmxSetAIChanCalTablePreScaledVals, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
 end
 
 function DAQmxResetAIChanCalTablePreScaledVals(taskHandle, channel)
@@ -3755,11 +3754,11 @@ function DAQmxResetAIChanCalTablePreScaledVals(taskHandle, channel)
 end
 
 function DAQmxGetAIChanCalTableScaledVals(taskHandle, channel, data, arraySizeInElements)
-    ccall((:DAQmxGetAIChanCalTableScaledVals, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
+    ccall((:DAQmxGetAIChanCalTableScaledVals, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
 end
 
 function DAQmxSetAIChanCalTableScaledVals(taskHandle, channel, data, arraySizeInElements)
-    ccall((:DAQmxSetAIChanCalTableScaledVals, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
+    ccall((:DAQmxSetAIChanCalTableScaledVals, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
 end
 
 function DAQmxResetAIChanCalTableScaledVals(taskHandle, channel)
@@ -3767,11 +3766,11 @@ function DAQmxResetAIChanCalTableScaledVals(taskHandle, channel)
 end
 
 function DAQmxGetAIChanCalPolyForwardCoeff(taskHandle, channel, data, arraySizeInElements)
-    ccall((:DAQmxGetAIChanCalPolyForwardCoeff, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
+    ccall((:DAQmxGetAIChanCalPolyForwardCoeff, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
 end
 
 function DAQmxSetAIChanCalPolyForwardCoeff(taskHandle, channel, data, arraySizeInElements)
-    ccall((:DAQmxSetAIChanCalPolyForwardCoeff, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
+    ccall((:DAQmxSetAIChanCalPolyForwardCoeff, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
 end
 
 function DAQmxResetAIChanCalPolyForwardCoeff(taskHandle, channel)
@@ -3779,11 +3778,11 @@ function DAQmxResetAIChanCalPolyForwardCoeff(taskHandle, channel)
 end
 
 function DAQmxGetAIChanCalPolyReverseCoeff(taskHandle, channel, data, arraySizeInElements)
-    ccall((:DAQmxGetAIChanCalPolyReverseCoeff, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
+    ccall((:DAQmxGetAIChanCalPolyReverseCoeff, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
 end
 
 function DAQmxSetAIChanCalPolyReverseCoeff(taskHandle, channel, data, arraySizeInElements)
-    ccall((:DAQmxSetAIChanCalPolyReverseCoeff, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
+    ccall((:DAQmxSetAIChanCalPolyReverseCoeff, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
 end
 
 function DAQmxResetAIChanCalPolyReverseCoeff(taskHandle, channel)
@@ -3791,11 +3790,11 @@ function DAQmxResetAIChanCalPolyReverseCoeff(taskHandle, channel)
 end
 
 function DAQmxGetAIChanCalOperatorName(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetAIChanCalOperatorName, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetAIChanCalOperatorName, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetAIChanCalOperatorName(taskHandle, channel, data)
-    ccall((:DAQmxSetAIChanCalOperatorName, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetAIChanCalOperatorName, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetAIChanCalOperatorName(taskHandle, channel)
@@ -3803,11 +3802,11 @@ function DAQmxResetAIChanCalOperatorName(taskHandle, channel)
 end
 
 function DAQmxGetAIChanCalDesc(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetAIChanCalDesc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetAIChanCalDesc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetAIChanCalDesc(taskHandle, channel, data)
-    ccall((:DAQmxSetAIChanCalDesc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetAIChanCalDesc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetAIChanCalDesc(taskHandle, channel)
@@ -3815,11 +3814,11 @@ function DAQmxResetAIChanCalDesc(taskHandle, channel)
 end
 
 function DAQmxGetAIChanCalVerifRefVals(taskHandle, channel, data, arraySizeInElements)
-    ccall((:DAQmxGetAIChanCalVerifRefVals, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
+    ccall((:DAQmxGetAIChanCalVerifRefVals, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
 end
 
 function DAQmxSetAIChanCalVerifRefVals(taskHandle, channel, data, arraySizeInElements)
-    ccall((:DAQmxSetAIChanCalVerifRefVals, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
+    ccall((:DAQmxSetAIChanCalVerifRefVals, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
 end
 
 function DAQmxResetAIChanCalVerifRefVals(taskHandle, channel)
@@ -3827,11 +3826,11 @@ function DAQmxResetAIChanCalVerifRefVals(taskHandle, channel)
 end
 
 function DAQmxGetAIChanCalVerifAcqVals(taskHandle, channel, data, arraySizeInElements)
-    ccall((:DAQmxGetAIChanCalVerifAcqVals, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
+    ccall((:DAQmxGetAIChanCalVerifAcqVals, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
 end
 
 function DAQmxSetAIChanCalVerifAcqVals(taskHandle, channel, data, arraySizeInElements)
-    ccall((:DAQmxSetAIChanCalVerifAcqVals, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
+    ccall((:DAQmxSetAIChanCalVerifAcqVals, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
 end
 
 function DAQmxResetAIChanCalVerifAcqVals(taskHandle, channel)
@@ -3839,7 +3838,7 @@ function DAQmxResetAIChanCalVerifAcqVals(taskHandle, channel)
 end
 
 function DAQmxGetAIRngHigh(taskHandle, channel, data)
-    ccall((:DAQmxGetAIRngHigh, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIRngHigh, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIRngHigh(taskHandle, channel, data)
@@ -3851,7 +3850,7 @@ function DAQmxResetAIRngHigh(taskHandle, channel)
 end
 
 function DAQmxGetAIRngLow(taskHandle, channel, data)
-    ccall((:DAQmxGetAIRngLow, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIRngLow, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIRngLow(taskHandle, channel, data)
@@ -3863,7 +3862,7 @@ function DAQmxResetAIRngLow(taskHandle, channel)
 end
 
 function DAQmxGetAIDCOffset(taskHandle, channel, data)
-    ccall((:DAQmxGetAIDCOffset, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIDCOffset, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIDCOffset(taskHandle, channel, data)
@@ -3875,7 +3874,7 @@ function DAQmxResetAIDCOffset(taskHandle, channel)
 end
 
 function DAQmxGetAIGain(taskHandle, channel, data)
-    ccall((:DAQmxGetAIGain, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIGain, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIGain(taskHandle, channel, data)
@@ -3887,7 +3886,7 @@ function DAQmxResetAIGain(taskHandle, channel)
 end
 
 function DAQmxGetAISampAndHoldEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetAISampAndHoldEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAISampAndHoldEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAISampAndHoldEnable(taskHandle, channel, data)
@@ -3899,7 +3898,7 @@ function DAQmxResetAISampAndHoldEnable(taskHandle, channel)
 end
 
 function DAQmxGetAIAutoZeroMode(taskHandle, channel, data)
-    ccall((:DAQmxGetAIAutoZeroMode, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIAutoZeroMode, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIAutoZeroMode(taskHandle, channel, data)
@@ -3911,7 +3910,7 @@ function DAQmxResetAIAutoZeroMode(taskHandle, channel)
 end
 
 function DAQmxGetAIChopEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetAIChopEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIChopEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIChopEnable(taskHandle, channel, data)
@@ -3923,7 +3922,7 @@ function DAQmxResetAIChopEnable(taskHandle, channel)
 end
 
 function DAQmxGetAIDataXferMaxRate(taskHandle, channel, data)
-    ccall((:DAQmxGetAIDataXferMaxRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIDataXferMaxRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIDataXferMaxRate(taskHandle, channel, data)
@@ -3935,7 +3934,7 @@ function DAQmxResetAIDataXferMaxRate(taskHandle, channel)
 end
 
 function DAQmxGetAIDataXferMech(taskHandle, channel, data)
-    ccall((:DAQmxGetAIDataXferMech, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIDataXferMech, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIDataXferMech(taskHandle, channel, data)
@@ -3947,7 +3946,7 @@ function DAQmxResetAIDataXferMech(taskHandle, channel)
 end
 
 function DAQmxGetAIDataXferReqCond(taskHandle, channel, data)
-    ccall((:DAQmxGetAIDataXferReqCond, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIDataXferReqCond, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIDataXferReqCond(taskHandle, channel, data)
@@ -3959,7 +3958,7 @@ function DAQmxResetAIDataXferReqCond(taskHandle, channel)
 end
 
 function DAQmxGetAIDataXferCustomThreshold(taskHandle, channel, data)
-    ccall((:DAQmxGetAIDataXferCustomThreshold, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIDataXferCustomThreshold, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIDataXferCustomThreshold(taskHandle, channel, data)
@@ -3971,7 +3970,7 @@ function DAQmxResetAIDataXferCustomThreshold(taskHandle, channel)
 end
 
 function DAQmxGetAIUsbXferReqSize(taskHandle, channel, data)
-    ccall((:DAQmxGetAIUsbXferReqSize, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIUsbXferReqSize, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIUsbXferReqSize(taskHandle, channel, data)
@@ -3983,7 +3982,7 @@ function DAQmxResetAIUsbXferReqSize(taskHandle, channel)
 end
 
 function DAQmxGetAIUsbXferReqCount(taskHandle, channel, data)
-    ccall((:DAQmxGetAIUsbXferReqCount, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIUsbXferReqCount, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIUsbXferReqCount(taskHandle, channel, data)
@@ -3995,7 +3994,7 @@ function DAQmxResetAIUsbXferReqCount(taskHandle, channel)
 end
 
 function DAQmxGetAIMemMapEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetAIMemMapEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIMemMapEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIMemMapEnable(taskHandle, channel, data)
@@ -4007,7 +4006,7 @@ function DAQmxResetAIMemMapEnable(taskHandle, channel)
 end
 
 function DAQmxGetAIRawDataCompressionType(taskHandle, channel, data)
-    ccall((:DAQmxGetAIRawDataCompressionType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIRawDataCompressionType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIRawDataCompressionType(taskHandle, channel, data)
@@ -4019,7 +4018,7 @@ function DAQmxResetAIRawDataCompressionType(taskHandle, channel)
 end
 
 function DAQmxGetAILossyLSBRemovalCompressedSampSize(taskHandle, channel, data)
-    ccall((:DAQmxGetAILossyLSBRemovalCompressedSampSize, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAILossyLSBRemovalCompressedSampSize, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAILossyLSBRemovalCompressedSampSize(taskHandle, channel, data)
@@ -4031,11 +4030,11 @@ function DAQmxResetAILossyLSBRemovalCompressedSampSize(taskHandle, channel)
 end
 
 function DAQmxGetAIDevScalingCoeff(taskHandle, channel, data, arraySizeInElements)
-    ccall((:DAQmxGetAIDevScalingCoeff, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
+    ccall((:DAQmxGetAIDevScalingCoeff, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
 end
 
 function DAQmxGetAIEnhancedAliasRejectionEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetAIEnhancedAliasRejectionEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIEnhancedAliasRejectionEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIEnhancedAliasRejectionEnable(taskHandle, channel, data)
@@ -4047,7 +4046,7 @@ function DAQmxResetAIEnhancedAliasRejectionEnable(taskHandle, channel)
 end
 
 function DAQmxGetAIOpenChanDetectEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetAIOpenChanDetectEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAIOpenChanDetectEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAIOpenChanDetectEnable(taskHandle, channel, data)
@@ -4059,7 +4058,7 @@ function DAQmxResetAIOpenChanDetectEnable(taskHandle, channel)
 end
 
 function DAQmxGetAOMax(taskHandle, channel, data)
-    ccall((:DAQmxGetAOMax, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAOMax, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAOMax(taskHandle, channel, data)
@@ -4071,7 +4070,7 @@ function DAQmxResetAOMax(taskHandle, channel)
 end
 
 function DAQmxGetAOMin(taskHandle, channel, data)
-    ccall((:DAQmxGetAOMin, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAOMin, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAOMin(taskHandle, channel, data)
@@ -4083,11 +4082,11 @@ function DAQmxResetAOMin(taskHandle, channel)
 end
 
 function DAQmxGetAOCustomScaleName(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetAOCustomScaleName, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetAOCustomScaleName, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetAOCustomScaleName(taskHandle, channel, data)
-    ccall((:DAQmxSetAOCustomScaleName, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetAOCustomScaleName, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetAOCustomScaleName(taskHandle, channel)
@@ -4095,11 +4094,11 @@ function DAQmxResetAOCustomScaleName(taskHandle, channel)
 end
 
 function DAQmxGetAOOutputType(taskHandle, channel, data)
-    ccall((:DAQmxGetAOOutputType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAOOutputType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxGetAOVoltageUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetAOVoltageUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAOVoltageUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAOVoltageUnits(taskHandle, channel, data)
@@ -4111,7 +4110,7 @@ function DAQmxResetAOVoltageUnits(taskHandle, channel)
 end
 
 function DAQmxGetAOVoltageCurrentLimit(taskHandle, channel, data)
-    ccall((:DAQmxGetAOVoltageCurrentLimit, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAOVoltageCurrentLimit, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAOVoltageCurrentLimit(taskHandle, channel, data)
@@ -4123,7 +4122,7 @@ function DAQmxResetAOVoltageCurrentLimit(taskHandle, channel)
 end
 
 function DAQmxGetAOCurrentUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetAOCurrentUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAOCurrentUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAOCurrentUnits(taskHandle, channel, data)
@@ -4135,7 +4134,7 @@ function DAQmxResetAOCurrentUnits(taskHandle, channel)
 end
 
 function DAQmxGetAOFuncGenType(taskHandle, channel, data)
-    ccall((:DAQmxGetAOFuncGenType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAOFuncGenType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAOFuncGenType(taskHandle, channel, data)
@@ -4147,7 +4146,7 @@ function DAQmxResetAOFuncGenType(taskHandle, channel)
 end
 
 function DAQmxGetAOFuncGenFreq(taskHandle, channel, data)
-    ccall((:DAQmxGetAOFuncGenFreq, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAOFuncGenFreq, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAOFuncGenFreq(taskHandle, channel, data)
@@ -4159,7 +4158,7 @@ function DAQmxResetAOFuncGenFreq(taskHandle, channel)
 end
 
 function DAQmxGetAOFuncGenAmplitude(taskHandle, channel, data)
-    ccall((:DAQmxGetAOFuncGenAmplitude, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAOFuncGenAmplitude, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAOFuncGenAmplitude(taskHandle, channel, data)
@@ -4171,7 +4170,7 @@ function DAQmxResetAOFuncGenAmplitude(taskHandle, channel)
 end
 
 function DAQmxGetAOFuncGenOffset(taskHandle, channel, data)
-    ccall((:DAQmxGetAOFuncGenOffset, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAOFuncGenOffset, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAOFuncGenOffset(taskHandle, channel, data)
@@ -4183,7 +4182,7 @@ function DAQmxResetAOFuncGenOffset(taskHandle, channel)
 end
 
 function DAQmxGetAOFuncGenSquareDutyCycle(taskHandle, channel, data)
-    ccall((:DAQmxGetAOFuncGenSquareDutyCycle, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAOFuncGenSquareDutyCycle, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAOFuncGenSquareDutyCycle(taskHandle, channel, data)
@@ -4195,7 +4194,7 @@ function DAQmxResetAOFuncGenSquareDutyCycle(taskHandle, channel)
 end
 
 function DAQmxGetAOFuncGenModulationType(taskHandle, channel, data)
-    ccall((:DAQmxGetAOFuncGenModulationType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAOFuncGenModulationType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAOFuncGenModulationType(taskHandle, channel, data)
@@ -4207,7 +4206,7 @@ function DAQmxResetAOFuncGenModulationType(taskHandle, channel)
 end
 
 function DAQmxGetAOFuncGenFMDeviation(taskHandle, channel, data)
-    ccall((:DAQmxGetAOFuncGenFMDeviation, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAOFuncGenFMDeviation, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAOFuncGenFMDeviation(taskHandle, channel, data)
@@ -4219,7 +4218,7 @@ function DAQmxResetAOFuncGenFMDeviation(taskHandle, channel)
 end
 
 function DAQmxGetAOOutputImpedance(taskHandle, channel, data)
-    ccall((:DAQmxGetAOOutputImpedance, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAOOutputImpedance, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAOOutputImpedance(taskHandle, channel, data)
@@ -4231,7 +4230,7 @@ function DAQmxResetAOOutputImpedance(taskHandle, channel)
 end
 
 function DAQmxGetAOLoadImpedance(taskHandle, channel, data)
-    ccall((:DAQmxGetAOLoadImpedance, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAOLoadImpedance, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAOLoadImpedance(taskHandle, channel, data)
@@ -4243,7 +4242,7 @@ function DAQmxResetAOLoadImpedance(taskHandle, channel)
 end
 
 function DAQmxGetAOIdleOutputBehavior(taskHandle, channel, data)
-    ccall((:DAQmxGetAOIdleOutputBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAOIdleOutputBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAOIdleOutputBehavior(taskHandle, channel, data)
@@ -4255,7 +4254,7 @@ function DAQmxResetAOIdleOutputBehavior(taskHandle, channel)
 end
 
 function DAQmxGetAOTermCfg(taskHandle, channel, data)
-    ccall((:DAQmxGetAOTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAOTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAOTermCfg(taskHandle, channel, data)
@@ -4267,7 +4266,7 @@ function DAQmxResetAOTermCfg(taskHandle, channel)
 end
 
 function DAQmxGetAOResolutionUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetAOResolutionUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAOResolutionUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAOResolutionUnits(taskHandle, channel, data)
@@ -4279,11 +4278,11 @@ function DAQmxResetAOResolutionUnits(taskHandle, channel)
 end
 
 function DAQmxGetAOResolution(taskHandle, channel, data)
-    ccall((:DAQmxGetAOResolution, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAOResolution, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxGetAODACRngHigh(taskHandle, channel, data)
-    ccall((:DAQmxGetAODACRngHigh, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAODACRngHigh, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAODACRngHigh(taskHandle, channel, data)
@@ -4295,7 +4294,7 @@ function DAQmxResetAODACRngHigh(taskHandle, channel)
 end
 
 function DAQmxGetAODACRngLow(taskHandle, channel, data)
-    ccall((:DAQmxGetAODACRngLow, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAODACRngLow, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAODACRngLow(taskHandle, channel, data)
@@ -4307,7 +4306,7 @@ function DAQmxResetAODACRngLow(taskHandle, channel)
 end
 
 function DAQmxGetAODACRefConnToGnd(taskHandle, channel, data)
-    ccall((:DAQmxGetAODACRefConnToGnd, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAODACRefConnToGnd, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAODACRefConnToGnd(taskHandle, channel, data)
@@ -4319,7 +4318,7 @@ function DAQmxResetAODACRefConnToGnd(taskHandle, channel)
 end
 
 function DAQmxGetAODACRefAllowConnToGnd(taskHandle, channel, data)
-    ccall((:DAQmxGetAODACRefAllowConnToGnd, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAODACRefAllowConnToGnd, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAODACRefAllowConnToGnd(taskHandle, channel, data)
@@ -4331,7 +4330,7 @@ function DAQmxResetAODACRefAllowConnToGnd(taskHandle, channel)
 end
 
 function DAQmxGetAODACRefSrc(taskHandle, channel, data)
-    ccall((:DAQmxGetAODACRefSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAODACRefSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAODACRefSrc(taskHandle, channel, data)
@@ -4343,11 +4342,11 @@ function DAQmxResetAODACRefSrc(taskHandle, channel)
 end
 
 function DAQmxGetAODACRefExtSrc(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetAODACRefExtSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetAODACRefExtSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetAODACRefExtSrc(taskHandle, channel, data)
-    ccall((:DAQmxSetAODACRefExtSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetAODACRefExtSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetAODACRefExtSrc(taskHandle, channel)
@@ -4355,7 +4354,7 @@ function DAQmxResetAODACRefExtSrc(taskHandle, channel)
 end
 
 function DAQmxGetAODACRefVal(taskHandle, channel, data)
-    ccall((:DAQmxGetAODACRefVal, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAODACRefVal, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAODACRefVal(taskHandle, channel, data)
@@ -4367,7 +4366,7 @@ function DAQmxResetAODACRefVal(taskHandle, channel)
 end
 
 function DAQmxGetAODACOffsetSrc(taskHandle, channel, data)
-    ccall((:DAQmxGetAODACOffsetSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAODACOffsetSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAODACOffsetSrc(taskHandle, channel, data)
@@ -4379,11 +4378,11 @@ function DAQmxResetAODACOffsetSrc(taskHandle, channel)
 end
 
 function DAQmxGetAODACOffsetExtSrc(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetAODACOffsetExtSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetAODACOffsetExtSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetAODACOffsetExtSrc(taskHandle, channel, data)
-    ccall((:DAQmxSetAODACOffsetExtSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetAODACOffsetExtSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetAODACOffsetExtSrc(taskHandle, channel)
@@ -4391,7 +4390,7 @@ function DAQmxResetAODACOffsetExtSrc(taskHandle, channel)
 end
 
 function DAQmxGetAODACOffsetVal(taskHandle, channel, data)
-    ccall((:DAQmxGetAODACOffsetVal, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAODACOffsetVal, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAODACOffsetVal(taskHandle, channel, data)
@@ -4403,7 +4402,7 @@ function DAQmxResetAODACOffsetVal(taskHandle, channel)
 end
 
 function DAQmxGetAOReglitchEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetAOReglitchEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAOReglitchEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAOReglitchEnable(taskHandle, channel, data)
@@ -4415,7 +4414,7 @@ function DAQmxResetAOReglitchEnable(taskHandle, channel)
 end
 
 function DAQmxGetAOFilterDelay(taskHandle, channel, data)
-    ccall((:DAQmxGetAOFilterDelay, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAOFilterDelay, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAOFilterDelay(taskHandle, channel, data)
@@ -4427,7 +4426,7 @@ function DAQmxResetAOFilterDelay(taskHandle, channel)
 end
 
 function DAQmxGetAOFilterDelayUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetAOFilterDelayUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAOFilterDelayUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAOFilterDelayUnits(taskHandle, channel, data)
@@ -4439,7 +4438,7 @@ function DAQmxResetAOFilterDelayUnits(taskHandle, channel)
 end
 
 function DAQmxGetAOFilterDelayAdjustment(taskHandle, channel, data)
-    ccall((:DAQmxGetAOFilterDelayAdjustment, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAOFilterDelayAdjustment, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAOFilterDelayAdjustment(taskHandle, channel, data)
@@ -4451,7 +4450,7 @@ function DAQmxResetAOFilterDelayAdjustment(taskHandle, channel)
 end
 
 function DAQmxGetAOGain(taskHandle, channel, data)
-    ccall((:DAQmxGetAOGain, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetAOGain, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetAOGain(taskHandle, channel, data)
@@ -4463,7 +4462,7 @@ function DAQmxResetAOGain(taskHandle, channel)
 end
 
 function DAQmxGetAOUseOnlyOnBrdMem(taskHandle, channel, data)
-    ccall((:DAQmxGetAOUseOnlyOnBrdMem, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAOUseOnlyOnBrdMem, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAOUseOnlyOnBrdMem(taskHandle, channel, data)
@@ -4475,7 +4474,7 @@ function DAQmxResetAOUseOnlyOnBrdMem(taskHandle, channel)
 end
 
 function DAQmxGetAODataXferMech(taskHandle, channel, data)
-    ccall((:DAQmxGetAODataXferMech, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAODataXferMech, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAODataXferMech(taskHandle, channel, data)
@@ -4487,7 +4486,7 @@ function DAQmxResetAODataXferMech(taskHandle, channel)
 end
 
 function DAQmxGetAODataXferReqCond(taskHandle, channel, data)
-    ccall((:DAQmxGetAODataXferReqCond, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAODataXferReqCond, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAODataXferReqCond(taskHandle, channel, data)
@@ -4499,7 +4498,7 @@ function DAQmxResetAODataXferReqCond(taskHandle, channel)
 end
 
 function DAQmxGetAOUsbXferReqSize(taskHandle, channel, data)
-    ccall((:DAQmxGetAOUsbXferReqSize, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAOUsbXferReqSize, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAOUsbXferReqSize(taskHandle, channel, data)
@@ -4511,7 +4510,7 @@ function DAQmxResetAOUsbXferReqSize(taskHandle, channel)
 end
 
 function DAQmxGetAOUsbXferReqCount(taskHandle, channel, data)
-    ccall((:DAQmxGetAOUsbXferReqCount, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAOUsbXferReqCount, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAOUsbXferReqCount(taskHandle, channel, data)
@@ -4523,7 +4522,7 @@ function DAQmxResetAOUsbXferReqCount(taskHandle, channel)
 end
 
 function DAQmxGetAOMemMapEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetAOMemMapEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAOMemMapEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAOMemMapEnable(taskHandle, channel, data)
@@ -4535,11 +4534,11 @@ function DAQmxResetAOMemMapEnable(taskHandle, channel)
 end
 
 function DAQmxGetAODevScalingCoeff(taskHandle, channel, data, arraySizeInElements)
-    ccall((:DAQmxGetAODevScalingCoeff, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
+    ccall((:DAQmxGetAODevScalingCoeff, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}, uInt32), taskHandle, channel, data, arraySizeInElements)
 end
 
 function DAQmxGetAOEnhancedImageRejectionEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetAOEnhancedImageRejectionEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetAOEnhancedImageRejectionEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetAOEnhancedImageRejectionEnable(taskHandle, channel, data)
@@ -4551,7 +4550,7 @@ function DAQmxResetAOEnhancedImageRejectionEnable(taskHandle, channel)
 end
 
 function DAQmxGetDIInvertLines(taskHandle, channel, data)
-    ccall((:DAQmxGetDIInvertLines, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetDIInvertLines, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetDIInvertLines(taskHandle, channel, data)
@@ -4563,11 +4562,11 @@ function DAQmxResetDIInvertLines(taskHandle, channel)
 end
 
 function DAQmxGetDINumLines(taskHandle, channel, data)
-    ccall((:DAQmxGetDINumLines, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetDINumLines, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxGetDIDigFltrEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetDIDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetDIDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetDIDigFltrEnable(taskHandle, channel, data)
@@ -4579,7 +4578,7 @@ function DAQmxResetDIDigFltrEnable(taskHandle, channel)
 end
 
 function DAQmxGetDIDigFltrMinPulseWidth(taskHandle, channel, data)
-    ccall((:DAQmxGetDIDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetDIDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetDIDigFltrMinPulseWidth(taskHandle, channel, data)
@@ -4591,7 +4590,7 @@ function DAQmxResetDIDigFltrMinPulseWidth(taskHandle, channel)
 end
 
 function DAQmxGetDIDigFltrEnableBusMode(taskHandle, channel, data)
-    ccall((:DAQmxGetDIDigFltrEnableBusMode, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetDIDigFltrEnableBusMode, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetDIDigFltrEnableBusMode(taskHandle, channel, data)
@@ -4603,11 +4602,11 @@ function DAQmxResetDIDigFltrEnableBusMode(taskHandle, channel)
 end
 
 function DAQmxGetDIDigFltrTimebaseSrc(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetDIDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetDIDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetDIDigFltrTimebaseSrc(taskHandle, channel, data)
-    ccall((:DAQmxSetDIDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetDIDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetDIDigFltrTimebaseSrc(taskHandle, channel)
@@ -4615,7 +4614,7 @@ function DAQmxResetDIDigFltrTimebaseSrc(taskHandle, channel)
 end
 
 function DAQmxGetDIDigFltrTimebaseRate(taskHandle, channel, data)
-    ccall((:DAQmxGetDIDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetDIDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetDIDigFltrTimebaseRate(taskHandle, channel, data)
@@ -4627,7 +4626,7 @@ function DAQmxResetDIDigFltrTimebaseRate(taskHandle, channel)
 end
 
 function DAQmxGetDIDigSyncEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetDIDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetDIDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetDIDigSyncEnable(taskHandle, channel, data)
@@ -4639,7 +4638,7 @@ function DAQmxResetDIDigSyncEnable(taskHandle, channel)
 end
 
 function DAQmxGetDITristate(taskHandle, channel, data)
-    ccall((:DAQmxGetDITristate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetDITristate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetDITristate(taskHandle, channel, data)
@@ -4651,7 +4650,7 @@ function DAQmxResetDITristate(taskHandle, channel)
 end
 
 function DAQmxGetDILogicFamily(taskHandle, channel, data)
-    ccall((:DAQmxGetDILogicFamily, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetDILogicFamily, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetDILogicFamily(taskHandle, channel, data)
@@ -4663,7 +4662,7 @@ function DAQmxResetDILogicFamily(taskHandle, channel)
 end
 
 function DAQmxGetDIDataXferMech(taskHandle, channel, data)
-    ccall((:DAQmxGetDIDataXferMech, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetDIDataXferMech, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetDIDataXferMech(taskHandle, channel, data)
@@ -4675,7 +4674,7 @@ function DAQmxResetDIDataXferMech(taskHandle, channel)
 end
 
 function DAQmxGetDIDataXferReqCond(taskHandle, channel, data)
-    ccall((:DAQmxGetDIDataXferReqCond, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetDIDataXferReqCond, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetDIDataXferReqCond(taskHandle, channel, data)
@@ -4687,7 +4686,7 @@ function DAQmxResetDIDataXferReqCond(taskHandle, channel)
 end
 
 function DAQmxGetDIUsbXferReqSize(taskHandle, channel, data)
-    ccall((:DAQmxGetDIUsbXferReqSize, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetDIUsbXferReqSize, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetDIUsbXferReqSize(taskHandle, channel, data)
@@ -4699,7 +4698,7 @@ function DAQmxResetDIUsbXferReqSize(taskHandle, channel)
 end
 
 function DAQmxGetDIUsbXferReqCount(taskHandle, channel, data)
-    ccall((:DAQmxGetDIUsbXferReqCount, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetDIUsbXferReqCount, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetDIUsbXferReqCount(taskHandle, channel, data)
@@ -4711,7 +4710,7 @@ function DAQmxResetDIUsbXferReqCount(taskHandle, channel)
 end
 
 function DAQmxGetDIMemMapEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetDIMemMapEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetDIMemMapEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetDIMemMapEnable(taskHandle, channel, data)
@@ -4723,7 +4722,7 @@ function DAQmxResetDIMemMapEnable(taskHandle, channel)
 end
 
 function DAQmxGetDIAcquireOn(taskHandle, channel, data)
-    ccall((:DAQmxGetDIAcquireOn, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetDIAcquireOn, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetDIAcquireOn(taskHandle, channel, data)
@@ -4735,7 +4734,7 @@ function DAQmxResetDIAcquireOn(taskHandle, channel)
 end
 
 function DAQmxGetDOOutputDriveType(taskHandle, channel, data)
-    ccall((:DAQmxGetDOOutputDriveType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetDOOutputDriveType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetDOOutputDriveType(taskHandle, channel, data)
@@ -4747,7 +4746,7 @@ function DAQmxResetDOOutputDriveType(taskHandle, channel)
 end
 
 function DAQmxGetDOInvertLines(taskHandle, channel, data)
-    ccall((:DAQmxGetDOInvertLines, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetDOInvertLines, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetDOInvertLines(taskHandle, channel, data)
@@ -4759,11 +4758,11 @@ function DAQmxResetDOInvertLines(taskHandle, channel)
 end
 
 function DAQmxGetDONumLines(taskHandle, channel, data)
-    ccall((:DAQmxGetDONumLines, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetDONumLines, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxGetDOTristate(taskHandle, channel, data)
-    ccall((:DAQmxGetDOTristate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetDOTristate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetDOTristate(taskHandle, channel, data)
@@ -4775,7 +4774,7 @@ function DAQmxResetDOTristate(taskHandle, channel)
 end
 
 function DAQmxGetDOLineStatesStartState(taskHandle, channel, data)
-    ccall((:DAQmxGetDOLineStatesStartState, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetDOLineStatesStartState, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetDOLineStatesStartState(taskHandle, channel, data)
@@ -4787,7 +4786,7 @@ function DAQmxResetDOLineStatesStartState(taskHandle, channel)
 end
 
 function DAQmxGetDOLineStatesPausedState(taskHandle, channel, data)
-    ccall((:DAQmxGetDOLineStatesPausedState, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetDOLineStatesPausedState, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetDOLineStatesPausedState(taskHandle, channel, data)
@@ -4799,7 +4798,7 @@ function DAQmxResetDOLineStatesPausedState(taskHandle, channel)
 end
 
 function DAQmxGetDOLineStatesDoneState(taskHandle, channel, data)
-    ccall((:DAQmxGetDOLineStatesDoneState, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetDOLineStatesDoneState, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetDOLineStatesDoneState(taskHandle, channel, data)
@@ -4811,7 +4810,7 @@ function DAQmxResetDOLineStatesDoneState(taskHandle, channel)
 end
 
 function DAQmxGetDOLogicFamily(taskHandle, channel, data)
-    ccall((:DAQmxGetDOLogicFamily, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetDOLogicFamily, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetDOLogicFamily(taskHandle, channel, data)
@@ -4823,7 +4822,7 @@ function DAQmxResetDOLogicFamily(taskHandle, channel)
 end
 
 function DAQmxGetDOOvercurrentLimit(taskHandle, channel, data)
-    ccall((:DAQmxGetDOOvercurrentLimit, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetDOOvercurrentLimit, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetDOOvercurrentLimit(taskHandle, channel, data)
@@ -4835,7 +4834,7 @@ function DAQmxResetDOOvercurrentLimit(taskHandle, channel)
 end
 
 function DAQmxGetDOOvercurrentAutoReenable(taskHandle, channel, data)
-    ccall((:DAQmxGetDOOvercurrentAutoReenable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetDOOvercurrentAutoReenable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetDOOvercurrentAutoReenable(taskHandle, channel, data)
@@ -4847,7 +4846,7 @@ function DAQmxResetDOOvercurrentAutoReenable(taskHandle, channel)
 end
 
 function DAQmxGetDOOvercurrentReenablePeriod(taskHandle, channel, data)
-    ccall((:DAQmxGetDOOvercurrentReenablePeriod, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetDOOvercurrentReenablePeriod, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetDOOvercurrentReenablePeriod(taskHandle, channel, data)
@@ -4859,7 +4858,7 @@ function DAQmxResetDOOvercurrentReenablePeriod(taskHandle, channel)
 end
 
 function DAQmxGetDOUseOnlyOnBrdMem(taskHandle, channel, data)
-    ccall((:DAQmxGetDOUseOnlyOnBrdMem, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetDOUseOnlyOnBrdMem, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetDOUseOnlyOnBrdMem(taskHandle, channel, data)
@@ -4871,7 +4870,7 @@ function DAQmxResetDOUseOnlyOnBrdMem(taskHandle, channel)
 end
 
 function DAQmxGetDODataXferMech(taskHandle, channel, data)
-    ccall((:DAQmxGetDODataXferMech, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetDODataXferMech, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetDODataXferMech(taskHandle, channel, data)
@@ -4883,7 +4882,7 @@ function DAQmxResetDODataXferMech(taskHandle, channel)
 end
 
 function DAQmxGetDODataXferReqCond(taskHandle, channel, data)
-    ccall((:DAQmxGetDODataXferReqCond, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetDODataXferReqCond, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetDODataXferReqCond(taskHandle, channel, data)
@@ -4895,7 +4894,7 @@ function DAQmxResetDODataXferReqCond(taskHandle, channel)
 end
 
 function DAQmxGetDOUsbXferReqSize(taskHandle, channel, data)
-    ccall((:DAQmxGetDOUsbXferReqSize, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetDOUsbXferReqSize, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetDOUsbXferReqSize(taskHandle, channel, data)
@@ -4907,7 +4906,7 @@ function DAQmxResetDOUsbXferReqSize(taskHandle, channel)
 end
 
 function DAQmxGetDOUsbXferReqCount(taskHandle, channel, data)
-    ccall((:DAQmxGetDOUsbXferReqCount, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetDOUsbXferReqCount, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetDOUsbXferReqCount(taskHandle, channel, data)
@@ -4919,7 +4918,7 @@ function DAQmxResetDOUsbXferReqCount(taskHandle, channel)
 end
 
 function DAQmxGetDOMemMapEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetDOMemMapEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetDOMemMapEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetDOMemMapEnable(taskHandle, channel, data)
@@ -4931,7 +4930,7 @@ function DAQmxResetDOMemMapEnable(taskHandle, channel)
 end
 
 function DAQmxGetDOGenerateOn(taskHandle, channel, data)
-    ccall((:DAQmxGetDOGenerateOn, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetDOGenerateOn, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetDOGenerateOn(taskHandle, channel, data)
@@ -4943,7 +4942,7 @@ function DAQmxResetDOGenerateOn(taskHandle, channel)
 end
 
 function DAQmxGetCIMax(taskHandle, channel, data)
-    ccall((:DAQmxGetCIMax, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIMax, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIMax(taskHandle, channel, data)
@@ -4955,7 +4954,7 @@ function DAQmxResetCIMax(taskHandle, channel)
 end
 
 function DAQmxGetCIMin(taskHandle, channel, data)
-    ccall((:DAQmxGetCIMin, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIMin, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIMin(taskHandle, channel, data)
@@ -4967,11 +4966,11 @@ function DAQmxResetCIMin(taskHandle, channel)
 end
 
 function DAQmxGetCICustomScaleName(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCICustomScaleName, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCICustomScaleName, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCICustomScaleName(taskHandle, channel, data)
-    ccall((:DAQmxSetCICustomScaleName, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCICustomScaleName, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCICustomScaleName(taskHandle, channel)
@@ -4979,11 +4978,11 @@ function DAQmxResetCICustomScaleName(taskHandle, channel)
 end
 
 function DAQmxGetCIMeasType(taskHandle, channel, data)
-    ccall((:DAQmxGetCIMeasType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIMeasType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxGetCIFreqUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetCIFreqUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIFreqUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIFreqUnits(taskHandle, channel, data)
@@ -4995,11 +4994,11 @@ function DAQmxResetCIFreqUnits(taskHandle, channel)
 end
 
 function DAQmxGetCIFreqTerm(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCIFreqTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCIFreqTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCIFreqTerm(taskHandle, channel, data)
-    ccall((:DAQmxSetCIFreqTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCIFreqTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCIFreqTerm(taskHandle, channel)
@@ -5007,7 +5006,7 @@ function DAQmxResetCIFreqTerm(taskHandle, channel)
 end
 
 function DAQmxGetCIFreqTermCfg(taskHandle, channel, data)
-    ccall((:DAQmxGetCIFreqTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIFreqTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIFreqTermCfg(taskHandle, channel, data)
@@ -5019,7 +5018,7 @@ function DAQmxResetCIFreqTermCfg(taskHandle, channel)
 end
 
 function DAQmxGetCIFreqLogicLvlBehavior(taskHandle, channel, data)
-    ccall((:DAQmxGetCIFreqLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIFreqLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIFreqLogicLvlBehavior(taskHandle, channel, data)
@@ -5031,7 +5030,7 @@ function DAQmxResetCIFreqLogicLvlBehavior(taskHandle, channel)
 end
 
 function DAQmxGetCIFreqDigFltrEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCIFreqDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIFreqDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIFreqDigFltrEnable(taskHandle, channel, data)
@@ -5043,7 +5042,7 @@ function DAQmxResetCIFreqDigFltrEnable(taskHandle, channel)
 end
 
 function DAQmxGetCIFreqDigFltrMinPulseWidth(taskHandle, channel, data)
-    ccall((:DAQmxGetCIFreqDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIFreqDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIFreqDigFltrMinPulseWidth(taskHandle, channel, data)
@@ -5055,11 +5054,11 @@ function DAQmxResetCIFreqDigFltrMinPulseWidth(taskHandle, channel)
 end
 
 function DAQmxGetCIFreqDigFltrTimebaseSrc(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCIFreqDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCIFreqDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCIFreqDigFltrTimebaseSrc(taskHandle, channel, data)
-    ccall((:DAQmxSetCIFreqDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCIFreqDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCIFreqDigFltrTimebaseSrc(taskHandle, channel)
@@ -5067,7 +5066,7 @@ function DAQmxResetCIFreqDigFltrTimebaseSrc(taskHandle, channel)
 end
 
 function DAQmxGetCIFreqDigFltrTimebaseRate(taskHandle, channel, data)
-    ccall((:DAQmxGetCIFreqDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIFreqDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIFreqDigFltrTimebaseRate(taskHandle, channel, data)
@@ -5079,7 +5078,7 @@ function DAQmxResetCIFreqDigFltrTimebaseRate(taskHandle, channel)
 end
 
 function DAQmxGetCIFreqDigSyncEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCIFreqDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIFreqDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIFreqDigSyncEnable(taskHandle, channel, data)
@@ -5091,7 +5090,7 @@ function DAQmxResetCIFreqDigSyncEnable(taskHandle, channel)
 end
 
 function DAQmxGetCIFreqStartingEdge(taskHandle, channel, data)
-    ccall((:DAQmxGetCIFreqStartingEdge, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIFreqStartingEdge, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIFreqStartingEdge(taskHandle, channel, data)
@@ -5103,7 +5102,7 @@ function DAQmxResetCIFreqStartingEdge(taskHandle, channel)
 end
 
 function DAQmxGetCIFreqMeasMeth(taskHandle, channel, data)
-    ccall((:DAQmxGetCIFreqMeasMeth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIFreqMeasMeth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIFreqMeasMeth(taskHandle, channel, data)
@@ -5115,7 +5114,7 @@ function DAQmxResetCIFreqMeasMeth(taskHandle, channel)
 end
 
 function DAQmxGetCIFreqEnableAveraging(taskHandle, channel, data)
-    ccall((:DAQmxGetCIFreqEnableAveraging, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIFreqEnableAveraging, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIFreqEnableAveraging(taskHandle, channel, data)
@@ -5127,7 +5126,7 @@ function DAQmxResetCIFreqEnableAveraging(taskHandle, channel)
 end
 
 function DAQmxGetCIFreqMeasTime(taskHandle, channel, data)
-    ccall((:DAQmxGetCIFreqMeasTime, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIFreqMeasTime, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIFreqMeasTime(taskHandle, channel, data)
@@ -5139,7 +5138,7 @@ function DAQmxResetCIFreqMeasTime(taskHandle, channel)
 end
 
 function DAQmxGetCIFreqDiv(taskHandle, channel, data)
-    ccall((:DAQmxGetCIFreqDiv, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIFreqDiv, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIFreqDiv(taskHandle, channel, data)
@@ -5151,7 +5150,7 @@ function DAQmxResetCIFreqDiv(taskHandle, channel)
 end
 
 function DAQmxGetCIPeriodUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPeriodUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPeriodUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPeriodUnits(taskHandle, channel, data)
@@ -5163,11 +5162,11 @@ function DAQmxResetCIPeriodUnits(taskHandle, channel)
 end
 
 function DAQmxGetCIPeriodTerm(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCIPeriodTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCIPeriodTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCIPeriodTerm(taskHandle, channel, data)
-    ccall((:DAQmxSetCIPeriodTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCIPeriodTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCIPeriodTerm(taskHandle, channel)
@@ -5175,7 +5174,7 @@ function DAQmxResetCIPeriodTerm(taskHandle, channel)
 end
 
 function DAQmxGetCIPeriodTermCfg(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPeriodTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPeriodTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPeriodTermCfg(taskHandle, channel, data)
@@ -5187,7 +5186,7 @@ function DAQmxResetCIPeriodTermCfg(taskHandle, channel)
 end
 
 function DAQmxGetCIPeriodLogicLvlBehavior(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPeriodLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPeriodLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPeriodLogicLvlBehavior(taskHandle, channel, data)
@@ -5199,7 +5198,7 @@ function DAQmxResetCIPeriodLogicLvlBehavior(taskHandle, channel)
 end
 
 function DAQmxGetCIPeriodDigFltrEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPeriodDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPeriodDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPeriodDigFltrEnable(taskHandle, channel, data)
@@ -5211,7 +5210,7 @@ function DAQmxResetCIPeriodDigFltrEnable(taskHandle, channel)
 end
 
 function DAQmxGetCIPeriodDigFltrMinPulseWidth(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPeriodDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPeriodDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPeriodDigFltrMinPulseWidth(taskHandle, channel, data)
@@ -5223,11 +5222,11 @@ function DAQmxResetCIPeriodDigFltrMinPulseWidth(taskHandle, channel)
 end
 
 function DAQmxGetCIPeriodDigFltrTimebaseSrc(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCIPeriodDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCIPeriodDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCIPeriodDigFltrTimebaseSrc(taskHandle, channel, data)
-    ccall((:DAQmxSetCIPeriodDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCIPeriodDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCIPeriodDigFltrTimebaseSrc(taskHandle, channel)
@@ -5235,7 +5234,7 @@ function DAQmxResetCIPeriodDigFltrTimebaseSrc(taskHandle, channel)
 end
 
 function DAQmxGetCIPeriodDigFltrTimebaseRate(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPeriodDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPeriodDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPeriodDigFltrTimebaseRate(taskHandle, channel, data)
@@ -5247,7 +5246,7 @@ function DAQmxResetCIPeriodDigFltrTimebaseRate(taskHandle, channel)
 end
 
 function DAQmxGetCIPeriodDigSyncEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPeriodDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPeriodDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPeriodDigSyncEnable(taskHandle, channel, data)
@@ -5259,7 +5258,7 @@ function DAQmxResetCIPeriodDigSyncEnable(taskHandle, channel)
 end
 
 function DAQmxGetCIPeriodStartingEdge(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPeriodStartingEdge, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPeriodStartingEdge, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPeriodStartingEdge(taskHandle, channel, data)
@@ -5271,7 +5270,7 @@ function DAQmxResetCIPeriodStartingEdge(taskHandle, channel)
 end
 
 function DAQmxGetCIPeriodMeasMeth(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPeriodMeasMeth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPeriodMeasMeth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPeriodMeasMeth(taskHandle, channel, data)
@@ -5283,7 +5282,7 @@ function DAQmxResetCIPeriodMeasMeth(taskHandle, channel)
 end
 
 function DAQmxGetCIPeriodEnableAveraging(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPeriodEnableAveraging, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPeriodEnableAveraging, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPeriodEnableAveraging(taskHandle, channel, data)
@@ -5295,7 +5294,7 @@ function DAQmxResetCIPeriodEnableAveraging(taskHandle, channel)
 end
 
 function DAQmxGetCIPeriodMeasTime(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPeriodMeasTime, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPeriodMeasTime, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPeriodMeasTime(taskHandle, channel, data)
@@ -5307,7 +5306,7 @@ function DAQmxResetCIPeriodMeasTime(taskHandle, channel)
 end
 
 function DAQmxGetCIPeriodDiv(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPeriodDiv, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPeriodDiv, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPeriodDiv(taskHandle, channel, data)
@@ -5319,11 +5318,11 @@ function DAQmxResetCIPeriodDiv(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesTerm(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCICountEdgesTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCICountEdgesTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCICountEdgesTerm(taskHandle, channel, data)
-    ccall((:DAQmxSetCICountEdgesTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCICountEdgesTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCICountEdgesTerm(taskHandle, channel)
@@ -5331,7 +5330,7 @@ function DAQmxResetCICountEdgesTerm(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesTermCfg(taskHandle, channel, data)
-    ccall((:DAQmxGetCICountEdgesTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICountEdgesTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICountEdgesTermCfg(taskHandle, channel, data)
@@ -5343,7 +5342,7 @@ function DAQmxResetCICountEdgesTermCfg(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesLogicLvlBehavior(taskHandle, channel, data)
-    ccall((:DAQmxGetCICountEdgesLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICountEdgesLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICountEdgesLogicLvlBehavior(taskHandle, channel, data)
@@ -5355,7 +5354,7 @@ function DAQmxResetCICountEdgesLogicLvlBehavior(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesDigFltrEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCICountEdgesDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICountEdgesDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICountEdgesDigFltrEnable(taskHandle, channel, data)
@@ -5367,7 +5366,7 @@ function DAQmxResetCICountEdgesDigFltrEnable(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesDigFltrMinPulseWidth(taskHandle, channel, data)
-    ccall((:DAQmxGetCICountEdgesDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICountEdgesDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICountEdgesDigFltrMinPulseWidth(taskHandle, channel, data)
@@ -5379,11 +5378,11 @@ function DAQmxResetCICountEdgesDigFltrMinPulseWidth(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesDigFltrTimebaseSrc(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCICountEdgesDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCICountEdgesDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCICountEdgesDigFltrTimebaseSrc(taskHandle, channel, data)
-    ccall((:DAQmxSetCICountEdgesDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCICountEdgesDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCICountEdgesDigFltrTimebaseSrc(taskHandle, channel)
@@ -5391,7 +5390,7 @@ function DAQmxResetCICountEdgesDigFltrTimebaseSrc(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesDigFltrTimebaseRate(taskHandle, channel, data)
-    ccall((:DAQmxGetCICountEdgesDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICountEdgesDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICountEdgesDigFltrTimebaseRate(taskHandle, channel, data)
@@ -5403,7 +5402,7 @@ function DAQmxResetCICountEdgesDigFltrTimebaseRate(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesDigSyncEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCICountEdgesDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICountEdgesDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICountEdgesDigSyncEnable(taskHandle, channel, data)
@@ -5415,7 +5414,7 @@ function DAQmxResetCICountEdgesDigSyncEnable(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesDir(taskHandle, channel, data)
-    ccall((:DAQmxGetCICountEdgesDir, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICountEdgesDir, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICountEdgesDir(taskHandle, channel, data)
@@ -5427,11 +5426,11 @@ function DAQmxResetCICountEdgesDir(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesDirTerm(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCICountEdgesDirTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCICountEdgesDirTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCICountEdgesDirTerm(taskHandle, channel, data)
-    ccall((:DAQmxSetCICountEdgesDirTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCICountEdgesDirTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCICountEdgesDirTerm(taskHandle, channel)
@@ -5439,7 +5438,7 @@ function DAQmxResetCICountEdgesDirTerm(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesCountDirTermCfg(taskHandle, channel, data)
-    ccall((:DAQmxGetCICountEdgesCountDirTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICountEdgesCountDirTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICountEdgesCountDirTermCfg(taskHandle, channel, data)
@@ -5451,7 +5450,7 @@ function DAQmxResetCICountEdgesCountDirTermCfg(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesCountDirLogicLvlBehavior(taskHandle, channel, data)
-    ccall((:DAQmxGetCICountEdgesCountDirLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICountEdgesCountDirLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICountEdgesCountDirLogicLvlBehavior(taskHandle, channel, data)
@@ -5463,7 +5462,7 @@ function DAQmxResetCICountEdgesCountDirLogicLvlBehavior(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesCountDirDigFltrEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCICountEdgesCountDirDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICountEdgesCountDirDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICountEdgesCountDirDigFltrEnable(taskHandle, channel, data)
@@ -5475,7 +5474,7 @@ function DAQmxResetCICountEdgesCountDirDigFltrEnable(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesCountDirDigFltrMinPulseWidth(taskHandle, channel, data)
-    ccall((:DAQmxGetCICountEdgesCountDirDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICountEdgesCountDirDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICountEdgesCountDirDigFltrMinPulseWidth(taskHandle, channel, data)
@@ -5487,11 +5486,11 @@ function DAQmxResetCICountEdgesCountDirDigFltrMinPulseWidth(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesCountDirDigFltrTimebaseSrc(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCICountEdgesCountDirDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCICountEdgesCountDirDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCICountEdgesCountDirDigFltrTimebaseSrc(taskHandle, channel, data)
-    ccall((:DAQmxSetCICountEdgesCountDirDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCICountEdgesCountDirDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCICountEdgesCountDirDigFltrTimebaseSrc(taskHandle, channel)
@@ -5499,7 +5498,7 @@ function DAQmxResetCICountEdgesCountDirDigFltrTimebaseSrc(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesCountDirDigFltrTimebaseRate(taskHandle, channel, data)
-    ccall((:DAQmxGetCICountEdgesCountDirDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICountEdgesCountDirDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICountEdgesCountDirDigFltrTimebaseRate(taskHandle, channel, data)
@@ -5511,7 +5510,7 @@ function DAQmxResetCICountEdgesCountDirDigFltrTimebaseRate(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesCountDirDigSyncEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCICountEdgesCountDirDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICountEdgesCountDirDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICountEdgesCountDirDigSyncEnable(taskHandle, channel, data)
@@ -5523,7 +5522,7 @@ function DAQmxResetCICountEdgesCountDirDigSyncEnable(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesInitialCnt(taskHandle, channel, data)
-    ccall((:DAQmxGetCICountEdgesInitialCnt, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICountEdgesInitialCnt, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICountEdgesInitialCnt(taskHandle, channel, data)
@@ -5535,7 +5534,7 @@ function DAQmxResetCICountEdgesInitialCnt(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesActiveEdge(taskHandle, channel, data)
-    ccall((:DAQmxGetCICountEdgesActiveEdge, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICountEdgesActiveEdge, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICountEdgesActiveEdge(taskHandle, channel, data)
@@ -5547,7 +5546,7 @@ function DAQmxResetCICountEdgesActiveEdge(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesCountResetEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCICountEdgesCountResetEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICountEdgesCountResetEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICountEdgesCountResetEnable(taskHandle, channel, data)
@@ -5559,7 +5558,7 @@ function DAQmxResetCICountEdgesCountResetEnable(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesCountResetResetCount(taskHandle, channel, data)
-    ccall((:DAQmxGetCICountEdgesCountResetResetCount, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICountEdgesCountResetResetCount, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICountEdgesCountResetResetCount(taskHandle, channel, data)
@@ -5571,11 +5570,11 @@ function DAQmxResetCICountEdgesCountResetResetCount(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesCountResetTerm(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCICountEdgesCountResetTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCICountEdgesCountResetTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCICountEdgesCountResetTerm(taskHandle, channel, data)
-    ccall((:DAQmxSetCICountEdgesCountResetTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCICountEdgesCountResetTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCICountEdgesCountResetTerm(taskHandle, channel)
@@ -5583,7 +5582,7 @@ function DAQmxResetCICountEdgesCountResetTerm(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesCountResetTermCfg(taskHandle, channel, data)
-    ccall((:DAQmxGetCICountEdgesCountResetTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICountEdgesCountResetTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICountEdgesCountResetTermCfg(taskHandle, channel, data)
@@ -5595,7 +5594,7 @@ function DAQmxResetCICountEdgesCountResetTermCfg(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesCountResetLogicLvlBehavior(taskHandle, channel, data)
-    ccall((:DAQmxGetCICountEdgesCountResetLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICountEdgesCountResetLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICountEdgesCountResetLogicLvlBehavior(taskHandle, channel, data)
@@ -5607,7 +5606,7 @@ function DAQmxResetCICountEdgesCountResetLogicLvlBehavior(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesCountResetDigFltrEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCICountEdgesCountResetDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICountEdgesCountResetDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICountEdgesCountResetDigFltrEnable(taskHandle, channel, data)
@@ -5619,7 +5618,7 @@ function DAQmxResetCICountEdgesCountResetDigFltrEnable(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesCountResetDigFltrMinPulseWidth(taskHandle, channel, data)
-    ccall((:DAQmxGetCICountEdgesCountResetDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICountEdgesCountResetDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICountEdgesCountResetDigFltrMinPulseWidth(taskHandle, channel, data)
@@ -5631,11 +5630,11 @@ function DAQmxResetCICountEdgesCountResetDigFltrMinPulseWidth(taskHandle, channe
 end
 
 function DAQmxGetCICountEdgesCountResetDigFltrTimebaseSrc(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCICountEdgesCountResetDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCICountEdgesCountResetDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCICountEdgesCountResetDigFltrTimebaseSrc(taskHandle, channel, data)
-    ccall((:DAQmxSetCICountEdgesCountResetDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCICountEdgesCountResetDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCICountEdgesCountResetDigFltrTimebaseSrc(taskHandle, channel)
@@ -5643,7 +5642,7 @@ function DAQmxResetCICountEdgesCountResetDigFltrTimebaseSrc(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesCountResetDigFltrTimebaseRate(taskHandle, channel, data)
-    ccall((:DAQmxGetCICountEdgesCountResetDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICountEdgesCountResetDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICountEdgesCountResetDigFltrTimebaseRate(taskHandle, channel, data)
@@ -5655,7 +5654,7 @@ function DAQmxResetCICountEdgesCountResetDigFltrTimebaseRate(taskHandle, channel
 end
 
 function DAQmxGetCICountEdgesCountResetDigSyncEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCICountEdgesCountResetDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICountEdgesCountResetDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICountEdgesCountResetDigSyncEnable(taskHandle, channel, data)
@@ -5667,7 +5666,7 @@ function DAQmxResetCICountEdgesCountResetDigSyncEnable(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesCountResetActiveEdge(taskHandle, channel, data)
-    ccall((:DAQmxGetCICountEdgesCountResetActiveEdge, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICountEdgesCountResetActiveEdge, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICountEdgesCountResetActiveEdge(taskHandle, channel, data)
@@ -5679,7 +5678,7 @@ function DAQmxResetCICountEdgesCountResetActiveEdge(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesGateEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCICountEdgesGateEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICountEdgesGateEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICountEdgesGateEnable(taskHandle, channel, data)
@@ -5691,11 +5690,11 @@ function DAQmxResetCICountEdgesGateEnable(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesGateTerm(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCICountEdgesGateTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCICountEdgesGateTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCICountEdgesGateTerm(taskHandle, channel, data)
-    ccall((:DAQmxSetCICountEdgesGateTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCICountEdgesGateTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCICountEdgesGateTerm(taskHandle, channel)
@@ -5703,7 +5702,7 @@ function DAQmxResetCICountEdgesGateTerm(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesGateTermCfg(taskHandle, channel, data)
-    ccall((:DAQmxGetCICountEdgesGateTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICountEdgesGateTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICountEdgesGateTermCfg(taskHandle, channel, data)
@@ -5715,7 +5714,7 @@ function DAQmxResetCICountEdgesGateTermCfg(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesGateLogicLvlBehavior(taskHandle, channel, data)
-    ccall((:DAQmxGetCICountEdgesGateLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICountEdgesGateLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICountEdgesGateLogicLvlBehavior(taskHandle, channel, data)
@@ -5727,7 +5726,7 @@ function DAQmxResetCICountEdgesGateLogicLvlBehavior(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesGateDigFltrEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCICountEdgesGateDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICountEdgesGateDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICountEdgesGateDigFltrEnable(taskHandle, channel, data)
@@ -5739,7 +5738,7 @@ function DAQmxResetCICountEdgesGateDigFltrEnable(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesGateDigFltrMinPulseWidth(taskHandle, channel, data)
-    ccall((:DAQmxGetCICountEdgesGateDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICountEdgesGateDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICountEdgesGateDigFltrMinPulseWidth(taskHandle, channel, data)
@@ -5751,11 +5750,11 @@ function DAQmxResetCICountEdgesGateDigFltrMinPulseWidth(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesGateDigFltrTimebaseSrc(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCICountEdgesGateDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCICountEdgesGateDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCICountEdgesGateDigFltrTimebaseSrc(taskHandle, channel, data)
-    ccall((:DAQmxSetCICountEdgesGateDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCICountEdgesGateDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCICountEdgesGateDigFltrTimebaseSrc(taskHandle, channel)
@@ -5763,7 +5762,7 @@ function DAQmxResetCICountEdgesGateDigFltrTimebaseSrc(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesGateDigFltrTimebaseRate(taskHandle, channel, data)
-    ccall((:DAQmxGetCICountEdgesGateDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICountEdgesGateDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICountEdgesGateDigFltrTimebaseRate(taskHandle, channel, data)
@@ -5775,7 +5774,7 @@ function DAQmxResetCICountEdgesGateDigFltrTimebaseRate(taskHandle, channel)
 end
 
 function DAQmxGetCICountEdgesGateWhen(taskHandle, channel, data)
-    ccall((:DAQmxGetCICountEdgesGateWhen, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICountEdgesGateWhen, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICountEdgesGateWhen(taskHandle, channel, data)
@@ -5787,11 +5786,11 @@ function DAQmxResetCICountEdgesGateWhen(taskHandle, channel)
 end
 
 function DAQmxGetCIDutyCycleTerm(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCIDutyCycleTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCIDutyCycleTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCIDutyCycleTerm(taskHandle, channel, data)
-    ccall((:DAQmxSetCIDutyCycleTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCIDutyCycleTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCIDutyCycleTerm(taskHandle, channel)
@@ -5799,7 +5798,7 @@ function DAQmxResetCIDutyCycleTerm(taskHandle, channel)
 end
 
 function DAQmxGetCIDutyCycleTermCfg(taskHandle, channel, data)
-    ccall((:DAQmxGetCIDutyCycleTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIDutyCycleTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIDutyCycleTermCfg(taskHandle, channel, data)
@@ -5811,7 +5810,7 @@ function DAQmxResetCIDutyCycleTermCfg(taskHandle, channel)
 end
 
 function DAQmxGetCIDutyCycleLogicLvlBehavior(taskHandle, channel, data)
-    ccall((:DAQmxGetCIDutyCycleLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIDutyCycleLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIDutyCycleLogicLvlBehavior(taskHandle, channel, data)
@@ -5823,7 +5822,7 @@ function DAQmxResetCIDutyCycleLogicLvlBehavior(taskHandle, channel)
 end
 
 function DAQmxGetCIDutyCycleDigFltrEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCIDutyCycleDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIDutyCycleDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIDutyCycleDigFltrEnable(taskHandle, channel, data)
@@ -5835,7 +5834,7 @@ function DAQmxResetCIDutyCycleDigFltrEnable(taskHandle, channel)
 end
 
 function DAQmxGetCIDutyCycleDigFltrMinPulseWidth(taskHandle, channel, data)
-    ccall((:DAQmxGetCIDutyCycleDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIDutyCycleDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIDutyCycleDigFltrMinPulseWidth(taskHandle, channel, data)
@@ -5847,11 +5846,11 @@ function DAQmxResetCIDutyCycleDigFltrMinPulseWidth(taskHandle, channel)
 end
 
 function DAQmxGetCIDutyCycleDigFltrTimebaseSrc(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCIDutyCycleDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCIDutyCycleDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCIDutyCycleDigFltrTimebaseSrc(taskHandle, channel, data)
-    ccall((:DAQmxSetCIDutyCycleDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCIDutyCycleDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCIDutyCycleDigFltrTimebaseSrc(taskHandle, channel)
@@ -5859,7 +5858,7 @@ function DAQmxResetCIDutyCycleDigFltrTimebaseSrc(taskHandle, channel)
 end
 
 function DAQmxGetCIDutyCycleDigFltrTimebaseRate(taskHandle, channel, data)
-    ccall((:DAQmxGetCIDutyCycleDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIDutyCycleDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIDutyCycleDigFltrTimebaseRate(taskHandle, channel, data)
@@ -5871,7 +5870,7 @@ function DAQmxResetCIDutyCycleDigFltrTimebaseRate(taskHandle, channel)
 end
 
 function DAQmxGetCIDutyCycleStartingEdge(taskHandle, channel, data)
-    ccall((:DAQmxGetCIDutyCycleStartingEdge, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIDutyCycleStartingEdge, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIDutyCycleStartingEdge(taskHandle, channel, data)
@@ -5883,7 +5882,7 @@ function DAQmxResetCIDutyCycleStartingEdge(taskHandle, channel)
 end
 
 function DAQmxGetCIAngEncoderUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetCIAngEncoderUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIAngEncoderUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIAngEncoderUnits(taskHandle, channel, data)
@@ -5895,7 +5894,7 @@ function DAQmxResetCIAngEncoderUnits(taskHandle, channel)
 end
 
 function DAQmxGetCIAngEncoderPulsesPerRev(taskHandle, channel, data)
-    ccall((:DAQmxGetCIAngEncoderPulsesPerRev, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIAngEncoderPulsesPerRev, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIAngEncoderPulsesPerRev(taskHandle, channel, data)
@@ -5907,7 +5906,7 @@ function DAQmxResetCIAngEncoderPulsesPerRev(taskHandle, channel)
 end
 
 function DAQmxGetCIAngEncoderInitialAngle(taskHandle, channel, data)
-    ccall((:DAQmxGetCIAngEncoderInitialAngle, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIAngEncoderInitialAngle, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIAngEncoderInitialAngle(taskHandle, channel, data)
@@ -5919,7 +5918,7 @@ function DAQmxResetCIAngEncoderInitialAngle(taskHandle, channel)
 end
 
 function DAQmxGetCILinEncoderUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetCILinEncoderUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCILinEncoderUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCILinEncoderUnits(taskHandle, channel, data)
@@ -5931,7 +5930,7 @@ function DAQmxResetCILinEncoderUnits(taskHandle, channel)
 end
 
 function DAQmxGetCILinEncoderDistPerPulse(taskHandle, channel, data)
-    ccall((:DAQmxGetCILinEncoderDistPerPulse, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCILinEncoderDistPerPulse, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCILinEncoderDistPerPulse(taskHandle, channel, data)
@@ -5943,7 +5942,7 @@ function DAQmxResetCILinEncoderDistPerPulse(taskHandle, channel)
 end
 
 function DAQmxGetCILinEncoderInitialPos(taskHandle, channel, data)
-    ccall((:DAQmxGetCILinEncoderInitialPos, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCILinEncoderInitialPos, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCILinEncoderInitialPos(taskHandle, channel, data)
@@ -5955,7 +5954,7 @@ function DAQmxResetCILinEncoderInitialPos(taskHandle, channel)
 end
 
 function DAQmxGetCIEncoderDecodingType(taskHandle, channel, data)
-    ccall((:DAQmxGetCIEncoderDecodingType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIEncoderDecodingType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIEncoderDecodingType(taskHandle, channel, data)
@@ -5967,11 +5966,11 @@ function DAQmxResetCIEncoderDecodingType(taskHandle, channel)
 end
 
 function DAQmxGetCIEncoderAInputTerm(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCIEncoderAInputTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCIEncoderAInputTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCIEncoderAInputTerm(taskHandle, channel, data)
-    ccall((:DAQmxSetCIEncoderAInputTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCIEncoderAInputTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCIEncoderAInputTerm(taskHandle, channel)
@@ -5979,7 +5978,7 @@ function DAQmxResetCIEncoderAInputTerm(taskHandle, channel)
 end
 
 function DAQmxGetCIEncoderAInputTermCfg(taskHandle, channel, data)
-    ccall((:DAQmxGetCIEncoderAInputTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIEncoderAInputTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIEncoderAInputTermCfg(taskHandle, channel, data)
@@ -5991,7 +5990,7 @@ function DAQmxResetCIEncoderAInputTermCfg(taskHandle, channel)
 end
 
 function DAQmxGetCIEncoderAInputLogicLvlBehavior(taskHandle, channel, data)
-    ccall((:DAQmxGetCIEncoderAInputLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIEncoderAInputLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIEncoderAInputLogicLvlBehavior(taskHandle, channel, data)
@@ -6003,7 +6002,7 @@ function DAQmxResetCIEncoderAInputLogicLvlBehavior(taskHandle, channel)
 end
 
 function DAQmxGetCIEncoderAInputDigFltrEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCIEncoderAInputDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIEncoderAInputDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIEncoderAInputDigFltrEnable(taskHandle, channel, data)
@@ -6015,7 +6014,7 @@ function DAQmxResetCIEncoderAInputDigFltrEnable(taskHandle, channel)
 end
 
 function DAQmxGetCIEncoderAInputDigFltrMinPulseWidth(taskHandle, channel, data)
-    ccall((:DAQmxGetCIEncoderAInputDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIEncoderAInputDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIEncoderAInputDigFltrMinPulseWidth(taskHandle, channel, data)
@@ -6027,11 +6026,11 @@ function DAQmxResetCIEncoderAInputDigFltrMinPulseWidth(taskHandle, channel)
 end
 
 function DAQmxGetCIEncoderAInputDigFltrTimebaseSrc(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCIEncoderAInputDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCIEncoderAInputDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCIEncoderAInputDigFltrTimebaseSrc(taskHandle, channel, data)
-    ccall((:DAQmxSetCIEncoderAInputDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCIEncoderAInputDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCIEncoderAInputDigFltrTimebaseSrc(taskHandle, channel)
@@ -6039,7 +6038,7 @@ function DAQmxResetCIEncoderAInputDigFltrTimebaseSrc(taskHandle, channel)
 end
 
 function DAQmxGetCIEncoderAInputDigFltrTimebaseRate(taskHandle, channel, data)
-    ccall((:DAQmxGetCIEncoderAInputDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIEncoderAInputDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIEncoderAInputDigFltrTimebaseRate(taskHandle, channel, data)
@@ -6051,7 +6050,7 @@ function DAQmxResetCIEncoderAInputDigFltrTimebaseRate(taskHandle, channel)
 end
 
 function DAQmxGetCIEncoderAInputDigSyncEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCIEncoderAInputDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIEncoderAInputDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIEncoderAInputDigSyncEnable(taskHandle, channel, data)
@@ -6063,11 +6062,11 @@ function DAQmxResetCIEncoderAInputDigSyncEnable(taskHandle, channel)
 end
 
 function DAQmxGetCIEncoderBInputTerm(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCIEncoderBInputTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCIEncoderBInputTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCIEncoderBInputTerm(taskHandle, channel, data)
-    ccall((:DAQmxSetCIEncoderBInputTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCIEncoderBInputTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCIEncoderBInputTerm(taskHandle, channel)
@@ -6075,7 +6074,7 @@ function DAQmxResetCIEncoderBInputTerm(taskHandle, channel)
 end
 
 function DAQmxGetCIEncoderBInputTermCfg(taskHandle, channel, data)
-    ccall((:DAQmxGetCIEncoderBInputTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIEncoderBInputTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIEncoderBInputTermCfg(taskHandle, channel, data)
@@ -6087,7 +6086,7 @@ function DAQmxResetCIEncoderBInputTermCfg(taskHandle, channel)
 end
 
 function DAQmxGetCIEncoderBInputLogicLvlBehavior(taskHandle, channel, data)
-    ccall((:DAQmxGetCIEncoderBInputLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIEncoderBInputLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIEncoderBInputLogicLvlBehavior(taskHandle, channel, data)
@@ -6099,7 +6098,7 @@ function DAQmxResetCIEncoderBInputLogicLvlBehavior(taskHandle, channel)
 end
 
 function DAQmxGetCIEncoderBInputDigFltrEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCIEncoderBInputDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIEncoderBInputDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIEncoderBInputDigFltrEnable(taskHandle, channel, data)
@@ -6111,7 +6110,7 @@ function DAQmxResetCIEncoderBInputDigFltrEnable(taskHandle, channel)
 end
 
 function DAQmxGetCIEncoderBInputDigFltrMinPulseWidth(taskHandle, channel, data)
-    ccall((:DAQmxGetCIEncoderBInputDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIEncoderBInputDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIEncoderBInputDigFltrMinPulseWidth(taskHandle, channel, data)
@@ -6123,11 +6122,11 @@ function DAQmxResetCIEncoderBInputDigFltrMinPulseWidth(taskHandle, channel)
 end
 
 function DAQmxGetCIEncoderBInputDigFltrTimebaseSrc(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCIEncoderBInputDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCIEncoderBInputDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCIEncoderBInputDigFltrTimebaseSrc(taskHandle, channel, data)
-    ccall((:DAQmxSetCIEncoderBInputDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCIEncoderBInputDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCIEncoderBInputDigFltrTimebaseSrc(taskHandle, channel)
@@ -6135,7 +6134,7 @@ function DAQmxResetCIEncoderBInputDigFltrTimebaseSrc(taskHandle, channel)
 end
 
 function DAQmxGetCIEncoderBInputDigFltrTimebaseRate(taskHandle, channel, data)
-    ccall((:DAQmxGetCIEncoderBInputDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIEncoderBInputDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIEncoderBInputDigFltrTimebaseRate(taskHandle, channel, data)
@@ -6147,7 +6146,7 @@ function DAQmxResetCIEncoderBInputDigFltrTimebaseRate(taskHandle, channel)
 end
 
 function DAQmxGetCIEncoderBInputDigSyncEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCIEncoderBInputDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIEncoderBInputDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIEncoderBInputDigSyncEnable(taskHandle, channel, data)
@@ -6159,11 +6158,11 @@ function DAQmxResetCIEncoderBInputDigSyncEnable(taskHandle, channel)
 end
 
 function DAQmxGetCIEncoderZInputTerm(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCIEncoderZInputTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCIEncoderZInputTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCIEncoderZInputTerm(taskHandle, channel, data)
-    ccall((:DAQmxSetCIEncoderZInputTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCIEncoderZInputTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCIEncoderZInputTerm(taskHandle, channel)
@@ -6171,7 +6170,7 @@ function DAQmxResetCIEncoderZInputTerm(taskHandle, channel)
 end
 
 function DAQmxGetCIEncoderZInputTermCfg(taskHandle, channel, data)
-    ccall((:DAQmxGetCIEncoderZInputTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIEncoderZInputTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIEncoderZInputTermCfg(taskHandle, channel, data)
@@ -6183,7 +6182,7 @@ function DAQmxResetCIEncoderZInputTermCfg(taskHandle, channel)
 end
 
 function DAQmxGetCIEncoderZInputLogicLvlBehavior(taskHandle, channel, data)
-    ccall((:DAQmxGetCIEncoderZInputLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIEncoderZInputLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIEncoderZInputLogicLvlBehavior(taskHandle, channel, data)
@@ -6195,7 +6194,7 @@ function DAQmxResetCIEncoderZInputLogicLvlBehavior(taskHandle, channel)
 end
 
 function DAQmxGetCIEncoderZInputDigFltrEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCIEncoderZInputDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIEncoderZInputDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIEncoderZInputDigFltrEnable(taskHandle, channel, data)
@@ -6207,7 +6206,7 @@ function DAQmxResetCIEncoderZInputDigFltrEnable(taskHandle, channel)
 end
 
 function DAQmxGetCIEncoderZInputDigFltrMinPulseWidth(taskHandle, channel, data)
-    ccall((:DAQmxGetCIEncoderZInputDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIEncoderZInputDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIEncoderZInputDigFltrMinPulseWidth(taskHandle, channel, data)
@@ -6219,11 +6218,11 @@ function DAQmxResetCIEncoderZInputDigFltrMinPulseWidth(taskHandle, channel)
 end
 
 function DAQmxGetCIEncoderZInputDigFltrTimebaseSrc(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCIEncoderZInputDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCIEncoderZInputDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCIEncoderZInputDigFltrTimebaseSrc(taskHandle, channel, data)
-    ccall((:DAQmxSetCIEncoderZInputDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCIEncoderZInputDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCIEncoderZInputDigFltrTimebaseSrc(taskHandle, channel)
@@ -6231,7 +6230,7 @@ function DAQmxResetCIEncoderZInputDigFltrTimebaseSrc(taskHandle, channel)
 end
 
 function DAQmxGetCIEncoderZInputDigFltrTimebaseRate(taskHandle, channel, data)
-    ccall((:DAQmxGetCIEncoderZInputDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIEncoderZInputDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIEncoderZInputDigFltrTimebaseRate(taskHandle, channel, data)
@@ -6243,7 +6242,7 @@ function DAQmxResetCIEncoderZInputDigFltrTimebaseRate(taskHandle, channel)
 end
 
 function DAQmxGetCIEncoderZInputDigSyncEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCIEncoderZInputDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIEncoderZInputDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIEncoderZInputDigSyncEnable(taskHandle, channel, data)
@@ -6255,7 +6254,7 @@ function DAQmxResetCIEncoderZInputDigSyncEnable(taskHandle, channel)
 end
 
 function DAQmxGetCIEncoderZIndexEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCIEncoderZIndexEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIEncoderZIndexEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIEncoderZIndexEnable(taskHandle, channel, data)
@@ -6267,7 +6266,7 @@ function DAQmxResetCIEncoderZIndexEnable(taskHandle, channel)
 end
 
 function DAQmxGetCIEncoderZIndexVal(taskHandle, channel, data)
-    ccall((:DAQmxGetCIEncoderZIndexVal, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIEncoderZIndexVal, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIEncoderZIndexVal(taskHandle, channel, data)
@@ -6279,7 +6278,7 @@ function DAQmxResetCIEncoderZIndexVal(taskHandle, channel)
 end
 
 function DAQmxGetCIEncoderZIndexPhase(taskHandle, channel, data)
-    ccall((:DAQmxGetCIEncoderZIndexPhase, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIEncoderZIndexPhase, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIEncoderZIndexPhase(taskHandle, channel, data)
@@ -6291,7 +6290,7 @@ function DAQmxResetCIEncoderZIndexPhase(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseWidthUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPulseWidthUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPulseWidthUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPulseWidthUnits(taskHandle, channel, data)
@@ -6303,11 +6302,11 @@ function DAQmxResetCIPulseWidthUnits(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseWidthTerm(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCIPulseWidthTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCIPulseWidthTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCIPulseWidthTerm(taskHandle, channel, data)
-    ccall((:DAQmxSetCIPulseWidthTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCIPulseWidthTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCIPulseWidthTerm(taskHandle, channel)
@@ -6315,7 +6314,7 @@ function DAQmxResetCIPulseWidthTerm(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseWidthTermCfg(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPulseWidthTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPulseWidthTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPulseWidthTermCfg(taskHandle, channel, data)
@@ -6327,7 +6326,7 @@ function DAQmxResetCIPulseWidthTermCfg(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseWidthLogicLvlBehavior(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPulseWidthLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPulseWidthLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPulseWidthLogicLvlBehavior(taskHandle, channel, data)
@@ -6339,7 +6338,7 @@ function DAQmxResetCIPulseWidthLogicLvlBehavior(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseWidthDigFltrEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPulseWidthDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPulseWidthDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPulseWidthDigFltrEnable(taskHandle, channel, data)
@@ -6351,7 +6350,7 @@ function DAQmxResetCIPulseWidthDigFltrEnable(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseWidthDigFltrMinPulseWidth(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPulseWidthDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPulseWidthDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPulseWidthDigFltrMinPulseWidth(taskHandle, channel, data)
@@ -6363,11 +6362,11 @@ function DAQmxResetCIPulseWidthDigFltrMinPulseWidth(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseWidthDigFltrTimebaseSrc(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCIPulseWidthDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCIPulseWidthDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCIPulseWidthDigFltrTimebaseSrc(taskHandle, channel, data)
-    ccall((:DAQmxSetCIPulseWidthDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCIPulseWidthDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCIPulseWidthDigFltrTimebaseSrc(taskHandle, channel)
@@ -6375,7 +6374,7 @@ function DAQmxResetCIPulseWidthDigFltrTimebaseSrc(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseWidthDigFltrTimebaseRate(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPulseWidthDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPulseWidthDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPulseWidthDigFltrTimebaseRate(taskHandle, channel, data)
@@ -6387,7 +6386,7 @@ function DAQmxResetCIPulseWidthDigFltrTimebaseRate(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseWidthDigSyncEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPulseWidthDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPulseWidthDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPulseWidthDigSyncEnable(taskHandle, channel, data)
@@ -6399,7 +6398,7 @@ function DAQmxResetCIPulseWidthDigSyncEnable(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseWidthStartingEdge(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPulseWidthStartingEdge, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPulseWidthStartingEdge, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPulseWidthStartingEdge(taskHandle, channel, data)
@@ -6411,7 +6410,7 @@ function DAQmxResetCIPulseWidthStartingEdge(taskHandle, channel)
 end
 
 function DAQmxGetCITimestampUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetCITimestampUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCITimestampUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCITimestampUnits(taskHandle, channel, data)
@@ -6423,7 +6422,7 @@ function DAQmxResetCITimestampUnits(taskHandle, channel)
 end
 
 function DAQmxGetCITimestampInitialSeconds(taskHandle, channel, data)
-    ccall((:DAQmxGetCITimestampInitialSeconds, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCITimestampInitialSeconds, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCITimestampInitialSeconds(taskHandle, channel, data)
@@ -6435,7 +6434,7 @@ function DAQmxResetCITimestampInitialSeconds(taskHandle, channel)
 end
 
 function DAQmxGetCIGPSSyncMethod(taskHandle, channel, data)
-    ccall((:DAQmxGetCIGPSSyncMethod, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIGPSSyncMethod, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIGPSSyncMethod(taskHandle, channel, data)
@@ -6447,11 +6446,11 @@ function DAQmxResetCIGPSSyncMethod(taskHandle, channel)
 end
 
 function DAQmxGetCIGPSSyncSrc(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCIGPSSyncSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCIGPSSyncSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCIGPSSyncSrc(taskHandle, channel, data)
-    ccall((:DAQmxSetCIGPSSyncSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCIGPSSyncSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCIGPSSyncSrc(taskHandle, channel)
@@ -6459,7 +6458,7 @@ function DAQmxResetCIGPSSyncSrc(taskHandle, channel)
 end
 
 function DAQmxGetCIVelocityAngEncoderUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetCIVelocityAngEncoderUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIVelocityAngEncoderUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIVelocityAngEncoderUnits(taskHandle, channel, data)
@@ -6471,7 +6470,7 @@ function DAQmxResetCIVelocityAngEncoderUnits(taskHandle, channel)
 end
 
 function DAQmxGetCIVelocityAngEncoderPulsesPerRev(taskHandle, channel, data)
-    ccall((:DAQmxGetCIVelocityAngEncoderPulsesPerRev, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIVelocityAngEncoderPulsesPerRev, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIVelocityAngEncoderPulsesPerRev(taskHandle, channel, data)
@@ -6483,7 +6482,7 @@ function DAQmxResetCIVelocityAngEncoderPulsesPerRev(taskHandle, channel)
 end
 
 function DAQmxGetCIVelocityLinEncoderUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetCIVelocityLinEncoderUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIVelocityLinEncoderUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIVelocityLinEncoderUnits(taskHandle, channel, data)
@@ -6495,7 +6494,7 @@ function DAQmxResetCIVelocityLinEncoderUnits(taskHandle, channel)
 end
 
 function DAQmxGetCIVelocityLinEncoderDistPerPulse(taskHandle, channel, data)
-    ccall((:DAQmxGetCIVelocityLinEncoderDistPerPulse, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIVelocityLinEncoderDistPerPulse, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIVelocityLinEncoderDistPerPulse(taskHandle, channel, data)
@@ -6507,7 +6506,7 @@ function DAQmxResetCIVelocityLinEncoderDistPerPulse(taskHandle, channel)
 end
 
 function DAQmxGetCIVelocityEncoderDecodingType(taskHandle, channel, data)
-    ccall((:DAQmxGetCIVelocityEncoderDecodingType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIVelocityEncoderDecodingType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIVelocityEncoderDecodingType(taskHandle, channel, data)
@@ -6519,11 +6518,11 @@ function DAQmxResetCIVelocityEncoderDecodingType(taskHandle, channel)
 end
 
 function DAQmxGetCIVelocityEncoderAInputTerm(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCIVelocityEncoderAInputTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCIVelocityEncoderAInputTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCIVelocityEncoderAInputTerm(taskHandle, channel, data)
-    ccall((:DAQmxSetCIVelocityEncoderAInputTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCIVelocityEncoderAInputTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCIVelocityEncoderAInputTerm(taskHandle, channel)
@@ -6531,7 +6530,7 @@ function DAQmxResetCIVelocityEncoderAInputTerm(taskHandle, channel)
 end
 
 function DAQmxGetCIVelocityEncoderAInputTermCfg(taskHandle, channel, data)
-    ccall((:DAQmxGetCIVelocityEncoderAInputTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIVelocityEncoderAInputTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIVelocityEncoderAInputTermCfg(taskHandle, channel, data)
@@ -6543,7 +6542,7 @@ function DAQmxResetCIVelocityEncoderAInputTermCfg(taskHandle, channel)
 end
 
 function DAQmxGetCIVelocityEncoderAInputLogicLvlBehavior(taskHandle, channel, data)
-    ccall((:DAQmxGetCIVelocityEncoderAInputLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIVelocityEncoderAInputLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIVelocityEncoderAInputLogicLvlBehavior(taskHandle, channel, data)
@@ -6555,7 +6554,7 @@ function DAQmxResetCIVelocityEncoderAInputLogicLvlBehavior(taskHandle, channel)
 end
 
 function DAQmxGetCIVelocityEncoderAInputDigFltrEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCIVelocityEncoderAInputDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIVelocityEncoderAInputDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIVelocityEncoderAInputDigFltrEnable(taskHandle, channel, data)
@@ -6567,7 +6566,7 @@ function DAQmxResetCIVelocityEncoderAInputDigFltrEnable(taskHandle, channel)
 end
 
 function DAQmxGetCIVelocityEncoderAInputDigFltrMinPulseWidth(taskHandle, channel, data)
-    ccall((:DAQmxGetCIVelocityEncoderAInputDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIVelocityEncoderAInputDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIVelocityEncoderAInputDigFltrMinPulseWidth(taskHandle, channel, data)
@@ -6579,11 +6578,11 @@ function DAQmxResetCIVelocityEncoderAInputDigFltrMinPulseWidth(taskHandle, chann
 end
 
 function DAQmxGetCIVelocityEncoderAInputDigFltrTimebaseSrc(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCIVelocityEncoderAInputDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCIVelocityEncoderAInputDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCIVelocityEncoderAInputDigFltrTimebaseSrc(taskHandle, channel, data)
-    ccall((:DAQmxSetCIVelocityEncoderAInputDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCIVelocityEncoderAInputDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCIVelocityEncoderAInputDigFltrTimebaseSrc(taskHandle, channel)
@@ -6591,7 +6590,7 @@ function DAQmxResetCIVelocityEncoderAInputDigFltrTimebaseSrc(taskHandle, channel
 end
 
 function DAQmxGetCIVelocityEncoderAInputDigFltrTimebaseRate(taskHandle, channel, data)
-    ccall((:DAQmxGetCIVelocityEncoderAInputDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIVelocityEncoderAInputDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIVelocityEncoderAInputDigFltrTimebaseRate(taskHandle, channel, data)
@@ -6603,11 +6602,11 @@ function DAQmxResetCIVelocityEncoderAInputDigFltrTimebaseRate(taskHandle, channe
 end
 
 function DAQmxGetCIVelocityEncoderBInputTerm(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCIVelocityEncoderBInputTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCIVelocityEncoderBInputTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCIVelocityEncoderBInputTerm(taskHandle, channel, data)
-    ccall((:DAQmxSetCIVelocityEncoderBInputTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCIVelocityEncoderBInputTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCIVelocityEncoderBInputTerm(taskHandle, channel)
@@ -6615,7 +6614,7 @@ function DAQmxResetCIVelocityEncoderBInputTerm(taskHandle, channel)
 end
 
 function DAQmxGetCIVelocityEncoderBInputTermCfg(taskHandle, channel, data)
-    ccall((:DAQmxGetCIVelocityEncoderBInputTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIVelocityEncoderBInputTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIVelocityEncoderBInputTermCfg(taskHandle, channel, data)
@@ -6627,7 +6626,7 @@ function DAQmxResetCIVelocityEncoderBInputTermCfg(taskHandle, channel)
 end
 
 function DAQmxGetCIVelocityEncoderBInputLogicLvlBehavior(taskHandle, channel, data)
-    ccall((:DAQmxGetCIVelocityEncoderBInputLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIVelocityEncoderBInputLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIVelocityEncoderBInputLogicLvlBehavior(taskHandle, channel, data)
@@ -6639,7 +6638,7 @@ function DAQmxResetCIVelocityEncoderBInputLogicLvlBehavior(taskHandle, channel)
 end
 
 function DAQmxGetCIVelocityEncoderBInputDigFltrEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCIVelocityEncoderBInputDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIVelocityEncoderBInputDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIVelocityEncoderBInputDigFltrEnable(taskHandle, channel, data)
@@ -6651,7 +6650,7 @@ function DAQmxResetCIVelocityEncoderBInputDigFltrEnable(taskHandle, channel)
 end
 
 function DAQmxGetCIVelocityEncoderBInputDigFltrMinPulseWidth(taskHandle, channel, data)
-    ccall((:DAQmxGetCIVelocityEncoderBInputDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIVelocityEncoderBInputDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIVelocityEncoderBInputDigFltrMinPulseWidth(taskHandle, channel, data)
@@ -6663,11 +6662,11 @@ function DAQmxResetCIVelocityEncoderBInputDigFltrMinPulseWidth(taskHandle, chann
 end
 
 function DAQmxGetCIVelocityEncoderBInputDigFltrTimebaseSrc(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCIVelocityEncoderBInputDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCIVelocityEncoderBInputDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCIVelocityEncoderBInputDigFltrTimebaseSrc(taskHandle, channel, data)
-    ccall((:DAQmxSetCIVelocityEncoderBInputDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCIVelocityEncoderBInputDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCIVelocityEncoderBInputDigFltrTimebaseSrc(taskHandle, channel)
@@ -6675,7 +6674,7 @@ function DAQmxResetCIVelocityEncoderBInputDigFltrTimebaseSrc(taskHandle, channel
 end
 
 function DAQmxGetCIVelocityEncoderBInputDigFltrTimebaseRate(taskHandle, channel, data)
-    ccall((:DAQmxGetCIVelocityEncoderBInputDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIVelocityEncoderBInputDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIVelocityEncoderBInputDigFltrTimebaseRate(taskHandle, channel, data)
@@ -6687,7 +6686,7 @@ function DAQmxResetCIVelocityEncoderBInputDigFltrTimebaseRate(taskHandle, channe
 end
 
 function DAQmxGetCIVelocityMeasTime(taskHandle, channel, data)
-    ccall((:DAQmxGetCIVelocityMeasTime, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIVelocityMeasTime, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIVelocityMeasTime(taskHandle, channel, data)
@@ -6699,7 +6698,7 @@ function DAQmxResetCIVelocityMeasTime(taskHandle, channel)
 end
 
 function DAQmxGetCIVelocityDiv(taskHandle, channel, data)
-    ccall((:DAQmxGetCIVelocityDiv, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIVelocityDiv, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIVelocityDiv(taskHandle, channel, data)
@@ -6711,7 +6710,7 @@ function DAQmxResetCIVelocityDiv(taskHandle, channel)
 end
 
 function DAQmxGetCITwoEdgeSepUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetCITwoEdgeSepUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCITwoEdgeSepUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCITwoEdgeSepUnits(taskHandle, channel, data)
@@ -6723,11 +6722,11 @@ function DAQmxResetCITwoEdgeSepUnits(taskHandle, channel)
 end
 
 function DAQmxGetCITwoEdgeSepFirstTerm(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCITwoEdgeSepFirstTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCITwoEdgeSepFirstTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCITwoEdgeSepFirstTerm(taskHandle, channel, data)
-    ccall((:DAQmxSetCITwoEdgeSepFirstTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCITwoEdgeSepFirstTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCITwoEdgeSepFirstTerm(taskHandle, channel)
@@ -6735,7 +6734,7 @@ function DAQmxResetCITwoEdgeSepFirstTerm(taskHandle, channel)
 end
 
 function DAQmxGetCITwoEdgeSepFirstTermCfg(taskHandle, channel, data)
-    ccall((:DAQmxGetCITwoEdgeSepFirstTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCITwoEdgeSepFirstTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCITwoEdgeSepFirstTermCfg(taskHandle, channel, data)
@@ -6747,7 +6746,7 @@ function DAQmxResetCITwoEdgeSepFirstTermCfg(taskHandle, channel)
 end
 
 function DAQmxGetCITwoEdgeSepFirstLogicLvlBehavior(taskHandle, channel, data)
-    ccall((:DAQmxGetCITwoEdgeSepFirstLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCITwoEdgeSepFirstLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCITwoEdgeSepFirstLogicLvlBehavior(taskHandle, channel, data)
@@ -6759,7 +6758,7 @@ function DAQmxResetCITwoEdgeSepFirstLogicLvlBehavior(taskHandle, channel)
 end
 
 function DAQmxGetCITwoEdgeSepFirstDigFltrEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCITwoEdgeSepFirstDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCITwoEdgeSepFirstDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCITwoEdgeSepFirstDigFltrEnable(taskHandle, channel, data)
@@ -6771,7 +6770,7 @@ function DAQmxResetCITwoEdgeSepFirstDigFltrEnable(taskHandle, channel)
 end
 
 function DAQmxGetCITwoEdgeSepFirstDigFltrMinPulseWidth(taskHandle, channel, data)
-    ccall((:DAQmxGetCITwoEdgeSepFirstDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCITwoEdgeSepFirstDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCITwoEdgeSepFirstDigFltrMinPulseWidth(taskHandle, channel, data)
@@ -6783,11 +6782,11 @@ function DAQmxResetCITwoEdgeSepFirstDigFltrMinPulseWidth(taskHandle, channel)
 end
 
 function DAQmxGetCITwoEdgeSepFirstDigFltrTimebaseSrc(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCITwoEdgeSepFirstDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCITwoEdgeSepFirstDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCITwoEdgeSepFirstDigFltrTimebaseSrc(taskHandle, channel, data)
-    ccall((:DAQmxSetCITwoEdgeSepFirstDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCITwoEdgeSepFirstDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCITwoEdgeSepFirstDigFltrTimebaseSrc(taskHandle, channel)
@@ -6795,7 +6794,7 @@ function DAQmxResetCITwoEdgeSepFirstDigFltrTimebaseSrc(taskHandle, channel)
 end
 
 function DAQmxGetCITwoEdgeSepFirstDigFltrTimebaseRate(taskHandle, channel, data)
-    ccall((:DAQmxGetCITwoEdgeSepFirstDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCITwoEdgeSepFirstDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCITwoEdgeSepFirstDigFltrTimebaseRate(taskHandle, channel, data)
@@ -6807,7 +6806,7 @@ function DAQmxResetCITwoEdgeSepFirstDigFltrTimebaseRate(taskHandle, channel)
 end
 
 function DAQmxGetCITwoEdgeSepFirstDigSyncEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCITwoEdgeSepFirstDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCITwoEdgeSepFirstDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCITwoEdgeSepFirstDigSyncEnable(taskHandle, channel, data)
@@ -6819,7 +6818,7 @@ function DAQmxResetCITwoEdgeSepFirstDigSyncEnable(taskHandle, channel)
 end
 
 function DAQmxGetCITwoEdgeSepFirstEdge(taskHandle, channel, data)
-    ccall((:DAQmxGetCITwoEdgeSepFirstEdge, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCITwoEdgeSepFirstEdge, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCITwoEdgeSepFirstEdge(taskHandle, channel, data)
@@ -6831,11 +6830,11 @@ function DAQmxResetCITwoEdgeSepFirstEdge(taskHandle, channel)
 end
 
 function DAQmxGetCITwoEdgeSepSecondTerm(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCITwoEdgeSepSecondTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCITwoEdgeSepSecondTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCITwoEdgeSepSecondTerm(taskHandle, channel, data)
-    ccall((:DAQmxSetCITwoEdgeSepSecondTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCITwoEdgeSepSecondTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCITwoEdgeSepSecondTerm(taskHandle, channel)
@@ -6843,7 +6842,7 @@ function DAQmxResetCITwoEdgeSepSecondTerm(taskHandle, channel)
 end
 
 function DAQmxGetCITwoEdgeSepSecondTermCfg(taskHandle, channel, data)
-    ccall((:DAQmxGetCITwoEdgeSepSecondTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCITwoEdgeSepSecondTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCITwoEdgeSepSecondTermCfg(taskHandle, channel, data)
@@ -6855,7 +6854,7 @@ function DAQmxResetCITwoEdgeSepSecondTermCfg(taskHandle, channel)
 end
 
 function DAQmxGetCITwoEdgeSepSecondLogicLvlBehavior(taskHandle, channel, data)
-    ccall((:DAQmxGetCITwoEdgeSepSecondLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCITwoEdgeSepSecondLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCITwoEdgeSepSecondLogicLvlBehavior(taskHandle, channel, data)
@@ -6867,7 +6866,7 @@ function DAQmxResetCITwoEdgeSepSecondLogicLvlBehavior(taskHandle, channel)
 end
 
 function DAQmxGetCITwoEdgeSepSecondDigFltrEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCITwoEdgeSepSecondDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCITwoEdgeSepSecondDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCITwoEdgeSepSecondDigFltrEnable(taskHandle, channel, data)
@@ -6879,7 +6878,7 @@ function DAQmxResetCITwoEdgeSepSecondDigFltrEnable(taskHandle, channel)
 end
 
 function DAQmxGetCITwoEdgeSepSecondDigFltrMinPulseWidth(taskHandle, channel, data)
-    ccall((:DAQmxGetCITwoEdgeSepSecondDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCITwoEdgeSepSecondDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCITwoEdgeSepSecondDigFltrMinPulseWidth(taskHandle, channel, data)
@@ -6891,11 +6890,11 @@ function DAQmxResetCITwoEdgeSepSecondDigFltrMinPulseWidth(taskHandle, channel)
 end
 
 function DAQmxGetCITwoEdgeSepSecondDigFltrTimebaseSrc(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCITwoEdgeSepSecondDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCITwoEdgeSepSecondDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCITwoEdgeSepSecondDigFltrTimebaseSrc(taskHandle, channel, data)
-    ccall((:DAQmxSetCITwoEdgeSepSecondDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCITwoEdgeSepSecondDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCITwoEdgeSepSecondDigFltrTimebaseSrc(taskHandle, channel)
@@ -6903,7 +6902,7 @@ function DAQmxResetCITwoEdgeSepSecondDigFltrTimebaseSrc(taskHandle, channel)
 end
 
 function DAQmxGetCITwoEdgeSepSecondDigFltrTimebaseRate(taskHandle, channel, data)
-    ccall((:DAQmxGetCITwoEdgeSepSecondDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCITwoEdgeSepSecondDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCITwoEdgeSepSecondDigFltrTimebaseRate(taskHandle, channel, data)
@@ -6915,7 +6914,7 @@ function DAQmxResetCITwoEdgeSepSecondDigFltrTimebaseRate(taskHandle, channel)
 end
 
 function DAQmxGetCITwoEdgeSepSecondDigSyncEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCITwoEdgeSepSecondDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCITwoEdgeSepSecondDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCITwoEdgeSepSecondDigSyncEnable(taskHandle, channel, data)
@@ -6927,7 +6926,7 @@ function DAQmxResetCITwoEdgeSepSecondDigSyncEnable(taskHandle, channel)
 end
 
 function DAQmxGetCITwoEdgeSepSecondEdge(taskHandle, channel, data)
-    ccall((:DAQmxGetCITwoEdgeSepSecondEdge, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCITwoEdgeSepSecondEdge, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCITwoEdgeSepSecondEdge(taskHandle, channel, data)
@@ -6939,7 +6938,7 @@ function DAQmxResetCITwoEdgeSepSecondEdge(taskHandle, channel)
 end
 
 function DAQmxGetCISemiPeriodUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetCISemiPeriodUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCISemiPeriodUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCISemiPeriodUnits(taskHandle, channel, data)
@@ -6951,11 +6950,11 @@ function DAQmxResetCISemiPeriodUnits(taskHandle, channel)
 end
 
 function DAQmxGetCISemiPeriodTerm(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCISemiPeriodTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCISemiPeriodTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCISemiPeriodTerm(taskHandle, channel, data)
-    ccall((:DAQmxSetCISemiPeriodTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCISemiPeriodTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCISemiPeriodTerm(taskHandle, channel)
@@ -6963,7 +6962,7 @@ function DAQmxResetCISemiPeriodTerm(taskHandle, channel)
 end
 
 function DAQmxGetCISemiPeriodTermCfg(taskHandle, channel, data)
-    ccall((:DAQmxGetCISemiPeriodTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCISemiPeriodTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCISemiPeriodTermCfg(taskHandle, channel, data)
@@ -6975,7 +6974,7 @@ function DAQmxResetCISemiPeriodTermCfg(taskHandle, channel)
 end
 
 function DAQmxGetCISemiPeriodLogicLvlBehavior(taskHandle, channel, data)
-    ccall((:DAQmxGetCISemiPeriodLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCISemiPeriodLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCISemiPeriodLogicLvlBehavior(taskHandle, channel, data)
@@ -6987,7 +6986,7 @@ function DAQmxResetCISemiPeriodLogicLvlBehavior(taskHandle, channel)
 end
 
 function DAQmxGetCISemiPeriodDigFltrEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCISemiPeriodDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCISemiPeriodDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCISemiPeriodDigFltrEnable(taskHandle, channel, data)
@@ -6999,7 +6998,7 @@ function DAQmxResetCISemiPeriodDigFltrEnable(taskHandle, channel)
 end
 
 function DAQmxGetCISemiPeriodDigFltrMinPulseWidth(taskHandle, channel, data)
-    ccall((:DAQmxGetCISemiPeriodDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCISemiPeriodDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCISemiPeriodDigFltrMinPulseWidth(taskHandle, channel, data)
@@ -7011,11 +7010,11 @@ function DAQmxResetCISemiPeriodDigFltrMinPulseWidth(taskHandle, channel)
 end
 
 function DAQmxGetCISemiPeriodDigFltrTimebaseSrc(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCISemiPeriodDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCISemiPeriodDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCISemiPeriodDigFltrTimebaseSrc(taskHandle, channel, data)
-    ccall((:DAQmxSetCISemiPeriodDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCISemiPeriodDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCISemiPeriodDigFltrTimebaseSrc(taskHandle, channel)
@@ -7023,7 +7022,7 @@ function DAQmxResetCISemiPeriodDigFltrTimebaseSrc(taskHandle, channel)
 end
 
 function DAQmxGetCISemiPeriodDigFltrTimebaseRate(taskHandle, channel, data)
-    ccall((:DAQmxGetCISemiPeriodDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCISemiPeriodDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCISemiPeriodDigFltrTimebaseRate(taskHandle, channel, data)
@@ -7035,7 +7034,7 @@ function DAQmxResetCISemiPeriodDigFltrTimebaseRate(taskHandle, channel)
 end
 
 function DAQmxGetCISemiPeriodDigSyncEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCISemiPeriodDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCISemiPeriodDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCISemiPeriodDigSyncEnable(taskHandle, channel, data)
@@ -7047,7 +7046,7 @@ function DAQmxResetCISemiPeriodDigSyncEnable(taskHandle, channel)
 end
 
 function DAQmxGetCISemiPeriodStartingEdge(taskHandle, channel, data)
-    ccall((:DAQmxGetCISemiPeriodStartingEdge, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCISemiPeriodStartingEdge, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCISemiPeriodStartingEdge(taskHandle, channel, data)
@@ -7059,7 +7058,7 @@ function DAQmxResetCISemiPeriodStartingEdge(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseFreqUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPulseFreqUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPulseFreqUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPulseFreqUnits(taskHandle, channel, data)
@@ -7071,11 +7070,11 @@ function DAQmxResetCIPulseFreqUnits(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseFreqTerm(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCIPulseFreqTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCIPulseFreqTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCIPulseFreqTerm(taskHandle, channel, data)
-    ccall((:DAQmxSetCIPulseFreqTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCIPulseFreqTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCIPulseFreqTerm(taskHandle, channel)
@@ -7083,7 +7082,7 @@ function DAQmxResetCIPulseFreqTerm(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseFreqTermCfg(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPulseFreqTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPulseFreqTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPulseFreqTermCfg(taskHandle, channel, data)
@@ -7095,7 +7094,7 @@ function DAQmxResetCIPulseFreqTermCfg(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseFreqLogicLvlBehavior(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPulseFreqLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPulseFreqLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPulseFreqLogicLvlBehavior(taskHandle, channel, data)
@@ -7107,7 +7106,7 @@ function DAQmxResetCIPulseFreqLogicLvlBehavior(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseFreqDigFltrEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPulseFreqDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPulseFreqDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPulseFreqDigFltrEnable(taskHandle, channel, data)
@@ -7119,7 +7118,7 @@ function DAQmxResetCIPulseFreqDigFltrEnable(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseFreqDigFltrMinPulseWidth(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPulseFreqDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPulseFreqDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPulseFreqDigFltrMinPulseWidth(taskHandle, channel, data)
@@ -7131,11 +7130,11 @@ function DAQmxResetCIPulseFreqDigFltrMinPulseWidth(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseFreqDigFltrTimebaseSrc(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCIPulseFreqDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCIPulseFreqDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCIPulseFreqDigFltrTimebaseSrc(taskHandle, channel, data)
-    ccall((:DAQmxSetCIPulseFreqDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCIPulseFreqDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCIPulseFreqDigFltrTimebaseSrc(taskHandle, channel)
@@ -7143,7 +7142,7 @@ function DAQmxResetCIPulseFreqDigFltrTimebaseSrc(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseFreqDigFltrTimebaseRate(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPulseFreqDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPulseFreqDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPulseFreqDigFltrTimebaseRate(taskHandle, channel, data)
@@ -7155,7 +7154,7 @@ function DAQmxResetCIPulseFreqDigFltrTimebaseRate(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseFreqDigSyncEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPulseFreqDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPulseFreqDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPulseFreqDigSyncEnable(taskHandle, channel, data)
@@ -7167,7 +7166,7 @@ function DAQmxResetCIPulseFreqDigSyncEnable(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseFreqStartEdge(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPulseFreqStartEdge, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPulseFreqStartEdge, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPulseFreqStartEdge(taskHandle, channel, data)
@@ -7179,7 +7178,7 @@ function DAQmxResetCIPulseFreqStartEdge(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseTimeUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPulseTimeUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPulseTimeUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPulseTimeUnits(taskHandle, channel, data)
@@ -7191,11 +7190,11 @@ function DAQmxResetCIPulseTimeUnits(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseTimeTerm(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCIPulseTimeTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCIPulseTimeTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCIPulseTimeTerm(taskHandle, channel, data)
-    ccall((:DAQmxSetCIPulseTimeTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCIPulseTimeTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCIPulseTimeTerm(taskHandle, channel)
@@ -7203,7 +7202,7 @@ function DAQmxResetCIPulseTimeTerm(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseTimeTermCfg(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPulseTimeTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPulseTimeTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPulseTimeTermCfg(taskHandle, channel, data)
@@ -7215,7 +7214,7 @@ function DAQmxResetCIPulseTimeTermCfg(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseTimeLogicLvlBehavior(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPulseTimeLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPulseTimeLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPulseTimeLogicLvlBehavior(taskHandle, channel, data)
@@ -7227,7 +7226,7 @@ function DAQmxResetCIPulseTimeLogicLvlBehavior(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseTimeDigFltrEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPulseTimeDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPulseTimeDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPulseTimeDigFltrEnable(taskHandle, channel, data)
@@ -7239,7 +7238,7 @@ function DAQmxResetCIPulseTimeDigFltrEnable(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseTimeDigFltrMinPulseWidth(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPulseTimeDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPulseTimeDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPulseTimeDigFltrMinPulseWidth(taskHandle, channel, data)
@@ -7251,11 +7250,11 @@ function DAQmxResetCIPulseTimeDigFltrMinPulseWidth(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseTimeDigFltrTimebaseSrc(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCIPulseTimeDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCIPulseTimeDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCIPulseTimeDigFltrTimebaseSrc(taskHandle, channel, data)
-    ccall((:DAQmxSetCIPulseTimeDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCIPulseTimeDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCIPulseTimeDigFltrTimebaseSrc(taskHandle, channel)
@@ -7263,7 +7262,7 @@ function DAQmxResetCIPulseTimeDigFltrTimebaseSrc(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseTimeDigFltrTimebaseRate(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPulseTimeDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPulseTimeDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPulseTimeDigFltrTimebaseRate(taskHandle, channel, data)
@@ -7275,7 +7274,7 @@ function DAQmxResetCIPulseTimeDigFltrTimebaseRate(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseTimeDigSyncEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPulseTimeDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPulseTimeDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPulseTimeDigSyncEnable(taskHandle, channel, data)
@@ -7287,7 +7286,7 @@ function DAQmxResetCIPulseTimeDigSyncEnable(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseTimeStartEdge(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPulseTimeStartEdge, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPulseTimeStartEdge, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPulseTimeStartEdge(taskHandle, channel, data)
@@ -7299,11 +7298,11 @@ function DAQmxResetCIPulseTimeStartEdge(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseTicksTerm(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCIPulseTicksTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCIPulseTicksTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCIPulseTicksTerm(taskHandle, channel, data)
-    ccall((:DAQmxSetCIPulseTicksTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCIPulseTicksTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCIPulseTicksTerm(taskHandle, channel)
@@ -7311,7 +7310,7 @@ function DAQmxResetCIPulseTicksTerm(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseTicksTermCfg(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPulseTicksTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPulseTicksTermCfg, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPulseTicksTermCfg(taskHandle, channel, data)
@@ -7323,7 +7322,7 @@ function DAQmxResetCIPulseTicksTermCfg(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseTicksLogicLvlBehavior(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPulseTicksLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPulseTicksLogicLvlBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPulseTicksLogicLvlBehavior(taskHandle, channel, data)
@@ -7335,7 +7334,7 @@ function DAQmxResetCIPulseTicksLogicLvlBehavior(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseTicksDigFltrEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPulseTicksDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPulseTicksDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPulseTicksDigFltrEnable(taskHandle, channel, data)
@@ -7347,7 +7346,7 @@ function DAQmxResetCIPulseTicksDigFltrEnable(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseTicksDigFltrMinPulseWidth(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPulseTicksDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPulseTicksDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPulseTicksDigFltrMinPulseWidth(taskHandle, channel, data)
@@ -7359,11 +7358,11 @@ function DAQmxResetCIPulseTicksDigFltrMinPulseWidth(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseTicksDigFltrTimebaseSrc(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCIPulseTicksDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCIPulseTicksDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCIPulseTicksDigFltrTimebaseSrc(taskHandle, channel, data)
-    ccall((:DAQmxSetCIPulseTicksDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCIPulseTicksDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCIPulseTicksDigFltrTimebaseSrc(taskHandle, channel)
@@ -7371,7 +7370,7 @@ function DAQmxResetCIPulseTicksDigFltrTimebaseSrc(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseTicksDigFltrTimebaseRate(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPulseTicksDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPulseTicksDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPulseTicksDigFltrTimebaseRate(taskHandle, channel, data)
@@ -7383,7 +7382,7 @@ function DAQmxResetCIPulseTicksDigFltrTimebaseRate(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseTicksDigSyncEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPulseTicksDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPulseTicksDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPulseTicksDigSyncEnable(taskHandle, channel, data)
@@ -7395,7 +7394,7 @@ function DAQmxResetCIPulseTicksDigSyncEnable(taskHandle, channel)
 end
 
 function DAQmxGetCIPulseTicksStartEdge(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPulseTicksStartEdge, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPulseTicksStartEdge, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPulseTicksStartEdge(taskHandle, channel, data)
@@ -7407,11 +7406,11 @@ function DAQmxResetCIPulseTicksStartEdge(taskHandle, channel)
 end
 
 function DAQmxGetCICtrTimebaseSrc(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCICtrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCICtrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCICtrTimebaseSrc(taskHandle, channel, data)
-    ccall((:DAQmxSetCICtrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCICtrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCICtrTimebaseSrc(taskHandle, channel)
@@ -7419,7 +7418,7 @@ function DAQmxResetCICtrTimebaseSrc(taskHandle, channel)
 end
 
 function DAQmxGetCICtrTimebaseRate(taskHandle, channel, data)
-    ccall((:DAQmxGetCICtrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICtrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICtrTimebaseRate(taskHandle, channel, data)
@@ -7431,7 +7430,7 @@ function DAQmxResetCICtrTimebaseRate(taskHandle, channel)
 end
 
 function DAQmxGetCICtrTimebaseActiveEdge(taskHandle, channel, data)
-    ccall((:DAQmxGetCICtrTimebaseActiveEdge, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICtrTimebaseActiveEdge, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICtrTimebaseActiveEdge(taskHandle, channel, data)
@@ -7443,7 +7442,7 @@ function DAQmxResetCICtrTimebaseActiveEdge(taskHandle, channel)
 end
 
 function DAQmxGetCICtrTimebaseDigFltrEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCICtrTimebaseDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICtrTimebaseDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICtrTimebaseDigFltrEnable(taskHandle, channel, data)
@@ -7455,7 +7454,7 @@ function DAQmxResetCICtrTimebaseDigFltrEnable(taskHandle, channel)
 end
 
 function DAQmxGetCICtrTimebaseDigFltrMinPulseWidth(taskHandle, channel, data)
-    ccall((:DAQmxGetCICtrTimebaseDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICtrTimebaseDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICtrTimebaseDigFltrMinPulseWidth(taskHandle, channel, data)
@@ -7467,11 +7466,11 @@ function DAQmxResetCICtrTimebaseDigFltrMinPulseWidth(taskHandle, channel)
 end
 
 function DAQmxGetCICtrTimebaseDigFltrTimebaseSrc(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCICtrTimebaseDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCICtrTimebaseDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCICtrTimebaseDigFltrTimebaseSrc(taskHandle, channel, data)
-    ccall((:DAQmxSetCICtrTimebaseDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCICtrTimebaseDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCICtrTimebaseDigFltrTimebaseSrc(taskHandle, channel)
@@ -7479,7 +7478,7 @@ function DAQmxResetCICtrTimebaseDigFltrTimebaseSrc(taskHandle, channel)
 end
 
 function DAQmxGetCICtrTimebaseDigFltrTimebaseRate(taskHandle, channel, data)
-    ccall((:DAQmxGetCICtrTimebaseDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICtrTimebaseDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICtrTimebaseDigFltrTimebaseRate(taskHandle, channel, data)
@@ -7491,7 +7490,7 @@ function DAQmxResetCICtrTimebaseDigFltrTimebaseRate(taskHandle, channel)
 end
 
 function DAQmxGetCICtrTimebaseDigSyncEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCICtrTimebaseDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICtrTimebaseDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICtrTimebaseDigSyncEnable(taskHandle, channel, data)
@@ -7503,7 +7502,7 @@ function DAQmxResetCICtrTimebaseDigSyncEnable(taskHandle, channel)
 end
 
 function DAQmxGetCIThreshVoltage(taskHandle, channel, data)
-    ccall((:DAQmxGetCIThreshVoltage, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIThreshVoltage, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIThreshVoltage(taskHandle, channel, data)
@@ -7515,19 +7514,19 @@ function DAQmxResetCIThreshVoltage(taskHandle, channel)
 end
 
 function DAQmxGetCICount(taskHandle, channel, data)
-    ccall((:DAQmxGetCICount, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICount, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxGetCIOutputState(taskHandle, channel, data)
-    ccall((:DAQmxGetCIOutputState, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIOutputState, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxGetCITCReached(taskHandle, channel, data)
-    ccall((:DAQmxGetCITCReached, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCITCReached, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxGetCICtrTimebaseMasterTimebaseDiv(taskHandle, channel, data)
-    ccall((:DAQmxGetCICtrTimebaseMasterTimebaseDiv, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCICtrTimebaseMasterTimebaseDiv, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCICtrTimebaseMasterTimebaseDiv(taskHandle, channel, data)
@@ -7539,7 +7538,7 @@ function DAQmxResetCICtrTimebaseMasterTimebaseDiv(taskHandle, channel)
 end
 
 function DAQmxGetCISampClkOverrunBehavior(taskHandle, channel, data)
-    ccall((:DAQmxGetCISampClkOverrunBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCISampClkOverrunBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCISampClkOverrunBehavior(taskHandle, channel, data)
@@ -7551,7 +7550,7 @@ function DAQmxResetCISampClkOverrunBehavior(taskHandle, channel)
 end
 
 function DAQmxGetCISampClkOverrunSentinelVal(taskHandle, channel, data)
-    ccall((:DAQmxGetCISampClkOverrunSentinelVal, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCISampClkOverrunSentinelVal, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCISampClkOverrunSentinelVal(taskHandle, channel, data)
@@ -7563,7 +7562,7 @@ function DAQmxResetCISampClkOverrunSentinelVal(taskHandle, channel)
 end
 
 function DAQmxGetCIDataXferMech(taskHandle, channel, data)
-    ccall((:DAQmxGetCIDataXferMech, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIDataXferMech, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIDataXferMech(taskHandle, channel, data)
@@ -7575,7 +7574,7 @@ function DAQmxResetCIDataXferMech(taskHandle, channel)
 end
 
 function DAQmxGetCIDataXferReqCond(taskHandle, channel, data)
-    ccall((:DAQmxGetCIDataXferReqCond, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIDataXferReqCond, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIDataXferReqCond(taskHandle, channel, data)
@@ -7587,7 +7586,7 @@ function DAQmxResetCIDataXferReqCond(taskHandle, channel)
 end
 
 function DAQmxGetCIUsbXferReqSize(taskHandle, channel, data)
-    ccall((:DAQmxGetCIUsbXferReqSize, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIUsbXferReqSize, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIUsbXferReqSize(taskHandle, channel, data)
@@ -7599,7 +7598,7 @@ function DAQmxResetCIUsbXferReqSize(taskHandle, channel)
 end
 
 function DAQmxGetCIUsbXferReqCount(taskHandle, channel, data)
-    ccall((:DAQmxGetCIUsbXferReqCount, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIUsbXferReqCount, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIUsbXferReqCount(taskHandle, channel, data)
@@ -7611,7 +7610,7 @@ function DAQmxResetCIUsbXferReqCount(taskHandle, channel)
 end
 
 function DAQmxGetCIMemMapEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCIMemMapEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIMemMapEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIMemMapEnable(taskHandle, channel, data)
@@ -7623,11 +7622,11 @@ function DAQmxResetCIMemMapEnable(taskHandle, channel)
 end
 
 function DAQmxGetCINumPossiblyInvalidSamps(taskHandle, channel, data)
-    ccall((:DAQmxGetCINumPossiblyInvalidSamps, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCINumPossiblyInvalidSamps, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxGetCIDupCountPrevent(taskHandle, channel, data)
-    ccall((:DAQmxGetCIDupCountPrevent, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIDupCountPrevent, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIDupCountPrevent(taskHandle, channel, data)
@@ -7639,7 +7638,7 @@ function DAQmxResetCIDupCountPrevent(taskHandle, channel)
 end
 
 function DAQmxGetCIPrescaler(taskHandle, channel, data)
-    ccall((:DAQmxGetCIPrescaler, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIPrescaler, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIPrescaler(taskHandle, channel, data)
@@ -7651,7 +7650,7 @@ function DAQmxResetCIPrescaler(taskHandle, channel)
 end
 
 function DAQmxGetCIMaxMeasPeriod(taskHandle, channel, data)
-    ccall((:DAQmxGetCIMaxMeasPeriod, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCIMaxMeasPeriod, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCIMaxMeasPeriod(taskHandle, channel, data)
@@ -7663,11 +7662,11 @@ function DAQmxResetCIMaxMeasPeriod(taskHandle, channel)
 end
 
 function DAQmxGetCOOutputType(taskHandle, channel, data)
-    ccall((:DAQmxGetCOOutputType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCOOutputType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxGetCOPulseIdleState(taskHandle, channel, data)
-    ccall((:DAQmxGetCOPulseIdleState, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCOPulseIdleState, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCOPulseIdleState(taskHandle, channel, data)
@@ -7679,11 +7678,11 @@ function DAQmxResetCOPulseIdleState(taskHandle, channel)
 end
 
 function DAQmxGetCOPulseTerm(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCOPulseTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCOPulseTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCOPulseTerm(taskHandle, channel, data)
-    ccall((:DAQmxSetCOPulseTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCOPulseTerm, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCOPulseTerm(taskHandle, channel)
@@ -7691,7 +7690,7 @@ function DAQmxResetCOPulseTerm(taskHandle, channel)
 end
 
 function DAQmxGetCOPulseTimeUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetCOPulseTimeUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCOPulseTimeUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCOPulseTimeUnits(taskHandle, channel, data)
@@ -7703,7 +7702,7 @@ function DAQmxResetCOPulseTimeUnits(taskHandle, channel)
 end
 
 function DAQmxGetCOPulseHighTime(taskHandle, channel, data)
-    ccall((:DAQmxGetCOPulseHighTime, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCOPulseHighTime, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCOPulseHighTime(taskHandle, channel, data)
@@ -7715,7 +7714,7 @@ function DAQmxResetCOPulseHighTime(taskHandle, channel)
 end
 
 function DAQmxGetCOPulseLowTime(taskHandle, channel, data)
-    ccall((:DAQmxGetCOPulseLowTime, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCOPulseLowTime, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCOPulseLowTime(taskHandle, channel, data)
@@ -7727,7 +7726,7 @@ function DAQmxResetCOPulseLowTime(taskHandle, channel)
 end
 
 function DAQmxGetCOPulseTimeInitialDelay(taskHandle, channel, data)
-    ccall((:DAQmxGetCOPulseTimeInitialDelay, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCOPulseTimeInitialDelay, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCOPulseTimeInitialDelay(taskHandle, channel, data)
@@ -7739,7 +7738,7 @@ function DAQmxResetCOPulseTimeInitialDelay(taskHandle, channel)
 end
 
 function DAQmxGetCOPulseDutyCyc(taskHandle, channel, data)
-    ccall((:DAQmxGetCOPulseDutyCyc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCOPulseDutyCyc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCOPulseDutyCyc(taskHandle, channel, data)
@@ -7751,7 +7750,7 @@ function DAQmxResetCOPulseDutyCyc(taskHandle, channel)
 end
 
 function DAQmxGetCOPulseFreqUnits(taskHandle, channel, data)
-    ccall((:DAQmxGetCOPulseFreqUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCOPulseFreqUnits, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCOPulseFreqUnits(taskHandle, channel, data)
@@ -7763,7 +7762,7 @@ function DAQmxResetCOPulseFreqUnits(taskHandle, channel)
 end
 
 function DAQmxGetCOPulseFreq(taskHandle, channel, data)
-    ccall((:DAQmxGetCOPulseFreq, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCOPulseFreq, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCOPulseFreq(taskHandle, channel, data)
@@ -7775,7 +7774,7 @@ function DAQmxResetCOPulseFreq(taskHandle, channel)
 end
 
 function DAQmxGetCOPulseFreqInitialDelay(taskHandle, channel, data)
-    ccall((:DAQmxGetCOPulseFreqInitialDelay, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCOPulseFreqInitialDelay, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCOPulseFreqInitialDelay(taskHandle, channel, data)
@@ -7787,7 +7786,7 @@ function DAQmxResetCOPulseFreqInitialDelay(taskHandle, channel)
 end
 
 function DAQmxGetCOPulseHighTicks(taskHandle, channel, data)
-    ccall((:DAQmxGetCOPulseHighTicks, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCOPulseHighTicks, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCOPulseHighTicks(taskHandle, channel, data)
@@ -7799,7 +7798,7 @@ function DAQmxResetCOPulseHighTicks(taskHandle, channel)
 end
 
 function DAQmxGetCOPulseLowTicks(taskHandle, channel, data)
-    ccall((:DAQmxGetCOPulseLowTicks, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCOPulseLowTicks, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCOPulseLowTicks(taskHandle, channel, data)
@@ -7811,7 +7810,7 @@ function DAQmxResetCOPulseLowTicks(taskHandle, channel)
 end
 
 function DAQmxGetCOPulseTicksInitialDelay(taskHandle, channel, data)
-    ccall((:DAQmxGetCOPulseTicksInitialDelay, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCOPulseTicksInitialDelay, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCOPulseTicksInitialDelay(taskHandle, channel, data)
@@ -7823,11 +7822,11 @@ function DAQmxResetCOPulseTicksInitialDelay(taskHandle, channel)
 end
 
 function DAQmxGetCOCtrTimebaseSrc(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCOCtrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCOCtrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCOCtrTimebaseSrc(taskHandle, channel, data)
-    ccall((:DAQmxSetCOCtrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCOCtrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCOCtrTimebaseSrc(taskHandle, channel)
@@ -7835,7 +7834,7 @@ function DAQmxResetCOCtrTimebaseSrc(taskHandle, channel)
 end
 
 function DAQmxGetCOCtrTimebaseRate(taskHandle, channel, data)
-    ccall((:DAQmxGetCOCtrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCOCtrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCOCtrTimebaseRate(taskHandle, channel, data)
@@ -7847,7 +7846,7 @@ function DAQmxResetCOCtrTimebaseRate(taskHandle, channel)
 end
 
 function DAQmxGetCOCtrTimebaseActiveEdge(taskHandle, channel, data)
-    ccall((:DAQmxGetCOCtrTimebaseActiveEdge, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCOCtrTimebaseActiveEdge, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCOCtrTimebaseActiveEdge(taskHandle, channel, data)
@@ -7859,7 +7858,7 @@ function DAQmxResetCOCtrTimebaseActiveEdge(taskHandle, channel)
 end
 
 function DAQmxGetCOCtrTimebaseDigFltrEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCOCtrTimebaseDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCOCtrTimebaseDigFltrEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCOCtrTimebaseDigFltrEnable(taskHandle, channel, data)
@@ -7871,7 +7870,7 @@ function DAQmxResetCOCtrTimebaseDigFltrEnable(taskHandle, channel)
 end
 
 function DAQmxGetCOCtrTimebaseDigFltrMinPulseWidth(taskHandle, channel, data)
-    ccall((:DAQmxGetCOCtrTimebaseDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCOCtrTimebaseDigFltrMinPulseWidth, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCOCtrTimebaseDigFltrMinPulseWidth(taskHandle, channel, data)
@@ -7883,11 +7882,11 @@ function DAQmxResetCOCtrTimebaseDigFltrMinPulseWidth(taskHandle, channel)
 end
 
 function DAQmxGetCOCtrTimebaseDigFltrTimebaseSrc(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetCOCtrTimebaseDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetCOCtrTimebaseDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetCOCtrTimebaseDigFltrTimebaseSrc(taskHandle, channel, data)
-    ccall((:DAQmxSetCOCtrTimebaseDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetCOCtrTimebaseDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetCOCtrTimebaseDigFltrTimebaseSrc(taskHandle, channel)
@@ -7895,7 +7894,7 @@ function DAQmxResetCOCtrTimebaseDigFltrTimebaseSrc(taskHandle, channel)
 end
 
 function DAQmxGetCOCtrTimebaseDigFltrTimebaseRate(taskHandle, channel, data)
-    ccall((:DAQmxGetCOCtrTimebaseDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, channel, data)
+    ccall((:DAQmxGetCOCtrTimebaseDigFltrTimebaseRate, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, channel, data)
 end
 
 function DAQmxSetCOCtrTimebaseDigFltrTimebaseRate(taskHandle, channel, data)
@@ -7907,7 +7906,7 @@ function DAQmxResetCOCtrTimebaseDigFltrTimebaseRate(taskHandle, channel)
 end
 
 function DAQmxGetCOCtrTimebaseDigSyncEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCOCtrTimebaseDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCOCtrTimebaseDigSyncEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCOCtrTimebaseDigSyncEnable(taskHandle, channel, data)
@@ -7919,15 +7918,15 @@ function DAQmxResetCOCtrTimebaseDigSyncEnable(taskHandle, channel)
 end
 
 function DAQmxGetCOCount(taskHandle, channel, data)
-    ccall((:DAQmxGetCOCount, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCOCount, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxGetCOOutputState(taskHandle, channel, data)
-    ccall((:DAQmxGetCOOutputState, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCOOutputState, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxGetCOAutoIncrCnt(taskHandle, channel, data)
-    ccall((:DAQmxGetCOAutoIncrCnt, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCOAutoIncrCnt, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCOAutoIncrCnt(taskHandle, channel, data)
@@ -7939,7 +7938,7 @@ function DAQmxResetCOAutoIncrCnt(taskHandle, channel)
 end
 
 function DAQmxGetCOCtrTimebaseMasterTimebaseDiv(taskHandle, channel, data)
-    ccall((:DAQmxGetCOCtrTimebaseMasterTimebaseDiv, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCOCtrTimebaseMasterTimebaseDiv, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCOCtrTimebaseMasterTimebaseDiv(taskHandle, channel, data)
@@ -7951,11 +7950,11 @@ function DAQmxResetCOCtrTimebaseMasterTimebaseDiv(taskHandle, channel)
 end
 
 function DAQmxGetCOPulseDone(taskHandle, channel, data)
-    ccall((:DAQmxGetCOPulseDone, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCOPulseDone, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxGetCOEnableInitialDelayOnRetrigger(taskHandle, channel, data)
-    ccall((:DAQmxGetCOEnableInitialDelayOnRetrigger, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCOEnableInitialDelayOnRetrigger, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCOEnableInitialDelayOnRetrigger(taskHandle, channel, data)
@@ -7967,7 +7966,7 @@ function DAQmxResetCOEnableInitialDelayOnRetrigger(taskHandle, channel)
 end
 
 function DAQmxGetCOConstrainedGenMode(taskHandle, channel, data)
-    ccall((:DAQmxGetCOConstrainedGenMode, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCOConstrainedGenMode, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCOConstrainedGenMode(taskHandle, channel, data)
@@ -7979,7 +7978,7 @@ function DAQmxResetCOConstrainedGenMode(taskHandle, channel)
 end
 
 function DAQmxGetCOUseOnlyOnBrdMem(taskHandle, channel, data)
-    ccall((:DAQmxGetCOUseOnlyOnBrdMem, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCOUseOnlyOnBrdMem, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCOUseOnlyOnBrdMem(taskHandle, channel, data)
@@ -7991,7 +7990,7 @@ function DAQmxResetCOUseOnlyOnBrdMem(taskHandle, channel)
 end
 
 function DAQmxGetCODataXferMech(taskHandle, channel, data)
-    ccall((:DAQmxGetCODataXferMech, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCODataXferMech, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCODataXferMech(taskHandle, channel, data)
@@ -8003,7 +8002,7 @@ function DAQmxResetCODataXferMech(taskHandle, channel)
 end
 
 function DAQmxGetCODataXferReqCond(taskHandle, channel, data)
-    ccall((:DAQmxGetCODataXferReqCond, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCODataXferReqCond, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCODataXferReqCond(taskHandle, channel, data)
@@ -8015,7 +8014,7 @@ function DAQmxResetCODataXferReqCond(taskHandle, channel)
 end
 
 function DAQmxGetCOUsbXferReqSize(taskHandle, channel, data)
-    ccall((:DAQmxGetCOUsbXferReqSize, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCOUsbXferReqSize, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCOUsbXferReqSize(taskHandle, channel, data)
@@ -8027,7 +8026,7 @@ function DAQmxResetCOUsbXferReqSize(taskHandle, channel)
 end
 
 function DAQmxGetCOUsbXferReqCount(taskHandle, channel, data)
-    ccall((:DAQmxGetCOUsbXferReqCount, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCOUsbXferReqCount, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCOUsbXferReqCount(taskHandle, channel, data)
@@ -8039,7 +8038,7 @@ function DAQmxResetCOUsbXferReqCount(taskHandle, channel)
 end
 
 function DAQmxGetCOMemMapEnable(taskHandle, channel, data)
-    ccall((:DAQmxGetCOMemMapEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCOMemMapEnable, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCOMemMapEnable(taskHandle, channel, data)
@@ -8051,7 +8050,7 @@ function DAQmxResetCOMemMapEnable(taskHandle, channel)
 end
 
 function DAQmxGetCOPrescaler(taskHandle, channel, data)
-    ccall((:DAQmxGetCOPrescaler, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCOPrescaler, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, channel, data)
 end
 
 function DAQmxSetCOPrescaler(taskHandle, channel, data)
@@ -8063,27 +8062,27 @@ function DAQmxResetCOPrescaler(taskHandle, channel)
 end
 
 function DAQmxGetCORdyForNewVal(taskHandle, channel, data)
-    ccall((:DAQmxGetCORdyForNewVal, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetCORdyForNewVal, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxGetChanType(taskHandle, channel, data)
-    ccall((:DAQmxGetChanType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetChanType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxGetPhysicalChanName(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetPhysicalChanName, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetPhysicalChanName, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetPhysicalChanName(taskHandle, channel, data)
-    ccall((:DAQmxSetPhysicalChanName, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetPhysicalChanName, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxGetChanDescr(taskHandle, channel, data, bufferSize)
-    ccall((:DAQmxGetChanDescr, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, channel, data, bufferSize)
+    ccall((:DAQmxGetChanDescr, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, channel, data, bufferSize)
 end
 
 function DAQmxSetChanDescr(taskHandle, channel, data)
-    ccall((:DAQmxSetChanDescr, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, channel, data)
+    ccall((:DAQmxSetChanDescr, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, channel, data)
 end
 
 function DAQmxResetChanDescr(taskHandle, channel)
@@ -8091,11 +8090,11 @@ function DAQmxResetChanDescr(taskHandle, channel)
 end
 
 function DAQmxGetChanIsGlobal(taskHandle, channel, data)
-    ccall((:DAQmxGetChanIsGlobal, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, channel, data)
+    ccall((:DAQmxGetChanIsGlobal, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, channel, data)
 end
 
 function DAQmxGetChanSyncUnlockBehavior(taskHandle, channel, data)
-    ccall((:DAQmxGetChanSyncUnlockBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, channel, data)
+    ccall((:DAQmxGetChanSyncUnlockBehavior, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, channel, data)
 end
 
 function DAQmxSetChanSyncUnlockBehavior(taskHandle, channel, data)
@@ -8107,387 +8106,387 @@ function DAQmxResetChanSyncUnlockBehavior(taskHandle, channel)
 end
 
 function DAQmxGetDevIsSimulated(device, data)
-    ccall((:DAQmxGetDevIsSimulated, NIDAQmx), int32, (Ref{UInt8}, Ptr{bool32}), device, data)
+    ccall((:DAQmxGetDevIsSimulated, NIDAQmx), int32, (Ref{UInt8}, Ref{bool32}), device, data)
 end
 
 function DAQmxGetDevProductCategory(device, data)
-    ccall((:DAQmxGetDevProductCategory, NIDAQmx), int32, (Ref{UInt8}, Ptr{int32}), device, data)
+    ccall((:DAQmxGetDevProductCategory, NIDAQmx), int32, (Ref{UInt8}, Ref{int32}), device, data)
 end
 
 function DAQmxGetDevProductType(device, data, bufferSize)
-    ccall((:DAQmxGetDevProductType, NIDAQmx), int32, (Ref{UInt8}, Cstring, uInt32), device, data, bufferSize)
+    ccall((:DAQmxGetDevProductType, NIDAQmx), int32, (Ref{UInt8}, SafeCstring, uInt32), device, data, bufferSize)
 end
 
 function DAQmxGetDevProductNum(device, data)
-    ccall((:DAQmxGetDevProductNum, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}), device, data)
+    ccall((:DAQmxGetDevProductNum, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}), device, data)
 end
 
 function DAQmxGetDevSerialNum(device, data)
-    ccall((:DAQmxGetDevSerialNum, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}), device, data)
+    ccall((:DAQmxGetDevSerialNum, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}), device, data)
 end
 
 function DAQmxGetDevAccessoryProductTypes(device, data, bufferSize)
-    ccall((:DAQmxGetDevAccessoryProductTypes, NIDAQmx), int32, (Ref{UInt8}, Cstring, uInt32), device, data, bufferSize)
+    ccall((:DAQmxGetDevAccessoryProductTypes, NIDAQmx), int32, (Ref{UInt8}, SafeCstring, uInt32), device, data, bufferSize)
 end
 
 function DAQmxGetDevAccessoryProductNums(device, data, arraySizeInElements)
-    ccall((:DAQmxGetDevAccessoryProductNums, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}, uInt32), device, data, arraySizeInElements)
+    ccall((:DAQmxGetDevAccessoryProductNums, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}, uInt32), device, data, arraySizeInElements)
 end
 
 function DAQmxGetDevAccessorySerialNums(device, data, arraySizeInElements)
-    ccall((:DAQmxGetDevAccessorySerialNums, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}, uInt32), device, data, arraySizeInElements)
+    ccall((:DAQmxGetDevAccessorySerialNums, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}, uInt32), device, data, arraySizeInElements)
 end
 
 function DAQmxGetCarrierSerialNum(device, data)
-    ccall((:DAQmxGetCarrierSerialNum, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}), device, data)
+    ccall((:DAQmxGetCarrierSerialNum, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}), device, data)
 end
 
 function DAQmxGetFieldDAQDevName(device, data, bufferSize)
-    ccall((:DAQmxGetFieldDAQDevName, NIDAQmx), int32, (Ref{UInt8}, Cstring, uInt32), device, data, bufferSize)
+    ccall((:DAQmxGetFieldDAQDevName, NIDAQmx), int32, (Ref{UInt8}, SafeCstring, uInt32), device, data, bufferSize)
 end
 
 function DAQmxGetFieldDAQBankDevNames(device, data, bufferSize)
-    ccall((:DAQmxGetFieldDAQBankDevNames, NIDAQmx), int32, (Ref{UInt8}, Cstring, uInt32), device, data, bufferSize)
+    ccall((:DAQmxGetFieldDAQBankDevNames, NIDAQmx), int32, (Ref{UInt8}, SafeCstring, uInt32), device, data, bufferSize)
 end
 
 function DAQmxGetDevChassisModuleDevNames(device, data, bufferSize)
-    ccall((:DAQmxGetDevChassisModuleDevNames, NIDAQmx), int32, (Ref{UInt8}, Cstring, uInt32), device, data, bufferSize)
+    ccall((:DAQmxGetDevChassisModuleDevNames, NIDAQmx), int32, (Ref{UInt8}, SafeCstring, uInt32), device, data, bufferSize)
 end
 
 function DAQmxGetDevAnlgTrigSupported(device, data)
-    ccall((:DAQmxGetDevAnlgTrigSupported, NIDAQmx), int32, (Ref{UInt8}, Ptr{bool32}), device, data)
+    ccall((:DAQmxGetDevAnlgTrigSupported, NIDAQmx), int32, (Ref{UInt8}, Ref{bool32}), device, data)
 end
 
 function DAQmxGetDevDigTrigSupported(device, data)
-    ccall((:DAQmxGetDevDigTrigSupported, NIDAQmx), int32, (Ref{UInt8}, Ptr{bool32}), device, data)
+    ccall((:DAQmxGetDevDigTrigSupported, NIDAQmx), int32, (Ref{UInt8}, Ref{bool32}), device, data)
 end
 
 function DAQmxGetDevTimeTrigSupported(device, data)
-    ccall((:DAQmxGetDevTimeTrigSupported, NIDAQmx), int32, (Ref{UInt8}, Ptr{bool32}), device, data)
+    ccall((:DAQmxGetDevTimeTrigSupported, NIDAQmx), int32, (Ref{UInt8}, Ref{bool32}), device, data)
 end
 
 function DAQmxGetDevAIPhysicalChans(device, data, bufferSize)
-    ccall((:DAQmxGetDevAIPhysicalChans, NIDAQmx), int32, (Ref{UInt8}, Cstring, uInt32), device, data, bufferSize)
+    ccall((:DAQmxGetDevAIPhysicalChans, NIDAQmx), int32, (Ref{UInt8}, SafeCstring, uInt32), device, data, bufferSize)
 end
 
 function DAQmxGetDevAISupportedMeasTypes(device, data, arraySizeInElements)
-    ccall((:DAQmxGetDevAISupportedMeasTypes, NIDAQmx), int32, (Ref{UInt8}, Ptr{int32}, uInt32), device, data, arraySizeInElements)
+    ccall((:DAQmxGetDevAISupportedMeasTypes, NIDAQmx), int32, (Ref{UInt8}, Ref{int32}, uInt32), device, data, arraySizeInElements)
 end
 
 function DAQmxGetDevAIMaxSingleChanRate(device, data)
-    ccall((:DAQmxGetDevAIMaxSingleChanRate, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), device, data)
+    ccall((:DAQmxGetDevAIMaxSingleChanRate, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), device, data)
 end
 
 function DAQmxGetDevAIMaxMultiChanRate(device, data)
-    ccall((:DAQmxGetDevAIMaxMultiChanRate, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), device, data)
+    ccall((:DAQmxGetDevAIMaxMultiChanRate, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), device, data)
 end
 
 function DAQmxGetDevAIMinRate(device, data)
-    ccall((:DAQmxGetDevAIMinRate, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), device, data)
+    ccall((:DAQmxGetDevAIMinRate, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), device, data)
 end
 
 function DAQmxGetDevAISimultaneousSamplingSupported(device, data)
-    ccall((:DAQmxGetDevAISimultaneousSamplingSupported, NIDAQmx), int32, (Ref{UInt8}, Ptr{bool32}), device, data)
+    ccall((:DAQmxGetDevAISimultaneousSamplingSupported, NIDAQmx), int32, (Ref{UInt8}, Ref{bool32}), device, data)
 end
 
 function DAQmxGetDevAINumSampTimingEngines(device, data)
-    ccall((:DAQmxGetDevAINumSampTimingEngines, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}), device, data)
+    ccall((:DAQmxGetDevAINumSampTimingEngines, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}), device, data)
 end
 
 function DAQmxGetDevAISampModes(device, data, arraySizeInElements)
-    ccall((:DAQmxGetDevAISampModes, NIDAQmx), int32, (Ref{UInt8}, Ptr{int32}, uInt32), device, data, arraySizeInElements)
+    ccall((:DAQmxGetDevAISampModes, NIDAQmx), int32, (Ref{UInt8}, Ref{int32}, uInt32), device, data, arraySizeInElements)
 end
 
 function DAQmxGetDevAINumSyncPulseSrcs(device, data)
-    ccall((:DAQmxGetDevAINumSyncPulseSrcs, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}), device, data)
+    ccall((:DAQmxGetDevAINumSyncPulseSrcs, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}), device, data)
 end
 
 function DAQmxGetDevAITrigUsage(device, data)
-    ccall((:DAQmxGetDevAITrigUsage, NIDAQmx), int32, (Ref{UInt8}, Ptr{int32}), device, data)
+    ccall((:DAQmxGetDevAITrigUsage, NIDAQmx), int32, (Ref{UInt8}, Ref{int32}), device, data)
 end
 
 function DAQmxGetDevAIVoltageRngs(device, data, arraySizeInElements)
-    ccall((:DAQmxGetDevAIVoltageRngs, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}, uInt32), device, data, arraySizeInElements)
+    ccall((:DAQmxGetDevAIVoltageRngs, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}, uInt32), device, data, arraySizeInElements)
 end
 
 function DAQmxGetDevAIVoltageIntExcitDiscreteVals(device, data, arraySizeInElements)
-    ccall((:DAQmxGetDevAIVoltageIntExcitDiscreteVals, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}, uInt32), device, data, arraySizeInElements)
+    ccall((:DAQmxGetDevAIVoltageIntExcitDiscreteVals, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}, uInt32), device, data, arraySizeInElements)
 end
 
 function DAQmxGetDevAIVoltageIntExcitRangeVals(device, data, arraySizeInElements)
-    ccall((:DAQmxGetDevAIVoltageIntExcitRangeVals, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}, uInt32), device, data, arraySizeInElements)
+    ccall((:DAQmxGetDevAIVoltageIntExcitRangeVals, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}, uInt32), device, data, arraySizeInElements)
 end
 
 function DAQmxGetDevAIChargeRngs(device, data, arraySizeInElements)
-    ccall((:DAQmxGetDevAIChargeRngs, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}, uInt32), device, data, arraySizeInElements)
+    ccall((:DAQmxGetDevAIChargeRngs, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}, uInt32), device, data, arraySizeInElements)
 end
 
 function DAQmxGetDevAICurrentRngs(device, data, arraySizeInElements)
-    ccall((:DAQmxGetDevAICurrentRngs, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}, uInt32), device, data, arraySizeInElements)
+    ccall((:DAQmxGetDevAICurrentRngs, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}, uInt32), device, data, arraySizeInElements)
 end
 
 function DAQmxGetDevAICurrentIntExcitDiscreteVals(device, data, arraySizeInElements)
-    ccall((:DAQmxGetDevAICurrentIntExcitDiscreteVals, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}, uInt32), device, data, arraySizeInElements)
+    ccall((:DAQmxGetDevAICurrentIntExcitDiscreteVals, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}, uInt32), device, data, arraySizeInElements)
 end
 
 function DAQmxGetDevAIBridgeRngs(device, data, arraySizeInElements)
-    ccall((:DAQmxGetDevAIBridgeRngs, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}, uInt32), device, data, arraySizeInElements)
+    ccall((:DAQmxGetDevAIBridgeRngs, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}, uInt32), device, data, arraySizeInElements)
 end
 
 function DAQmxGetDevAIResistanceRngs(device, data, arraySizeInElements)
-    ccall((:DAQmxGetDevAIResistanceRngs, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}, uInt32), device, data, arraySizeInElements)
+    ccall((:DAQmxGetDevAIResistanceRngs, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}, uInt32), device, data, arraySizeInElements)
 end
 
 function DAQmxGetDevAIFreqRngs(device, data, arraySizeInElements)
-    ccall((:DAQmxGetDevAIFreqRngs, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}, uInt32), device, data, arraySizeInElements)
+    ccall((:DAQmxGetDevAIFreqRngs, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}, uInt32), device, data, arraySizeInElements)
 end
 
 function DAQmxGetDevAIGains(device, data, arraySizeInElements)
-    ccall((:DAQmxGetDevAIGains, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}, uInt32), device, data, arraySizeInElements)
+    ccall((:DAQmxGetDevAIGains, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}, uInt32), device, data, arraySizeInElements)
 end
 
 function DAQmxGetDevAICouplings(device, data)
-    ccall((:DAQmxGetDevAICouplings, NIDAQmx), int32, (Ref{UInt8}, Ptr{int32}), device, data)
+    ccall((:DAQmxGetDevAICouplings, NIDAQmx), int32, (Ref{UInt8}, Ref{int32}), device, data)
 end
 
 function DAQmxGetDevAILowpassCutoffFreqDiscreteVals(device, data, arraySizeInElements)
-    ccall((:DAQmxGetDevAILowpassCutoffFreqDiscreteVals, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}, uInt32), device, data, arraySizeInElements)
+    ccall((:DAQmxGetDevAILowpassCutoffFreqDiscreteVals, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}, uInt32), device, data, arraySizeInElements)
 end
 
 function DAQmxGetDevAILowpassCutoffFreqRangeVals(device, data, arraySizeInElements)
-    ccall((:DAQmxGetDevAILowpassCutoffFreqRangeVals, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}, uInt32), device, data, arraySizeInElements)
+    ccall((:DAQmxGetDevAILowpassCutoffFreqRangeVals, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}, uInt32), device, data, arraySizeInElements)
 end
 
 function DAQmxGetAIDigFltrTypes(device, data, arraySizeInElements)
-    ccall((:DAQmxGetAIDigFltrTypes, NIDAQmx), int32, (Ref{UInt8}, Ptr{int32}, uInt32), device, data, arraySizeInElements)
+    ccall((:DAQmxGetAIDigFltrTypes, NIDAQmx), int32, (Ref{UInt8}, Ref{int32}, uInt32), device, data, arraySizeInElements)
 end
 
 function DAQmxGetDevAIDigFltrLowpassCutoffFreqDiscreteVals(device, data, arraySizeInElements)
-    ccall((:DAQmxGetDevAIDigFltrLowpassCutoffFreqDiscreteVals, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}, uInt32), device, data, arraySizeInElements)
+    ccall((:DAQmxGetDevAIDigFltrLowpassCutoffFreqDiscreteVals, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}, uInt32), device, data, arraySizeInElements)
 end
 
 function DAQmxGetDevAIDigFltrLowpassCutoffFreqRangeVals(device, data, arraySizeInElements)
-    ccall((:DAQmxGetDevAIDigFltrLowpassCutoffFreqRangeVals, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}, uInt32), device, data, arraySizeInElements)
+    ccall((:DAQmxGetDevAIDigFltrLowpassCutoffFreqRangeVals, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}, uInt32), device, data, arraySizeInElements)
 end
 
 function DAQmxGetDevAOPhysicalChans(device, data, bufferSize)
-    ccall((:DAQmxGetDevAOPhysicalChans, NIDAQmx), int32, (Ref{UInt8}, Cstring, uInt32), device, data, bufferSize)
+    ccall((:DAQmxGetDevAOPhysicalChans, NIDAQmx), int32, (Ref{UInt8}, SafeCstring, uInt32), device, data, bufferSize)
 end
 
 function DAQmxGetDevAOSupportedOutputTypes(device, data, arraySizeInElements)
-    ccall((:DAQmxGetDevAOSupportedOutputTypes, NIDAQmx), int32, (Ref{UInt8}, Ptr{int32}, uInt32), device, data, arraySizeInElements)
+    ccall((:DAQmxGetDevAOSupportedOutputTypes, NIDAQmx), int32, (Ref{UInt8}, Ref{int32}, uInt32), device, data, arraySizeInElements)
 end
 
 function DAQmxGetDevAOMaxRate(device, data)
-    ccall((:DAQmxGetDevAOMaxRate, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), device, data)
+    ccall((:DAQmxGetDevAOMaxRate, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), device, data)
 end
 
 function DAQmxGetDevAOMinRate(device, data)
-    ccall((:DAQmxGetDevAOMinRate, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), device, data)
+    ccall((:DAQmxGetDevAOMinRate, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), device, data)
 end
 
 function DAQmxGetDevAOSampClkSupported(device, data)
-    ccall((:DAQmxGetDevAOSampClkSupported, NIDAQmx), int32, (Ref{UInt8}, Ptr{bool32}), device, data)
+    ccall((:DAQmxGetDevAOSampClkSupported, NIDAQmx), int32, (Ref{UInt8}, Ref{bool32}), device, data)
 end
 
 function DAQmxGetDevAONumSampTimingEngines(device, data)
-    ccall((:DAQmxGetDevAONumSampTimingEngines, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}), device, data)
+    ccall((:DAQmxGetDevAONumSampTimingEngines, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}), device, data)
 end
 
 function DAQmxGetDevAOSampModes(device, data, arraySizeInElements)
-    ccall((:DAQmxGetDevAOSampModes, NIDAQmx), int32, (Ref{UInt8}, Ptr{int32}, uInt32), device, data, arraySizeInElements)
+    ccall((:DAQmxGetDevAOSampModes, NIDAQmx), int32, (Ref{UInt8}, Ref{int32}, uInt32), device, data, arraySizeInElements)
 end
 
 function DAQmxGetDevAONumSyncPulseSrcs(device, data)
-    ccall((:DAQmxGetDevAONumSyncPulseSrcs, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}), device, data)
+    ccall((:DAQmxGetDevAONumSyncPulseSrcs, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}), device, data)
 end
 
 function DAQmxGetDevAOTrigUsage(device, data)
-    ccall((:DAQmxGetDevAOTrigUsage, NIDAQmx), int32, (Ref{UInt8}, Ptr{int32}), device, data)
+    ccall((:DAQmxGetDevAOTrigUsage, NIDAQmx), int32, (Ref{UInt8}, Ref{int32}), device, data)
 end
 
 function DAQmxGetDevAOVoltageRngs(device, data, arraySizeInElements)
-    ccall((:DAQmxGetDevAOVoltageRngs, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}, uInt32), device, data, arraySizeInElements)
+    ccall((:DAQmxGetDevAOVoltageRngs, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}, uInt32), device, data, arraySizeInElements)
 end
 
 function DAQmxGetDevAOCurrentRngs(device, data, arraySizeInElements)
-    ccall((:DAQmxGetDevAOCurrentRngs, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}, uInt32), device, data, arraySizeInElements)
+    ccall((:DAQmxGetDevAOCurrentRngs, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}, uInt32), device, data, arraySizeInElements)
 end
 
 function DAQmxGetDevAOGains(device, data, arraySizeInElements)
-    ccall((:DAQmxGetDevAOGains, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}, uInt32), device, data, arraySizeInElements)
+    ccall((:DAQmxGetDevAOGains, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}, uInt32), device, data, arraySizeInElements)
 end
 
 function DAQmxGetDevDILines(device, data, bufferSize)
-    ccall((:DAQmxGetDevDILines, NIDAQmx), int32, (Ref{UInt8}, Cstring, uInt32), device, data, bufferSize)
+    ccall((:DAQmxGetDevDILines, NIDAQmx), int32, (Ref{UInt8}, SafeCstring, uInt32), device, data, bufferSize)
 end
 
 function DAQmxGetDevDIPorts(device, data, bufferSize)
-    ccall((:DAQmxGetDevDIPorts, NIDAQmx), int32, (Ref{UInt8}, Cstring, uInt32), device, data, bufferSize)
+    ccall((:DAQmxGetDevDIPorts, NIDAQmx), int32, (Ref{UInt8}, SafeCstring, uInt32), device, data, bufferSize)
 end
 
 function DAQmxGetDevDIMaxRate(device, data)
-    ccall((:DAQmxGetDevDIMaxRate, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), device, data)
+    ccall((:DAQmxGetDevDIMaxRate, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), device, data)
 end
 
 function DAQmxGetDevDINumSampTimingEngines(device, data)
-    ccall((:DAQmxGetDevDINumSampTimingEngines, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}), device, data)
+    ccall((:DAQmxGetDevDINumSampTimingEngines, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}), device, data)
 end
 
 function DAQmxGetDevDITrigUsage(device, data)
-    ccall((:DAQmxGetDevDITrigUsage, NIDAQmx), int32, (Ref{UInt8}, Ptr{int32}), device, data)
+    ccall((:DAQmxGetDevDITrigUsage, NIDAQmx), int32, (Ref{UInt8}, Ref{int32}), device, data)
 end
 
 function DAQmxGetDevDOLines(device, data, bufferSize)
-    ccall((:DAQmxGetDevDOLines, NIDAQmx), int32, (Ref{UInt8}, Cstring, uInt32), device, data, bufferSize)
+    ccall((:DAQmxGetDevDOLines, NIDAQmx), int32, (Ref{UInt8}, SafeCstring, uInt32), device, data, bufferSize)
 end
 
 function DAQmxGetDevDOPorts(device, data, bufferSize)
-    ccall((:DAQmxGetDevDOPorts, NIDAQmx), int32, (Ref{UInt8}, Cstring, uInt32), device, data, bufferSize)
+    ccall((:DAQmxGetDevDOPorts, NIDAQmx), int32, (Ref{UInt8}, SafeCstring, uInt32), device, data, bufferSize)
 end
 
 function DAQmxGetDevDOMaxRate(device, data)
-    ccall((:DAQmxGetDevDOMaxRate, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), device, data)
+    ccall((:DAQmxGetDevDOMaxRate, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), device, data)
 end
 
 function DAQmxGetDevDONumSampTimingEngines(device, data)
-    ccall((:DAQmxGetDevDONumSampTimingEngines, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}), device, data)
+    ccall((:DAQmxGetDevDONumSampTimingEngines, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}), device, data)
 end
 
 function DAQmxGetDevDOTrigUsage(device, data)
-    ccall((:DAQmxGetDevDOTrigUsage, NIDAQmx), int32, (Ref{UInt8}, Ptr{int32}), device, data)
+    ccall((:DAQmxGetDevDOTrigUsage, NIDAQmx), int32, (Ref{UInt8}, Ref{int32}), device, data)
 end
 
 function DAQmxGetDevCIPhysicalChans(device, data, bufferSize)
-    ccall((:DAQmxGetDevCIPhysicalChans, NIDAQmx), int32, (Ref{UInt8}, Cstring, uInt32), device, data, bufferSize)
+    ccall((:DAQmxGetDevCIPhysicalChans, NIDAQmx), int32, (Ref{UInt8}, SafeCstring, uInt32), device, data, bufferSize)
 end
 
 function DAQmxGetDevCISupportedMeasTypes(device, data, arraySizeInElements)
-    ccall((:DAQmxGetDevCISupportedMeasTypes, NIDAQmx), int32, (Ref{UInt8}, Ptr{int32}, uInt32), device, data, arraySizeInElements)
+    ccall((:DAQmxGetDevCISupportedMeasTypes, NIDAQmx), int32, (Ref{UInt8}, Ref{int32}, uInt32), device, data, arraySizeInElements)
 end
 
 function DAQmxGetDevCITrigUsage(device, data)
-    ccall((:DAQmxGetDevCITrigUsage, NIDAQmx), int32, (Ref{UInt8}, Ptr{int32}), device, data)
+    ccall((:DAQmxGetDevCITrigUsage, NIDAQmx), int32, (Ref{UInt8}, Ref{int32}), device, data)
 end
 
 function DAQmxGetDevCISampClkSupported(device, data)
-    ccall((:DAQmxGetDevCISampClkSupported, NIDAQmx), int32, (Ref{UInt8}, Ptr{bool32}), device, data)
+    ccall((:DAQmxGetDevCISampClkSupported, NIDAQmx), int32, (Ref{UInt8}, Ref{bool32}), device, data)
 end
 
 function DAQmxGetDevCISampModes(device, data, arraySizeInElements)
-    ccall((:DAQmxGetDevCISampModes, NIDAQmx), int32, (Ref{UInt8}, Ptr{int32}, uInt32), device, data, arraySizeInElements)
+    ccall((:DAQmxGetDevCISampModes, NIDAQmx), int32, (Ref{UInt8}, Ref{int32}, uInt32), device, data, arraySizeInElements)
 end
 
 function DAQmxGetDevCIMaxSize(device, data)
-    ccall((:DAQmxGetDevCIMaxSize, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}), device, data)
+    ccall((:DAQmxGetDevCIMaxSize, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}), device, data)
 end
 
 function DAQmxGetDevCIMaxTimebase(device, data)
-    ccall((:DAQmxGetDevCIMaxTimebase, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), device, data)
+    ccall((:DAQmxGetDevCIMaxTimebase, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), device, data)
 end
 
 function DAQmxGetDevCOPhysicalChans(device, data, bufferSize)
-    ccall((:DAQmxGetDevCOPhysicalChans, NIDAQmx), int32, (Ref{UInt8}, Cstring, uInt32), device, data, bufferSize)
+    ccall((:DAQmxGetDevCOPhysicalChans, NIDAQmx), int32, (Ref{UInt8}, SafeCstring, uInt32), device, data, bufferSize)
 end
 
 function DAQmxGetDevCOSupportedOutputTypes(device, data, arraySizeInElements)
-    ccall((:DAQmxGetDevCOSupportedOutputTypes, NIDAQmx), int32, (Ref{UInt8}, Ptr{int32}, uInt32), device, data, arraySizeInElements)
+    ccall((:DAQmxGetDevCOSupportedOutputTypes, NIDAQmx), int32, (Ref{UInt8}, Ref{int32}, uInt32), device, data, arraySizeInElements)
 end
 
 function DAQmxGetDevCOSampClkSupported(device, data)
-    ccall((:DAQmxGetDevCOSampClkSupported, NIDAQmx), int32, (Ref{UInt8}, Ptr{bool32}), device, data)
+    ccall((:DAQmxGetDevCOSampClkSupported, NIDAQmx), int32, (Ref{UInt8}, Ref{bool32}), device, data)
 end
 
 function DAQmxGetDevCOSampModes(device, data, arraySizeInElements)
-    ccall((:DAQmxGetDevCOSampModes, NIDAQmx), int32, (Ref{UInt8}, Ptr{int32}, uInt32), device, data, arraySizeInElements)
+    ccall((:DAQmxGetDevCOSampModes, NIDAQmx), int32, (Ref{UInt8}, Ref{int32}, uInt32), device, data, arraySizeInElements)
 end
 
 function DAQmxGetDevCOTrigUsage(device, data)
-    ccall((:DAQmxGetDevCOTrigUsage, NIDAQmx), int32, (Ref{UInt8}, Ptr{int32}), device, data)
+    ccall((:DAQmxGetDevCOTrigUsage, NIDAQmx), int32, (Ref{UInt8}, Ref{int32}), device, data)
 end
 
 function DAQmxGetDevCOMaxSize(device, data)
-    ccall((:DAQmxGetDevCOMaxSize, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}), device, data)
+    ccall((:DAQmxGetDevCOMaxSize, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}), device, data)
 end
 
 function DAQmxGetDevCOMaxTimebase(device, data)
-    ccall((:DAQmxGetDevCOMaxTimebase, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), device, data)
+    ccall((:DAQmxGetDevCOMaxTimebase, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), device, data)
 end
 
 function DAQmxGetDevTEDSHWTEDSSupported(device, data)
-    ccall((:DAQmxGetDevTEDSHWTEDSSupported, NIDAQmx), int32, (Ref{UInt8}, Ptr{bool32}), device, data)
+    ccall((:DAQmxGetDevTEDSHWTEDSSupported, NIDAQmx), int32, (Ref{UInt8}, Ref{bool32}), device, data)
 end
 
 function DAQmxGetDevNumDMAChans(device, data)
-    ccall((:DAQmxGetDevNumDMAChans, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}), device, data)
+    ccall((:DAQmxGetDevNumDMAChans, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}), device, data)
 end
 
 function DAQmxGetDevBusType(device, data)
-    ccall((:DAQmxGetDevBusType, NIDAQmx), int32, (Ref{UInt8}, Ptr{int32}), device, data)
+    ccall((:DAQmxGetDevBusType, NIDAQmx), int32, (Ref{UInt8}, Ref{int32}), device, data)
 end
 
 function DAQmxGetDevPCIBusNum(device, data)
-    ccall((:DAQmxGetDevPCIBusNum, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}), device, data)
+    ccall((:DAQmxGetDevPCIBusNum, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}), device, data)
 end
 
 function DAQmxGetDevPCIDevNum(device, data)
-    ccall((:DAQmxGetDevPCIDevNum, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}), device, data)
+    ccall((:DAQmxGetDevPCIDevNum, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}), device, data)
 end
 
 function DAQmxGetDevPXIChassisNum(device, data)
-    ccall((:DAQmxGetDevPXIChassisNum, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}), device, data)
+    ccall((:DAQmxGetDevPXIChassisNum, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}), device, data)
 end
 
 function DAQmxGetDevPXISlotNum(device, data)
-    ccall((:DAQmxGetDevPXISlotNum, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}), device, data)
+    ccall((:DAQmxGetDevPXISlotNum, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}), device, data)
 end
 
 function DAQmxGetDevCompactDAQChassisDevName(device, data, bufferSize)
-    ccall((:DAQmxGetDevCompactDAQChassisDevName, NIDAQmx), int32, (Ref{UInt8}, Cstring, uInt32), device, data, bufferSize)
+    ccall((:DAQmxGetDevCompactDAQChassisDevName, NIDAQmx), int32, (Ref{UInt8}, SafeCstring, uInt32), device, data, bufferSize)
 end
 
 function DAQmxGetDevCompactDAQSlotNum(device, data)
-    ccall((:DAQmxGetDevCompactDAQSlotNum, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}), device, data)
+    ccall((:DAQmxGetDevCompactDAQSlotNum, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}), device, data)
 end
 
 function DAQmxGetDevCompactRIOChassisDevName(device, data, bufferSize)
-    ccall((:DAQmxGetDevCompactRIOChassisDevName, NIDAQmx), int32, (Ref{UInt8}, Cstring, uInt32), device, data, bufferSize)
+    ccall((:DAQmxGetDevCompactRIOChassisDevName, NIDAQmx), int32, (Ref{UInt8}, SafeCstring, uInt32), device, data, bufferSize)
 end
 
 function DAQmxGetDevCompactRIOSlotNum(device, data)
-    ccall((:DAQmxGetDevCompactRIOSlotNum, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}), device, data)
+    ccall((:DAQmxGetDevCompactRIOSlotNum, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}), device, data)
 end
 
 function DAQmxGetDevTCPIPHostname(device, data, bufferSize)
-    ccall((:DAQmxGetDevTCPIPHostname, NIDAQmx), int32, (Ref{UInt8}, Cstring, uInt32), device, data, bufferSize)
+    ccall((:DAQmxGetDevTCPIPHostname, NIDAQmx), int32, (Ref{UInt8}, SafeCstring, uInt32), device, data, bufferSize)
 end
 
 function DAQmxGetDevTCPIPEthernetIP(device, data, bufferSize)
-    ccall((:DAQmxGetDevTCPIPEthernetIP, NIDAQmx), int32, (Ref{UInt8}, Cstring, uInt32), device, data, bufferSize)
+    ccall((:DAQmxGetDevTCPIPEthernetIP, NIDAQmx), int32, (Ref{UInt8}, SafeCstring, uInt32), device, data, bufferSize)
 end
 
 function DAQmxGetDevTCPIPWirelessIP(device, data, bufferSize)
-    ccall((:DAQmxGetDevTCPIPWirelessIP, NIDAQmx), int32, (Ref{UInt8}, Cstring, uInt32), device, data, bufferSize)
+    ccall((:DAQmxGetDevTCPIPWirelessIP, NIDAQmx), int32, (Ref{UInt8}, SafeCstring, uInt32), device, data, bufferSize)
 end
 
 function DAQmxGetDevTerminals(device, data, bufferSize)
-    ccall((:DAQmxGetDevTerminals, NIDAQmx), int32, (Ref{UInt8}, Cstring, uInt32), device, data, bufferSize)
+    ccall((:DAQmxGetDevTerminals, NIDAQmx), int32, (Ref{UInt8}, SafeCstring, uInt32), device, data, bufferSize)
 end
 
 function DAQmxGetDevNumTimeTrigs(device, data)
-    ccall((:DAQmxGetDevNumTimeTrigs, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}), device, data)
+    ccall((:DAQmxGetDevNumTimeTrigs, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}), device, data)
 end
 
 function DAQmxGetDevNumTimestampEngines(device, data)
-    ccall((:DAQmxGetDevNumTimestampEngines, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}), device, data)
+    ccall((:DAQmxGetDevNumTimestampEngines, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}), device, data)
 end
 
 function DAQmxGetExportedAIConvClkOutputTerm(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetExportedAIConvClkOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetExportedAIConvClkOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetExportedAIConvClkOutputTerm(taskHandle, data)
-    ccall((:DAQmxSetExportedAIConvClkOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetExportedAIConvClkOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetExportedAIConvClkOutputTerm(taskHandle)
@@ -8499,11 +8498,11 @@ function DAQmxGetExportedAIConvClkPulsePolarity(taskHandle, data)
 end
 
 function DAQmxGetExported10MHzRefClkOutputTerm(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetExported10MHzRefClkOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetExported10MHzRefClkOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetExported10MHzRefClkOutputTerm(taskHandle, data)
-    ccall((:DAQmxSetExported10MHzRefClkOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetExported10MHzRefClkOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetExported10MHzRefClkOutputTerm(taskHandle)
@@ -8511,11 +8510,11 @@ function DAQmxResetExported10MHzRefClkOutputTerm(taskHandle)
 end
 
 function DAQmxGetExported20MHzTimebaseOutputTerm(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetExported20MHzTimebaseOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetExported20MHzTimebaseOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetExported20MHzTimebaseOutputTerm(taskHandle, data)
-    ccall((:DAQmxSetExported20MHzTimebaseOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetExported20MHzTimebaseOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetExported20MHzTimebaseOutputTerm(taskHandle)
@@ -8535,11 +8534,11 @@ function DAQmxResetExportedSampClkOutputBehavior(taskHandle)
 end
 
 function DAQmxGetExportedSampClkOutputTerm(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetExportedSampClkOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetExportedSampClkOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetExportedSampClkOutputTerm(taskHandle, data)
-    ccall((:DAQmxSetExportedSampClkOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetExportedSampClkOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetExportedSampClkOutputTerm(taskHandle)
@@ -8571,11 +8570,11 @@ function DAQmxResetExportedSampClkPulsePolarity(taskHandle)
 end
 
 function DAQmxGetExportedSampClkTimebaseOutputTerm(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetExportedSampClkTimebaseOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetExportedSampClkTimebaseOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetExportedSampClkTimebaseOutputTerm(taskHandle, data)
-    ccall((:DAQmxSetExportedSampClkTimebaseOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetExportedSampClkTimebaseOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetExportedSampClkTimebaseOutputTerm(taskHandle)
@@ -8583,11 +8582,11 @@ function DAQmxResetExportedSampClkTimebaseOutputTerm(taskHandle)
 end
 
 function DAQmxGetExportedDividedSampClkTimebaseOutputTerm(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetExportedDividedSampClkTimebaseOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetExportedDividedSampClkTimebaseOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetExportedDividedSampClkTimebaseOutputTerm(taskHandle, data)
-    ccall((:DAQmxSetExportedDividedSampClkTimebaseOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetExportedDividedSampClkTimebaseOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetExportedDividedSampClkTimebaseOutputTerm(taskHandle)
@@ -8595,11 +8594,11 @@ function DAQmxResetExportedDividedSampClkTimebaseOutputTerm(taskHandle)
 end
 
 function DAQmxGetExportedAdvTrigOutputTerm(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetExportedAdvTrigOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetExportedAdvTrigOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetExportedAdvTrigOutputTerm(taskHandle, data)
-    ccall((:DAQmxSetExportedAdvTrigOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetExportedAdvTrigOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetExportedAdvTrigOutputTerm(taskHandle)
@@ -8635,11 +8634,11 @@ function DAQmxResetExportedAdvTrigPulseWidth(taskHandle)
 end
 
 function DAQmxGetExportedPauseTrigOutputTerm(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetExportedPauseTrigOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetExportedPauseTrigOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetExportedPauseTrigOutputTerm(taskHandle, data)
-    ccall((:DAQmxSetExportedPauseTrigOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetExportedPauseTrigOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetExportedPauseTrigOutputTerm(taskHandle)
@@ -8659,11 +8658,11 @@ function DAQmxResetExportedPauseTrigLvlActiveLvl(taskHandle)
 end
 
 function DAQmxGetExportedRefTrigOutputTerm(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetExportedRefTrigOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetExportedRefTrigOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetExportedRefTrigOutputTerm(taskHandle, data)
-    ccall((:DAQmxSetExportedRefTrigOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetExportedRefTrigOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetExportedRefTrigOutputTerm(taskHandle)
@@ -8683,11 +8682,11 @@ function DAQmxResetExportedRefTrigPulsePolarity(taskHandle)
 end
 
 function DAQmxGetExportedStartTrigOutputTerm(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetExportedStartTrigOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetExportedStartTrigOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetExportedStartTrigOutputTerm(taskHandle, data)
-    ccall((:DAQmxSetExportedStartTrigOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetExportedStartTrigOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetExportedStartTrigOutputTerm(taskHandle)
@@ -8707,11 +8706,11 @@ function DAQmxResetExportedStartTrigPulsePolarity(taskHandle)
 end
 
 function DAQmxGetExportedAdvCmpltEventOutputTerm(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetExportedAdvCmpltEventOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetExportedAdvCmpltEventOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetExportedAdvCmpltEventOutputTerm(taskHandle, data)
-    ccall((:DAQmxSetExportedAdvCmpltEventOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetExportedAdvCmpltEventOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetExportedAdvCmpltEventOutputTerm(taskHandle)
@@ -8755,11 +8754,11 @@ function DAQmxResetExportedAdvCmpltEventPulseWidth(taskHandle)
 end
 
 function DAQmxGetExportedAIHoldCmpltEventOutputTerm(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetExportedAIHoldCmpltEventOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetExportedAIHoldCmpltEventOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetExportedAIHoldCmpltEventOutputTerm(taskHandle, data)
-    ccall((:DAQmxSetExportedAIHoldCmpltEventOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetExportedAIHoldCmpltEventOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetExportedAIHoldCmpltEventOutputTerm(taskHandle)
@@ -8779,11 +8778,11 @@ function DAQmxResetExportedAIHoldCmpltEventPulsePolarity(taskHandle)
 end
 
 function DAQmxGetExportedChangeDetectEventOutputTerm(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetExportedChangeDetectEventOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetExportedChangeDetectEventOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetExportedChangeDetectEventOutputTerm(taskHandle, data)
-    ccall((:DAQmxSetExportedChangeDetectEventOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetExportedChangeDetectEventOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetExportedChangeDetectEventOutputTerm(taskHandle)
@@ -8803,11 +8802,11 @@ function DAQmxResetExportedChangeDetectEventPulsePolarity(taskHandle)
 end
 
 function DAQmxGetExportedCtrOutEventOutputTerm(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetExportedCtrOutEventOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetExportedCtrOutEventOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetExportedCtrOutEventOutputTerm(taskHandle, data)
-    ccall((:DAQmxSetExportedCtrOutEventOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetExportedCtrOutEventOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetExportedCtrOutEventOutputTerm(taskHandle)
@@ -8851,11 +8850,11 @@ function DAQmxResetExportedCtrOutEventToggleIdleState(taskHandle)
 end
 
 function DAQmxGetExportedHshkEventOutputTerm(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetExportedHshkEventOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetExportedHshkEventOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetExportedHshkEventOutputTerm(taskHandle, data)
-    ccall((:DAQmxSetExportedHshkEventOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetExportedHshkEventOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetExportedHshkEventOutputTerm(taskHandle)
@@ -8947,11 +8946,11 @@ function DAQmxResetExportedHshkEventPulseWidth(taskHandle)
 end
 
 function DAQmxGetExportedRdyForXferEventOutputTerm(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetExportedRdyForXferEventOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetExportedRdyForXferEventOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetExportedRdyForXferEventOutputTerm(taskHandle, data)
-    ccall((:DAQmxSetExportedRdyForXferEventOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetExportedRdyForXferEventOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetExportedRdyForXferEventOutputTerm(taskHandle)
@@ -8995,11 +8994,11 @@ function DAQmxResetExportedRdyForXferEventDeassertCondCustomThreshold(taskHandle
 end
 
 function DAQmxGetExportedDataActiveEventOutputTerm(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetExportedDataActiveEventOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetExportedDataActiveEventOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetExportedDataActiveEventOutputTerm(taskHandle, data)
-    ccall((:DAQmxSetExportedDataActiveEventOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetExportedDataActiveEventOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetExportedDataActiveEventOutputTerm(taskHandle)
@@ -9019,11 +9018,11 @@ function DAQmxResetExportedDataActiveEventLvlActiveLvl(taskHandle)
 end
 
 function DAQmxGetExportedRdyForStartEventOutputTerm(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetExportedRdyForStartEventOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetExportedRdyForStartEventOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetExportedRdyForStartEventOutputTerm(taskHandle, data)
-    ccall((:DAQmxSetExportedRdyForStartEventOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetExportedRdyForStartEventOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetExportedRdyForStartEventOutputTerm(taskHandle)
@@ -9043,11 +9042,11 @@ function DAQmxResetExportedRdyForStartEventLvlActiveLvl(taskHandle)
 end
 
 function DAQmxGetExportedSyncPulseEventOutputTerm(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetExportedSyncPulseEventOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetExportedSyncPulseEventOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetExportedSyncPulseEventOutputTerm(taskHandle, data)
-    ccall((:DAQmxSetExportedSyncPulseEventOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetExportedSyncPulseEventOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetExportedSyncPulseEventOutputTerm(taskHandle)
@@ -9055,11 +9054,11 @@ function DAQmxResetExportedSyncPulseEventOutputTerm(taskHandle)
 end
 
 function DAQmxGetExportedWatchdogExpiredEventOutputTerm(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetExportedWatchdogExpiredEventOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetExportedWatchdogExpiredEventOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetExportedWatchdogExpiredEventOutputTerm(taskHandle, data)
-    ccall((:DAQmxSetExportedWatchdogExpiredEventOutputTerm, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetExportedWatchdogExpiredEventOutputTerm, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetExportedWatchdogExpiredEventOutputTerm(taskHandle)
@@ -9067,63 +9066,63 @@ function DAQmxResetExportedWatchdogExpiredEventOutputTerm(taskHandle)
 end
 
 function DAQmxGetPersistedChanAuthor(channel, data, bufferSize)
-    ccall((:DAQmxGetPersistedChanAuthor, NIDAQmx), int32, (Ref{UInt8}, Cstring, uInt32), channel, data, bufferSize)
+    ccall((:DAQmxGetPersistedChanAuthor, NIDAQmx), int32, (Ref{UInt8}, SafeCstring, uInt32), channel, data, bufferSize)
 end
 
 function DAQmxGetPersistedChanAllowInteractiveEditing(channel, data)
-    ccall((:DAQmxGetPersistedChanAllowInteractiveEditing, NIDAQmx), int32, (Ref{UInt8}, Ptr{bool32}), channel, data)
+    ccall((:DAQmxGetPersistedChanAllowInteractiveEditing, NIDAQmx), int32, (Ref{UInt8}, Ref{bool32}), channel, data)
 end
 
 function DAQmxGetPersistedChanAllowInteractiveDeletion(channel, data)
-    ccall((:DAQmxGetPersistedChanAllowInteractiveDeletion, NIDAQmx), int32, (Ref{UInt8}, Ptr{bool32}), channel, data)
+    ccall((:DAQmxGetPersistedChanAllowInteractiveDeletion, NIDAQmx), int32, (Ref{UInt8}, Ref{bool32}), channel, data)
 end
 
 function DAQmxGetPersistedScaleAuthor(scaleName, data, bufferSize)
-    ccall((:DAQmxGetPersistedScaleAuthor, NIDAQmx), int32, (Ref{UInt8}, Cstring, uInt32), scaleName, data, bufferSize)
+    ccall((:DAQmxGetPersistedScaleAuthor, NIDAQmx), int32, (Ref{UInt8}, SafeCstring, uInt32), scaleName, data, bufferSize)
 end
 
 function DAQmxGetPersistedScaleAllowInteractiveEditing(scaleName, data)
-    ccall((:DAQmxGetPersistedScaleAllowInteractiveEditing, NIDAQmx), int32, (Ref{UInt8}, Ptr{bool32}), scaleName, data)
+    ccall((:DAQmxGetPersistedScaleAllowInteractiveEditing, NIDAQmx), int32, (Ref{UInt8}, Ref{bool32}), scaleName, data)
 end
 
 function DAQmxGetPersistedScaleAllowInteractiveDeletion(scaleName, data)
-    ccall((:DAQmxGetPersistedScaleAllowInteractiveDeletion, NIDAQmx), int32, (Ref{UInt8}, Ptr{bool32}), scaleName, data)
+    ccall((:DAQmxGetPersistedScaleAllowInteractiveDeletion, NIDAQmx), int32, (Ref{UInt8}, Ref{bool32}), scaleName, data)
 end
 
 function DAQmxGetPersistedTaskAuthor(taskName, data, bufferSize)
-    ccall((:DAQmxGetPersistedTaskAuthor, NIDAQmx), int32, (Ref{UInt8}, Cstring, uInt32), taskName, data, bufferSize)
+    ccall((:DAQmxGetPersistedTaskAuthor, NIDAQmx), int32, (Ref{UInt8}, SafeCstring, uInt32), taskName, data, bufferSize)
 end
 
 function DAQmxGetPersistedTaskAllowInteractiveEditing(taskName, data)
-    ccall((:DAQmxGetPersistedTaskAllowInteractiveEditing, NIDAQmx), int32, (Ref{UInt8}, Ptr{bool32}), taskName, data)
+    ccall((:DAQmxGetPersistedTaskAllowInteractiveEditing, NIDAQmx), int32, (Ref{UInt8}, Ref{bool32}), taskName, data)
 end
 
 function DAQmxGetPersistedTaskAllowInteractiveDeletion(taskName, data)
-    ccall((:DAQmxGetPersistedTaskAllowInteractiveDeletion, NIDAQmx), int32, (Ref{UInt8}, Ptr{bool32}), taskName, data)
+    ccall((:DAQmxGetPersistedTaskAllowInteractiveDeletion, NIDAQmx), int32, (Ref{UInt8}, Ref{bool32}), taskName, data)
 end
 
 function DAQmxGetPhysicalChanAISupportedMeasTypes(physicalChannel, data, arraySizeInElements)
-    ccall((:DAQmxGetPhysicalChanAISupportedMeasTypes, NIDAQmx), int32, (Ref{UInt8}, Ptr{int32}, uInt32), physicalChannel, data, arraySizeInElements)
+    ccall((:DAQmxGetPhysicalChanAISupportedMeasTypes, NIDAQmx), int32, (Ref{UInt8}, Ref{int32}, uInt32), physicalChannel, data, arraySizeInElements)
 end
 
 function DAQmxGetPhysicalChanAITermCfgs(physicalChannel, data)
-    ccall((:DAQmxGetPhysicalChanAITermCfgs, NIDAQmx), int32, (Ref{UInt8}, Ptr{int32}), physicalChannel, data)
+    ccall((:DAQmxGetPhysicalChanAITermCfgs, NIDAQmx), int32, (Ref{UInt8}, Ref{int32}), physicalChannel, data)
 end
 
 function DAQmxGetPhysicalChanAIInputSrcs(physicalChannel, data, bufferSize)
-    ccall((:DAQmxGetPhysicalChanAIInputSrcs, NIDAQmx), int32, (Ref{UInt8}, Cstring, uInt32), physicalChannel, data, bufferSize)
+    ccall((:DAQmxGetPhysicalChanAIInputSrcs, NIDAQmx), int32, (Ref{UInt8}, SafeCstring, uInt32), physicalChannel, data, bufferSize)
 end
 
 function DAQmxGetPhysicalChanAISensorPowerTypes(physicalChannel, data, arraySizeInElements)
-    ccall((:DAQmxGetPhysicalChanAISensorPowerTypes, NIDAQmx), int32, (Ref{UInt8}, Ptr{int32}, uInt32), physicalChannel, data, arraySizeInElements)
+    ccall((:DAQmxGetPhysicalChanAISensorPowerTypes, NIDAQmx), int32, (Ref{UInt8}, Ref{int32}, uInt32), physicalChannel, data, arraySizeInElements)
 end
 
 function DAQmxGetPhysicalChanAISensorPowerVoltageRangeVals(physicalChannel, data, arraySizeInElements)
-    ccall((:DAQmxGetPhysicalChanAISensorPowerVoltageRangeVals, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}, uInt32), physicalChannel, data, arraySizeInElements)
+    ccall((:DAQmxGetPhysicalChanAISensorPowerVoltageRangeVals, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}, uInt32), physicalChannel, data, arraySizeInElements)
 end
 
 function DAQmxGetPhysicalChanAIPowerControlVoltage(physicalChannel, data)
-    ccall((:DAQmxGetPhysicalChanAIPowerControlVoltage, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), physicalChannel, data)
+    ccall((:DAQmxGetPhysicalChanAIPowerControlVoltage, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), physicalChannel, data)
 end
 
 function DAQmxSetPhysicalChanAIPowerControlVoltage(physicalChannel, data)
@@ -9135,7 +9134,7 @@ function DAQmxResetPhysicalChanAIPowerControlVoltage(physicalChannel)
 end
 
 function DAQmxGetPhysicalChanAIPowerControlEnable(physicalChannel, data)
-    ccall((:DAQmxGetPhysicalChanAIPowerControlEnable, NIDAQmx), int32, (Ref{UInt8}, Ptr{bool32}), physicalChannel, data)
+    ccall((:DAQmxGetPhysicalChanAIPowerControlEnable, NIDAQmx), int32, (Ref{UInt8}, Ref{bool32}), physicalChannel, data)
 end
 
 function DAQmxSetPhysicalChanAIPowerControlEnable(physicalChannel, data)
@@ -9147,7 +9146,7 @@ function DAQmxResetPhysicalChanAIPowerControlEnable(physicalChannel)
 end
 
 function DAQmxGetPhysicalChanAIPowerControlType(physicalChannel, data)
-    ccall((:DAQmxGetPhysicalChanAIPowerControlType, NIDAQmx), int32, (Ref{UInt8}, Ptr{int32}), physicalChannel, data)
+    ccall((:DAQmxGetPhysicalChanAIPowerControlType, NIDAQmx), int32, (Ref{UInt8}, Ref{int32}), physicalChannel, data)
 end
 
 function DAQmxSetPhysicalChanAIPowerControlType(physicalChannel, data)
@@ -9159,27 +9158,27 @@ function DAQmxResetPhysicalChanAIPowerControlType(physicalChannel)
 end
 
 function DAQmxGetPhysicalChanAISensorPowerOpenChan(physicalChannel, data)
-    ccall((:DAQmxGetPhysicalChanAISensorPowerOpenChan, NIDAQmx), int32, (Ref{UInt8}, Ptr{bool32}), physicalChannel, data)
+    ccall((:DAQmxGetPhysicalChanAISensorPowerOpenChan, NIDAQmx), int32, (Ref{UInt8}, Ref{bool32}), physicalChannel, data)
 end
 
 function DAQmxGetPhysicalChanAISensorPowerOvercurrent(physicalChannel, data)
-    ccall((:DAQmxGetPhysicalChanAISensorPowerOvercurrent, NIDAQmx), int32, (Ref{UInt8}, Ptr{bool32}), physicalChannel, data)
+    ccall((:DAQmxGetPhysicalChanAISensorPowerOvercurrent, NIDAQmx), int32, (Ref{UInt8}, Ref{bool32}), physicalChannel, data)
 end
 
 function DAQmxGetPhysicalChanAOSupportedOutputTypes(physicalChannel, data, arraySizeInElements)
-    ccall((:DAQmxGetPhysicalChanAOSupportedOutputTypes, NIDAQmx), int32, (Ref{UInt8}, Ptr{int32}, uInt32), physicalChannel, data, arraySizeInElements)
+    ccall((:DAQmxGetPhysicalChanAOSupportedOutputTypes, NIDAQmx), int32, (Ref{UInt8}, Ref{int32}, uInt32), physicalChannel, data, arraySizeInElements)
 end
 
 function DAQmxGetPhysicalChanAOSupportedPowerUpOutputTypes(physicalChannel, data, arraySizeInElements)
-    ccall((:DAQmxGetPhysicalChanAOSupportedPowerUpOutputTypes, NIDAQmx), int32, (Ref{UInt8}, Ptr{int32}, uInt32), physicalChannel, data, arraySizeInElements)
+    ccall((:DAQmxGetPhysicalChanAOSupportedPowerUpOutputTypes, NIDAQmx), int32, (Ref{UInt8}, Ref{int32}, uInt32), physicalChannel, data, arraySizeInElements)
 end
 
 function DAQmxGetPhysicalChanAOTermCfgs(physicalChannel, data)
-    ccall((:DAQmxGetPhysicalChanAOTermCfgs, NIDAQmx), int32, (Ref{UInt8}, Ptr{int32}), physicalChannel, data)
+    ccall((:DAQmxGetPhysicalChanAOTermCfgs, NIDAQmx), int32, (Ref{UInt8}, Ref{int32}), physicalChannel, data)
 end
 
 function DAQmxGetPhysicalChanAOManualControlEnable(physicalChannel, data)
-    ccall((:DAQmxGetPhysicalChanAOManualControlEnable, NIDAQmx), int32, (Ref{UInt8}, Ptr{bool32}), physicalChannel, data)
+    ccall((:DAQmxGetPhysicalChanAOManualControlEnable, NIDAQmx), int32, (Ref{UInt8}, Ref{bool32}), physicalChannel, data)
 end
 
 function DAQmxSetPhysicalChanAOManualControlEnable(physicalChannel, data)
@@ -9191,19 +9190,19 @@ function DAQmxResetPhysicalChanAOManualControlEnable(physicalChannel)
 end
 
 function DAQmxGetPhysicalChanAOManualControlShortDetected(physicalChannel, data)
-    ccall((:DAQmxGetPhysicalChanAOManualControlShortDetected, NIDAQmx), int32, (Ref{UInt8}, Ptr{bool32}), physicalChannel, data)
+    ccall((:DAQmxGetPhysicalChanAOManualControlShortDetected, NIDAQmx), int32, (Ref{UInt8}, Ref{bool32}), physicalChannel, data)
 end
 
 function DAQmxGetPhysicalChanAOManualControlAmplitude(physicalChannel, data)
-    ccall((:DAQmxGetPhysicalChanAOManualControlAmplitude, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), physicalChannel, data)
+    ccall((:DAQmxGetPhysicalChanAOManualControlAmplitude, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), physicalChannel, data)
 end
 
 function DAQmxGetPhysicalChanAOManualControlFreq(physicalChannel, data)
-    ccall((:DAQmxGetPhysicalChanAOManualControlFreq, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), physicalChannel, data)
+    ccall((:DAQmxGetPhysicalChanAOManualControlFreq, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), physicalChannel, data)
 end
 
 function DAQmxGetAOPowerAmpChannelEnable(physicalChannel, data)
-    ccall((:DAQmxGetAOPowerAmpChannelEnable, NIDAQmx), int32, (Ref{UInt8}, Ptr{bool32}), physicalChannel, data)
+    ccall((:DAQmxGetAOPowerAmpChannelEnable, NIDAQmx), int32, (Ref{UInt8}, Ref{bool32}), physicalChannel, data)
 end
 
 function DAQmxSetAOPowerAmpChannelEnable(physicalChannel, data)
@@ -9215,83 +9214,83 @@ function DAQmxResetAOPowerAmpChannelEnable(physicalChannel)
 end
 
 function DAQmxGetAOPowerAmpScalingCoeff(physicalChannel, data, arraySizeInElements)
-    ccall((:DAQmxGetAOPowerAmpScalingCoeff, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}, uInt32), physicalChannel, data, arraySizeInElements)
+    ccall((:DAQmxGetAOPowerAmpScalingCoeff, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}, uInt32), physicalChannel, data, arraySizeInElements)
 end
 
 function DAQmxGetAOPowerAmpOvercurrent(physicalChannel, data)
-    ccall((:DAQmxGetAOPowerAmpOvercurrent, NIDAQmx), int32, (Ref{UInt8}, Ptr{bool32}), physicalChannel, data)
+    ccall((:DAQmxGetAOPowerAmpOvercurrent, NIDAQmx), int32, (Ref{UInt8}, Ref{bool32}), physicalChannel, data)
 end
 
 function DAQmxGetAOPowerAmpGain(physicalChannel, data)
-    ccall((:DAQmxGetAOPowerAmpGain, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), physicalChannel, data)
+    ccall((:DAQmxGetAOPowerAmpGain, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), physicalChannel, data)
 end
 
 function DAQmxGetAOPowerAmpOffset(physicalChannel, data)
-    ccall((:DAQmxGetAOPowerAmpOffset, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), physicalChannel, data)
+    ccall((:DAQmxGetAOPowerAmpOffset, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), physicalChannel, data)
 end
 
 function DAQmxGetPhysicalChanDIPortWidth(physicalChannel, data)
-    ccall((:DAQmxGetPhysicalChanDIPortWidth, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}), physicalChannel, data)
+    ccall((:DAQmxGetPhysicalChanDIPortWidth, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}), physicalChannel, data)
 end
 
 function DAQmxGetPhysicalChanDISampClkSupported(physicalChannel, data)
-    ccall((:DAQmxGetPhysicalChanDISampClkSupported, NIDAQmx), int32, (Ref{UInt8}, Ptr{bool32}), physicalChannel, data)
+    ccall((:DAQmxGetPhysicalChanDISampClkSupported, NIDAQmx), int32, (Ref{UInt8}, Ref{bool32}), physicalChannel, data)
 end
 
 function DAQmxGetPhysicalChanDISampModes(physicalChannel, data, arraySizeInElements)
-    ccall((:DAQmxGetPhysicalChanDISampModes, NIDAQmx), int32, (Ref{UInt8}, Ptr{int32}, uInt32), physicalChannel, data, arraySizeInElements)
+    ccall((:DAQmxGetPhysicalChanDISampModes, NIDAQmx), int32, (Ref{UInt8}, Ref{int32}, uInt32), physicalChannel, data, arraySizeInElements)
 end
 
 function DAQmxGetPhysicalChanDIChangeDetectSupported(physicalChannel, data)
-    ccall((:DAQmxGetPhysicalChanDIChangeDetectSupported, NIDAQmx), int32, (Ref{UInt8}, Ptr{bool32}), physicalChannel, data)
+    ccall((:DAQmxGetPhysicalChanDIChangeDetectSupported, NIDAQmx), int32, (Ref{UInt8}, Ref{bool32}), physicalChannel, data)
 end
 
 function DAQmxGetPhysicalChanDOPortWidth(physicalChannel, data)
-    ccall((:DAQmxGetPhysicalChanDOPortWidth, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}), physicalChannel, data)
+    ccall((:DAQmxGetPhysicalChanDOPortWidth, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}), physicalChannel, data)
 end
 
 function DAQmxGetPhysicalChanDOSampClkSupported(physicalChannel, data)
-    ccall((:DAQmxGetPhysicalChanDOSampClkSupported, NIDAQmx), int32, (Ref{UInt8}, Ptr{bool32}), physicalChannel, data)
+    ccall((:DAQmxGetPhysicalChanDOSampClkSupported, NIDAQmx), int32, (Ref{UInt8}, Ref{bool32}), physicalChannel, data)
 end
 
 function DAQmxGetPhysicalChanDOSampModes(physicalChannel, data, arraySizeInElements)
-    ccall((:DAQmxGetPhysicalChanDOSampModes, NIDAQmx), int32, (Ref{UInt8}, Ptr{int32}, uInt32), physicalChannel, data, arraySizeInElements)
+    ccall((:DAQmxGetPhysicalChanDOSampModes, NIDAQmx), int32, (Ref{UInt8}, Ref{int32}, uInt32), physicalChannel, data, arraySizeInElements)
 end
 
 function DAQmxGetPhysicalChanCISupportedMeasTypes(physicalChannel, data, arraySizeInElements)
-    ccall((:DAQmxGetPhysicalChanCISupportedMeasTypes, NIDAQmx), int32, (Ref{UInt8}, Ptr{int32}, uInt32), physicalChannel, data, arraySizeInElements)
+    ccall((:DAQmxGetPhysicalChanCISupportedMeasTypes, NIDAQmx), int32, (Ref{UInt8}, Ref{int32}, uInt32), physicalChannel, data, arraySizeInElements)
 end
 
 function DAQmxGetPhysicalChanCOSupportedOutputTypes(physicalChannel, data, arraySizeInElements)
-    ccall((:DAQmxGetPhysicalChanCOSupportedOutputTypes, NIDAQmx), int32, (Ref{UInt8}, Ptr{int32}, uInt32), physicalChannel, data, arraySizeInElements)
+    ccall((:DAQmxGetPhysicalChanCOSupportedOutputTypes, NIDAQmx), int32, (Ref{UInt8}, Ref{int32}, uInt32), physicalChannel, data, arraySizeInElements)
 end
 
 function DAQmxGetPhysicalChanTEDSMfgID(physicalChannel, data)
-    ccall((:DAQmxGetPhysicalChanTEDSMfgID, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}), physicalChannel, data)
+    ccall((:DAQmxGetPhysicalChanTEDSMfgID, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}), physicalChannel, data)
 end
 
 function DAQmxGetPhysicalChanTEDSModelNum(physicalChannel, data)
-    ccall((:DAQmxGetPhysicalChanTEDSModelNum, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}), physicalChannel, data)
+    ccall((:DAQmxGetPhysicalChanTEDSModelNum, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}), physicalChannel, data)
 end
 
 function DAQmxGetPhysicalChanTEDSSerialNum(physicalChannel, data)
-    ccall((:DAQmxGetPhysicalChanTEDSSerialNum, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}), physicalChannel, data)
+    ccall((:DAQmxGetPhysicalChanTEDSSerialNum, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}), physicalChannel, data)
 end
 
 function DAQmxGetPhysicalChanTEDSVersionNum(physicalChannel, data)
-    ccall((:DAQmxGetPhysicalChanTEDSVersionNum, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}), physicalChannel, data)
+    ccall((:DAQmxGetPhysicalChanTEDSVersionNum, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}), physicalChannel, data)
 end
 
 function DAQmxGetPhysicalChanTEDSVersionLetter(physicalChannel, data, bufferSize)
-    ccall((:DAQmxGetPhysicalChanTEDSVersionLetter, NIDAQmx), int32, (Ref{UInt8}, Cstring, uInt32), physicalChannel, data, bufferSize)
+    ccall((:DAQmxGetPhysicalChanTEDSVersionLetter, NIDAQmx), int32, (Ref{UInt8}, SafeCstring, uInt32), physicalChannel, data, bufferSize)
 end
 
 function DAQmxGetPhysicalChanTEDSBitStream(physicalChannel, data, arraySizeInElements)
-    ccall((:DAQmxGetPhysicalChanTEDSBitStream, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt8}, uInt32), physicalChannel, data, arraySizeInElements)
+    ccall((:DAQmxGetPhysicalChanTEDSBitStream, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt8}, uInt32), physicalChannel, data, arraySizeInElements)
 end
 
 function DAQmxGetPhysicalChanTEDSTemplateIDs(physicalChannel, data, arraySizeInElements)
-    ccall((:DAQmxGetPhysicalChanTEDSTemplateIDs, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}, uInt32), physicalChannel, data, arraySizeInElements)
+    ccall((:DAQmxGetPhysicalChanTEDSTemplateIDs, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}, uInt32), physicalChannel, data, arraySizeInElements)
 end
 
 function DAQmxGetReadRelativeTo(taskHandle, data)
@@ -9319,11 +9318,11 @@ function DAQmxResetReadOffset(taskHandle)
 end
 
 function DAQmxGetReadChannelsToRead(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetReadChannelsToRead, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetReadChannelsToRead, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetReadChannelsToRead(taskHandle, data)
-    ccall((:DAQmxSetReadChannelsToRead, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetReadChannelsToRead, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetReadChannelsToRead(taskHandle)
@@ -9367,11 +9366,11 @@ function DAQmxResetReadOverWrite(taskHandle)
 end
 
 function DAQmxGetLoggingFilePath(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetLoggingFilePath, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetLoggingFilePath, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetLoggingFilePath(taskHandle, data)
-    ccall((:DAQmxSetLoggingFilePath, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetLoggingFilePath, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetLoggingFilePath(taskHandle)
@@ -9391,11 +9390,11 @@ function DAQmxResetLoggingMode(taskHandle)
 end
 
 function DAQmxGetLoggingTDMSGroupName(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetLoggingTDMSGroupName, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetLoggingTDMSGroupName, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetLoggingTDMSGroupName(taskHandle, data)
-    ccall((:DAQmxSetLoggingTDMSGroupName, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetLoggingTDMSGroupName, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetLoggingTDMSGroupName(taskHandle)
@@ -9479,7 +9478,7 @@ function DAQmxGetReadCommonModeRangeErrorChansExist(taskHandle, data)
 end
 
 function DAQmxGetReadCommonModeRangeErrorChans(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetReadCommonModeRangeErrorChans, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetReadCommonModeRangeErrorChans, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxGetReadExcitFaultChansExist(taskHandle, data)
@@ -9487,7 +9486,7 @@ function DAQmxGetReadExcitFaultChansExist(taskHandle, data)
 end
 
 function DAQmxGetReadExcitFaultChans(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetReadExcitFaultChans, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetReadExcitFaultChans, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxGetReadOvercurrentChansExist(taskHandle, data)
@@ -9495,7 +9494,7 @@ function DAQmxGetReadOvercurrentChansExist(taskHandle, data)
 end
 
 function DAQmxGetReadOvercurrentChans(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetReadOvercurrentChans, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetReadOvercurrentChans, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxGetReadOvertemperatureChansExist(taskHandle, data)
@@ -9503,7 +9502,7 @@ function DAQmxGetReadOvertemperatureChansExist(taskHandle, data)
 end
 
 function DAQmxGetReadOvertemperatureChans(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetReadOvertemperatureChans, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetReadOvertemperatureChans, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxGetReadOpenChansExist(taskHandle, data)
@@ -9511,11 +9510,11 @@ function DAQmxGetReadOpenChansExist(taskHandle, data)
 end
 
 function DAQmxGetReadOpenChans(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetReadOpenChans, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetReadOpenChans, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxGetReadOpenChansDetails(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetReadOpenChansDetails, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetReadOpenChansDetails, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxGetReadOpenCurrentLoopChansExist(taskHandle, data)
@@ -9523,7 +9522,7 @@ function DAQmxGetReadOpenCurrentLoopChansExist(taskHandle, data)
 end
 
 function DAQmxGetReadOpenCurrentLoopChans(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetReadOpenCurrentLoopChans, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetReadOpenCurrentLoopChans, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxGetReadOpenThrmcplChansExist(taskHandle, data)
@@ -9531,7 +9530,7 @@ function DAQmxGetReadOpenThrmcplChansExist(taskHandle, data)
 end
 
 function DAQmxGetReadOpenThrmcplChans(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetReadOpenThrmcplChans, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetReadOpenThrmcplChans, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxGetReadOverloadedChansExist(taskHandle, data)
@@ -9539,7 +9538,7 @@ function DAQmxGetReadOverloadedChansExist(taskHandle, data)
 end
 
 function DAQmxGetReadOverloadedChans(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetReadOverloadedChans, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetReadOverloadedChans, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxGetReadPLLUnlockedChansExist(taskHandle, data)
@@ -9547,7 +9546,7 @@ function DAQmxGetReadPLLUnlockedChansExist(taskHandle, data)
 end
 
 function DAQmxGetReadPLLUnlockedChans(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetReadPLLUnlockedChans, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetReadPLLUnlockedChans, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxGetReadSyncUnlockedChansExist(taskHandle, data)
@@ -9555,7 +9554,7 @@ function DAQmxGetReadSyncUnlockedChansExist(taskHandle, data)
 end
 
 function DAQmxGetReadSyncUnlockedChans(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetReadSyncUnlockedChans, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetReadSyncUnlockedChans, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxGetReadAccessoryInsertionOrRemovalDetected(taskHandle, data)
@@ -9563,7 +9562,7 @@ function DAQmxGetReadAccessoryInsertionOrRemovalDetected(taskHandle, data)
 end
 
 function DAQmxGetReadDevsWithInsertedOrRemovedAccessories(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetReadDevsWithInsertedOrRemovedAccessories, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetReadDevsWithInsertedOrRemovedAccessories, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxGetReadChangeDetectHasOverflowed(taskHandle, data)
@@ -9667,23 +9666,23 @@ function DAQmxResetRealTimeWriteRecoveryMode(taskHandle)
 end
 
 function DAQmxGetScaleDescr(scaleName, data, bufferSize)
-    ccall((:DAQmxGetScaleDescr, NIDAQmx), int32, (Ref{UInt8}, Cstring, uInt32), scaleName, data, bufferSize)
+    ccall((:DAQmxGetScaleDescr, NIDAQmx), int32, (Ref{UInt8}, SafeCstring, uInt32), scaleName, data, bufferSize)
 end
 
 function DAQmxSetScaleDescr(scaleName, data)
-    ccall((:DAQmxSetScaleDescr, NIDAQmx), int32, (Ref{UInt8}, Cstring), scaleName, data)
+    ccall((:DAQmxSetScaleDescr, NIDAQmx), int32, (Ref{UInt8}, SafeCstring), scaleName, data)
 end
 
 function DAQmxGetScaleScaledUnits(scaleName, data, bufferSize)
-    ccall((:DAQmxGetScaleScaledUnits, NIDAQmx), int32, (Ref{UInt8}, Cstring, uInt32), scaleName, data, bufferSize)
+    ccall((:DAQmxGetScaleScaledUnits, NIDAQmx), int32, (Ref{UInt8}, SafeCstring, uInt32), scaleName, data, bufferSize)
 end
 
 function DAQmxSetScaleScaledUnits(scaleName, data)
-    ccall((:DAQmxSetScaleScaledUnits, NIDAQmx), int32, (Ref{UInt8}, Cstring), scaleName, data)
+    ccall((:DAQmxSetScaleScaledUnits, NIDAQmx), int32, (Ref{UInt8}, SafeCstring), scaleName, data)
 end
 
 function DAQmxGetScalePreScaledUnits(scaleName, data)
-    ccall((:DAQmxGetScalePreScaledUnits, NIDAQmx), int32, (Ref{UInt8}, Ptr{int32}), scaleName, data)
+    ccall((:DAQmxGetScalePreScaledUnits, NIDAQmx), int32, (Ref{UInt8}, Ref{int32}), scaleName, data)
 end
 
 function DAQmxSetScalePreScaledUnits(scaleName, data)
@@ -9691,11 +9690,11 @@ function DAQmxSetScalePreScaledUnits(scaleName, data)
 end
 
 function DAQmxGetScaleType(scaleName, data)
-    ccall((:DAQmxGetScaleType, NIDAQmx), int32, (Ref{UInt8}, Ptr{int32}), scaleName, data)
+    ccall((:DAQmxGetScaleType, NIDAQmx), int32, (Ref{UInt8}, Ref{int32}), scaleName, data)
 end
 
 function DAQmxGetScaleLinSlope(scaleName, data)
-    ccall((:DAQmxGetScaleLinSlope, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), scaleName, data)
+    ccall((:DAQmxGetScaleLinSlope, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), scaleName, data)
 end
 
 function DAQmxSetScaleLinSlope(scaleName, data)
@@ -9703,7 +9702,7 @@ function DAQmxSetScaleLinSlope(scaleName, data)
 end
 
 function DAQmxGetScaleLinYIntercept(scaleName, data)
-    ccall((:DAQmxGetScaleLinYIntercept, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), scaleName, data)
+    ccall((:DAQmxGetScaleLinYIntercept, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), scaleName, data)
 end
 
 function DAQmxSetScaleLinYIntercept(scaleName, data)
@@ -9711,7 +9710,7 @@ function DAQmxSetScaleLinYIntercept(scaleName, data)
 end
 
 function DAQmxGetScaleMapScaledMax(scaleName, data)
-    ccall((:DAQmxGetScaleMapScaledMax, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), scaleName, data)
+    ccall((:DAQmxGetScaleMapScaledMax, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), scaleName, data)
 end
 
 function DAQmxSetScaleMapScaledMax(scaleName, data)
@@ -9719,7 +9718,7 @@ function DAQmxSetScaleMapScaledMax(scaleName, data)
 end
 
 function DAQmxGetScaleMapPreScaledMax(scaleName, data)
-    ccall((:DAQmxGetScaleMapPreScaledMax, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), scaleName, data)
+    ccall((:DAQmxGetScaleMapPreScaledMax, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), scaleName, data)
 end
 
 function DAQmxSetScaleMapPreScaledMax(scaleName, data)
@@ -9727,7 +9726,7 @@ function DAQmxSetScaleMapPreScaledMax(scaleName, data)
 end
 
 function DAQmxGetScaleMapScaledMin(scaleName, data)
-    ccall((:DAQmxGetScaleMapScaledMin, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), scaleName, data)
+    ccall((:DAQmxGetScaleMapScaledMin, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), scaleName, data)
 end
 
 function DAQmxSetScaleMapScaledMin(scaleName, data)
@@ -9735,7 +9734,7 @@ function DAQmxSetScaleMapScaledMin(scaleName, data)
 end
 
 function DAQmxGetScaleMapPreScaledMin(scaleName, data)
-    ccall((:DAQmxGetScaleMapPreScaledMin, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), scaleName, data)
+    ccall((:DAQmxGetScaleMapPreScaledMin, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), scaleName, data)
 end
 
 function DAQmxSetScaleMapPreScaledMin(scaleName, data)
@@ -9743,39 +9742,39 @@ function DAQmxSetScaleMapPreScaledMin(scaleName, data)
 end
 
 function DAQmxGetScalePolyForwardCoeff(scaleName, data, arraySizeInElements)
-    ccall((:DAQmxGetScalePolyForwardCoeff, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}, uInt32), scaleName, data, arraySizeInElements)
+    ccall((:DAQmxGetScalePolyForwardCoeff, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}, uInt32), scaleName, data, arraySizeInElements)
 end
 
 function DAQmxSetScalePolyForwardCoeff(scaleName, data, arraySizeInElements)
-    ccall((:DAQmxSetScalePolyForwardCoeff, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}, uInt32), scaleName, data, arraySizeInElements)
+    ccall((:DAQmxSetScalePolyForwardCoeff, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}, uInt32), scaleName, data, arraySizeInElements)
 end
 
 function DAQmxGetScalePolyReverseCoeff(scaleName, data, arraySizeInElements)
-    ccall((:DAQmxGetScalePolyReverseCoeff, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}, uInt32), scaleName, data, arraySizeInElements)
+    ccall((:DAQmxGetScalePolyReverseCoeff, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}, uInt32), scaleName, data, arraySizeInElements)
 end
 
 function DAQmxSetScalePolyReverseCoeff(scaleName, data, arraySizeInElements)
-    ccall((:DAQmxSetScalePolyReverseCoeff, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}, uInt32), scaleName, data, arraySizeInElements)
+    ccall((:DAQmxSetScalePolyReverseCoeff, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}, uInt32), scaleName, data, arraySizeInElements)
 end
 
 function DAQmxGetScaleTableScaledVals(scaleName, data, arraySizeInElements)
-    ccall((:DAQmxGetScaleTableScaledVals, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}, uInt32), scaleName, data, arraySizeInElements)
+    ccall((:DAQmxGetScaleTableScaledVals, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}, uInt32), scaleName, data, arraySizeInElements)
 end
 
 function DAQmxSetScaleTableScaledVals(scaleName, data, arraySizeInElements)
-    ccall((:DAQmxSetScaleTableScaledVals, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}, uInt32), scaleName, data, arraySizeInElements)
+    ccall((:DAQmxSetScaleTableScaledVals, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}, uInt32), scaleName, data, arraySizeInElements)
 end
 
 function DAQmxGetScaleTablePreScaledVals(scaleName, data, arraySizeInElements)
-    ccall((:DAQmxGetScaleTablePreScaledVals, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}, uInt32), scaleName, data, arraySizeInElements)
+    ccall((:DAQmxGetScaleTablePreScaledVals, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}, uInt32), scaleName, data, arraySizeInElements)
 end
 
 function DAQmxSetScaleTablePreScaledVals(scaleName, data, arraySizeInElements)
-    ccall((:DAQmxSetScaleTablePreScaledVals, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}, uInt32), scaleName, data, arraySizeInElements)
+    ccall((:DAQmxSetScaleTablePreScaledVals, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}, uInt32), scaleName, data, arraySizeInElements)
 end
 
 function DAQmxGetSwitchChanUsage(switchChannelName, data)
-    ccall((:DAQmxGetSwitchChanUsage, NIDAQmx), int32, (Ref{UInt8}, Ptr{int32}), switchChannelName, data)
+    ccall((:DAQmxGetSwitchChanUsage, NIDAQmx), int32, (Ref{UInt8}, Ref{int32}), switchChannelName, data)
 end
 
 function DAQmxSetSwitchChanUsage(switchChannelName, data)
@@ -9783,7 +9782,7 @@ function DAQmxSetSwitchChanUsage(switchChannelName, data)
 end
 
 function DAQmxGetSwitchChanAnlgBusSharingEnable(switchChannelName, data)
-    ccall((:DAQmxGetSwitchChanAnlgBusSharingEnable, NIDAQmx), int32, (Ref{UInt8}, Ptr{bool32}), switchChannelName, data)
+    ccall((:DAQmxGetSwitchChanAnlgBusSharingEnable, NIDAQmx), int32, (Ref{UInt8}, Ref{bool32}), switchChannelName, data)
 end
 
 function DAQmxSetSwitchChanAnlgBusSharingEnable(switchChannelName, data)
@@ -9791,59 +9790,59 @@ function DAQmxSetSwitchChanAnlgBusSharingEnable(switchChannelName, data)
 end
 
 function DAQmxGetSwitchChanMaxACCarryCurrent(switchChannelName, data)
-    ccall((:DAQmxGetSwitchChanMaxACCarryCurrent, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), switchChannelName, data)
+    ccall((:DAQmxGetSwitchChanMaxACCarryCurrent, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), switchChannelName, data)
 end
 
 function DAQmxGetSwitchChanMaxACSwitchCurrent(switchChannelName, data)
-    ccall((:DAQmxGetSwitchChanMaxACSwitchCurrent, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), switchChannelName, data)
+    ccall((:DAQmxGetSwitchChanMaxACSwitchCurrent, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), switchChannelName, data)
 end
 
 function DAQmxGetSwitchChanMaxACCarryPwr(switchChannelName, data)
-    ccall((:DAQmxGetSwitchChanMaxACCarryPwr, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), switchChannelName, data)
+    ccall((:DAQmxGetSwitchChanMaxACCarryPwr, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), switchChannelName, data)
 end
 
 function DAQmxGetSwitchChanMaxACSwitchPwr(switchChannelName, data)
-    ccall((:DAQmxGetSwitchChanMaxACSwitchPwr, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), switchChannelName, data)
+    ccall((:DAQmxGetSwitchChanMaxACSwitchPwr, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), switchChannelName, data)
 end
 
 function DAQmxGetSwitchChanMaxDCCarryCurrent(switchChannelName, data)
-    ccall((:DAQmxGetSwitchChanMaxDCCarryCurrent, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), switchChannelName, data)
+    ccall((:DAQmxGetSwitchChanMaxDCCarryCurrent, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), switchChannelName, data)
 end
 
 function DAQmxGetSwitchChanMaxDCSwitchCurrent(switchChannelName, data)
-    ccall((:DAQmxGetSwitchChanMaxDCSwitchCurrent, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), switchChannelName, data)
+    ccall((:DAQmxGetSwitchChanMaxDCSwitchCurrent, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), switchChannelName, data)
 end
 
 function DAQmxGetSwitchChanMaxDCCarryPwr(switchChannelName, data)
-    ccall((:DAQmxGetSwitchChanMaxDCCarryPwr, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), switchChannelName, data)
+    ccall((:DAQmxGetSwitchChanMaxDCCarryPwr, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), switchChannelName, data)
 end
 
 function DAQmxGetSwitchChanMaxDCSwitchPwr(switchChannelName, data)
-    ccall((:DAQmxGetSwitchChanMaxDCSwitchPwr, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), switchChannelName, data)
+    ccall((:DAQmxGetSwitchChanMaxDCSwitchPwr, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), switchChannelName, data)
 end
 
 function DAQmxGetSwitchChanMaxACVoltage(switchChannelName, data)
-    ccall((:DAQmxGetSwitchChanMaxACVoltage, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), switchChannelName, data)
+    ccall((:DAQmxGetSwitchChanMaxACVoltage, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), switchChannelName, data)
 end
 
 function DAQmxGetSwitchChanMaxDCVoltage(switchChannelName, data)
-    ccall((:DAQmxGetSwitchChanMaxDCVoltage, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), switchChannelName, data)
+    ccall((:DAQmxGetSwitchChanMaxDCVoltage, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), switchChannelName, data)
 end
 
 function DAQmxGetSwitchChanWireMode(switchChannelName, data)
-    ccall((:DAQmxGetSwitchChanWireMode, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}), switchChannelName, data)
+    ccall((:DAQmxGetSwitchChanWireMode, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}), switchChannelName, data)
 end
 
 function DAQmxGetSwitchChanBandwidth(switchChannelName, data)
-    ccall((:DAQmxGetSwitchChanBandwidth, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), switchChannelName, data)
+    ccall((:DAQmxGetSwitchChanBandwidth, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), switchChannelName, data)
 end
 
 function DAQmxGetSwitchChanImpedance(switchChannelName, data)
-    ccall((:DAQmxGetSwitchChanImpedance, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), switchChannelName, data)
+    ccall((:DAQmxGetSwitchChanImpedance, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), switchChannelName, data)
 end
 
 function DAQmxGetSwitchDevSettlingTime(deviceName, data)
-    ccall((:DAQmxGetSwitchDevSettlingTime, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), deviceName, data)
+    ccall((:DAQmxGetSwitchDevSettlingTime, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), deviceName, data)
 end
 
 function DAQmxSetSwitchDevSettlingTime(deviceName, data)
@@ -9851,7 +9850,7 @@ function DAQmxSetSwitchDevSettlingTime(deviceName, data)
 end
 
 function DAQmxGetSwitchDevAutoConnAnlgBus(deviceName, data)
-    ccall((:DAQmxGetSwitchDevAutoConnAnlgBus, NIDAQmx), int32, (Ref{UInt8}, Ptr{bool32}), deviceName, data)
+    ccall((:DAQmxGetSwitchDevAutoConnAnlgBus, NIDAQmx), int32, (Ref{UInt8}, Ref{bool32}), deviceName, data)
 end
 
 function DAQmxSetSwitchDevAutoConnAnlgBus(deviceName, data)
@@ -9859,7 +9858,7 @@ function DAQmxSetSwitchDevAutoConnAnlgBus(deviceName, data)
 end
 
 function DAQmxGetSwitchDevPwrDownLatchRelaysAfterSettling(deviceName, data)
-    ccall((:DAQmxGetSwitchDevPwrDownLatchRelaysAfterSettling, NIDAQmx), int32, (Ref{UInt8}, Ptr{bool32}), deviceName, data)
+    ccall((:DAQmxGetSwitchDevPwrDownLatchRelaysAfterSettling, NIDAQmx), int32, (Ref{UInt8}, Ref{bool32}), deviceName, data)
 end
 
 function DAQmxSetSwitchDevPwrDownLatchRelaysAfterSettling(deviceName, data)
@@ -9867,39 +9866,39 @@ function DAQmxSetSwitchDevPwrDownLatchRelaysAfterSettling(deviceName, data)
 end
 
 function DAQmxGetSwitchDevSettled(deviceName, data)
-    ccall((:DAQmxGetSwitchDevSettled, NIDAQmx), int32, (Ref{UInt8}, Ptr{bool32}), deviceName, data)
+    ccall((:DAQmxGetSwitchDevSettled, NIDAQmx), int32, (Ref{UInt8}, Ref{bool32}), deviceName, data)
 end
 
 function DAQmxGetSwitchDevRelayList(deviceName, data, bufferSize)
-    ccall((:DAQmxGetSwitchDevRelayList, NIDAQmx), int32, (Ref{UInt8}, Cstring, uInt32), deviceName, data, bufferSize)
+    ccall((:DAQmxGetSwitchDevRelayList, NIDAQmx), int32, (Ref{UInt8}, SafeCstring, uInt32), deviceName, data, bufferSize)
 end
 
 function DAQmxGetSwitchDevNumRelays(deviceName, data)
-    ccall((:DAQmxGetSwitchDevNumRelays, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}), deviceName, data)
+    ccall((:DAQmxGetSwitchDevNumRelays, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}), deviceName, data)
 end
 
 function DAQmxGetSwitchDevSwitchChanList(deviceName, data, bufferSize)
-    ccall((:DAQmxGetSwitchDevSwitchChanList, NIDAQmx), int32, (Ref{UInt8}, Cstring, uInt32), deviceName, data, bufferSize)
+    ccall((:DAQmxGetSwitchDevSwitchChanList, NIDAQmx), int32, (Ref{UInt8}, SafeCstring, uInt32), deviceName, data, bufferSize)
 end
 
 function DAQmxGetSwitchDevNumSwitchChans(deviceName, data)
-    ccall((:DAQmxGetSwitchDevNumSwitchChans, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}), deviceName, data)
+    ccall((:DAQmxGetSwitchDevNumSwitchChans, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}), deviceName, data)
 end
 
 function DAQmxGetSwitchDevNumRows(deviceName, data)
-    ccall((:DAQmxGetSwitchDevNumRows, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}), deviceName, data)
+    ccall((:DAQmxGetSwitchDevNumRows, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}), deviceName, data)
 end
 
 function DAQmxGetSwitchDevNumColumns(deviceName, data)
-    ccall((:DAQmxGetSwitchDevNumColumns, NIDAQmx), int32, (Ref{UInt8}, Ptr{uInt32}), deviceName, data)
+    ccall((:DAQmxGetSwitchDevNumColumns, NIDAQmx), int32, (Ref{UInt8}, Ref{uInt32}), deviceName, data)
 end
 
 function DAQmxGetSwitchDevTopology(deviceName, data, bufferSize)
-    ccall((:DAQmxGetSwitchDevTopology, NIDAQmx), int32, (Ref{UInt8}, Cstring, uInt32), deviceName, data, bufferSize)
+    ccall((:DAQmxGetSwitchDevTopology, NIDAQmx), int32, (Ref{UInt8}, SafeCstring, uInt32), deviceName, data, bufferSize)
 end
 
 function DAQmxGetSwitchDevTemperature(deviceName, data)
-    ccall((:DAQmxGetSwitchDevTemperature, NIDAQmx), int32, (Ref{UInt8}, Ptr{float64}), deviceName, data)
+    ccall((:DAQmxGetSwitchDevTemperature, NIDAQmx), int32, (Ref{UInt8}, Ref{float64}), deviceName, data)
 end
 
 function DAQmxGetSwitchScanBreakMode(taskHandle, data)
@@ -9931,19 +9930,19 @@ function DAQmxGetSwitchScanWaitingForAdv(taskHandle, data)
 end
 
 function DAQmxGetSysGlobalChans(data, bufferSize)
-    ccall((:DAQmxGetSysGlobalChans, NIDAQmx), int32, (Cstring, uInt32), data, bufferSize)
+    ccall((:DAQmxGetSysGlobalChans, NIDAQmx), int32, (SafeCstring, uInt32), data, bufferSize)
 end
 
 function DAQmxGetSysScales(data, bufferSize)
-    ccall((:DAQmxGetSysScales, NIDAQmx), int32, (Cstring, uInt32), data, bufferSize)
+    ccall((:DAQmxGetSysScales, NIDAQmx), int32, (SafeCstring, uInt32), data, bufferSize)
 end
 
 function DAQmxGetSysTasks(data, bufferSize)
-    ccall((:DAQmxGetSysTasks, NIDAQmx), int32, (Cstring, uInt32), data, bufferSize)
+    ccall((:DAQmxGetSysTasks, NIDAQmx), int32, (SafeCstring, uInt32), data, bufferSize)
 end
 
 function DAQmxGetSysDevNames(data, bufferSize)
-    ccall((:DAQmxGetSysDevNames, NIDAQmx), int32, (Cstring, uInt32), data, bufferSize)
+    ccall((:DAQmxGetSysDevNames, NIDAQmx), int32, (SafeCstring, uInt32), data, bufferSize)
 end
 
 function DAQmxGetSysNIDAQMajorVersion(data)
@@ -9959,11 +9958,11 @@ function DAQmxGetSysNIDAQUpdateVersion(data)
 end
 
 function DAQmxGetTaskName(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetTaskName, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetTaskName, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxGetTaskChannels(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetTaskChannels, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetTaskChannels, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxGetTaskNumChans(taskHandle, data)
@@ -9971,7 +9970,7 @@ function DAQmxGetTaskNumChans(taskHandle, data)
 end
 
 function DAQmxGetTaskDevices(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetTaskDevices, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetTaskDevices, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxGetTaskNumDevices(taskHandle, data)
@@ -10035,11 +10034,11 @@ function DAQmxGetSampClkMaxRate(taskHandle, data)
 end
 
 function DAQmxGetSampClkSrc(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetSampClkSrc, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetSampClkSrc, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetSampClkSrc(taskHandle, data)
-    ccall((:DAQmxSetSampClkSrc, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetSampClkSrc, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetSampClkSrc(taskHandle)
@@ -10095,7 +10094,7 @@ function DAQmxResetSampClkTimebaseDiv(taskHandle)
 end
 
 function DAQmxGetSampClkTerm(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetSampClkTerm, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetSampClkTerm, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxGetSampClkTimebaseRate(taskHandle, data)
@@ -10111,11 +10110,11 @@ function DAQmxResetSampClkTimebaseRate(taskHandle)
 end
 
 function DAQmxGetSampClkTimebaseSrc(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetSampClkTimebaseSrc, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetSampClkTimebaseSrc, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetSampClkTimebaseSrc(taskHandle, data)
-    ccall((:DAQmxSetSampClkTimebaseSrc, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetSampClkTimebaseSrc, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetSampClkTimebaseSrc(taskHandle)
@@ -10147,7 +10146,7 @@ function DAQmxResetSampClkTimebaseMasterTimebaseDiv(taskHandle)
 end
 
 function DAQmxGetSampClkTimebaseTerm(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetSampClkTimebaseTerm, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetSampClkTimebaseTerm, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxGetSampClkDigFltrEnable(taskHandle, data)
@@ -10175,11 +10174,11 @@ function DAQmxResetSampClkDigFltrMinPulseWidth(taskHandle)
 end
 
 function DAQmxGetSampClkDigFltrTimebaseSrc(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetSampClkDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetSampClkDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetSampClkDigFltrTimebaseSrc(taskHandle, data)
-    ccall((:DAQmxSetSampClkDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetSampClkDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetSampClkDigFltrTimebaseSrc(taskHandle)
@@ -10259,11 +10258,11 @@ function DAQmxResetHshkSampleInputDataWhen(taskHandle)
 end
 
 function DAQmxGetChangeDetectDIRisingEdgePhysicalChans(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetChangeDetectDIRisingEdgePhysicalChans, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetChangeDetectDIRisingEdgePhysicalChans, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetChangeDetectDIRisingEdgePhysicalChans(taskHandle, data)
-    ccall((:DAQmxSetChangeDetectDIRisingEdgePhysicalChans, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetChangeDetectDIRisingEdgePhysicalChans, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetChangeDetectDIRisingEdgePhysicalChans(taskHandle)
@@ -10271,11 +10270,11 @@ function DAQmxResetChangeDetectDIRisingEdgePhysicalChans(taskHandle)
 end
 
 function DAQmxGetChangeDetectDIFallingEdgePhysicalChans(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetChangeDetectDIFallingEdgePhysicalChans, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetChangeDetectDIFallingEdgePhysicalChans, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetChangeDetectDIFallingEdgePhysicalChans(taskHandle, data)
-    ccall((:DAQmxSetChangeDetectDIFallingEdgePhysicalChans, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetChangeDetectDIFallingEdgePhysicalChans, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetChangeDetectDIFallingEdgePhysicalChans(taskHandle)
@@ -10331,7 +10330,7 @@ function DAQmxResetAIConvRate(taskHandle)
 end
 
 function DAQmxGetAIConvRateEx(taskHandle, deviceNames, data)
-    ccall((:DAQmxGetAIConvRateEx, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, deviceNames, data)
+    ccall((:DAQmxGetAIConvRateEx, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, deviceNames, data)
 end
 
 function DAQmxSetAIConvRateEx(taskHandle, deviceNames, data)
@@ -10347,15 +10346,15 @@ function DAQmxGetAIConvMaxRate(taskHandle, data)
 end
 
 function DAQmxGetAIConvMaxRateEx(taskHandle, deviceNames, data)
-    ccall((:DAQmxGetAIConvMaxRateEx, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, deviceNames, data)
+    ccall((:DAQmxGetAIConvMaxRateEx, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, deviceNames, data)
 end
 
 function DAQmxGetAIConvSrc(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetAIConvSrc, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetAIConvSrc, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetAIConvSrc(taskHandle, data)
-    ccall((:DAQmxSetAIConvSrc, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetAIConvSrc, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetAIConvSrc(taskHandle)
@@ -10363,11 +10362,11 @@ function DAQmxResetAIConvSrc(taskHandle)
 end
 
 function DAQmxGetAIConvSrcEx(taskHandle, deviceNames, data, bufferSize)
-    ccall((:DAQmxGetAIConvSrcEx, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, deviceNames, data, bufferSize)
+    ccall((:DAQmxGetAIConvSrcEx, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, deviceNames, data, bufferSize)
 end
 
 function DAQmxSetAIConvSrcEx(taskHandle, deviceNames, data)
-    ccall((:DAQmxSetAIConvSrcEx, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, deviceNames, data)
+    ccall((:DAQmxSetAIConvSrcEx, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, deviceNames, data)
 end
 
 function DAQmxResetAIConvSrcEx(taskHandle, deviceNames)
@@ -10387,7 +10386,7 @@ function DAQmxResetAIConvActiveEdge(taskHandle)
 end
 
 function DAQmxGetAIConvActiveEdgeEx(taskHandle, deviceNames, data)
-    ccall((:DAQmxGetAIConvActiveEdgeEx, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, deviceNames, data)
+    ccall((:DAQmxGetAIConvActiveEdgeEx, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, deviceNames, data)
 end
 
 function DAQmxSetAIConvActiveEdgeEx(taskHandle, deviceNames, data)
@@ -10411,7 +10410,7 @@ function DAQmxResetAIConvTimebaseDiv(taskHandle)
 end
 
 function DAQmxGetAIConvTimebaseDivEx(taskHandle, deviceNames, data)
-    ccall((:DAQmxGetAIConvTimebaseDivEx, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{uInt32}), taskHandle, deviceNames, data)
+    ccall((:DAQmxGetAIConvTimebaseDivEx, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{uInt32}), taskHandle, deviceNames, data)
 end
 
 function DAQmxSetAIConvTimebaseDivEx(taskHandle, deviceNames, data)
@@ -10435,7 +10434,7 @@ function DAQmxResetAIConvTimebaseSrc(taskHandle)
 end
 
 function DAQmxGetAIConvTimebaseSrcEx(taskHandle, deviceNames, data)
-    ccall((:DAQmxGetAIConvTimebaseSrcEx, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, deviceNames, data)
+    ccall((:DAQmxGetAIConvTimebaseSrcEx, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, deviceNames, data)
 end
 
 function DAQmxSetAIConvTimebaseSrcEx(taskHandle, deviceNames, data)
@@ -10459,7 +10458,7 @@ function DAQmxResetDelayFromSampClkDelayUnits(taskHandle)
 end
 
 function DAQmxGetDelayFromSampClkDelayUnitsEx(taskHandle, deviceNames, data)
-    ccall((:DAQmxGetDelayFromSampClkDelayUnitsEx, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, deviceNames, data)
+    ccall((:DAQmxGetDelayFromSampClkDelayUnitsEx, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, deviceNames, data)
 end
 
 function DAQmxSetDelayFromSampClkDelayUnitsEx(taskHandle, deviceNames, data)
@@ -10483,7 +10482,7 @@ function DAQmxResetDelayFromSampClkDelay(taskHandle)
 end
 
 function DAQmxGetDelayFromSampClkDelayEx(taskHandle, deviceNames, data)
-    ccall((:DAQmxGetDelayFromSampClkDelayEx, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, deviceNames, data)
+    ccall((:DAQmxGetDelayFromSampClkDelayEx, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, deviceNames, data)
 end
 
 function DAQmxSetDelayFromSampClkDelayEx(taskHandle, deviceNames, data)
@@ -10507,7 +10506,7 @@ function DAQmxResetAIConvDigFltrEnable(taskHandle)
 end
 
 function DAQmxGetAIConvDigFltrEnableEx(taskHandle, deviceNames, data)
-    ccall((:DAQmxGetAIConvDigFltrEnableEx, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, deviceNames, data)
+    ccall((:DAQmxGetAIConvDigFltrEnableEx, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, deviceNames, data)
 end
 
 function DAQmxSetAIConvDigFltrEnableEx(taskHandle, deviceNames, data)
@@ -10531,7 +10530,7 @@ function DAQmxResetAIConvDigFltrMinPulseWidth(taskHandle)
 end
 
 function DAQmxGetAIConvDigFltrMinPulseWidthEx(taskHandle, deviceNames, data)
-    ccall((:DAQmxGetAIConvDigFltrMinPulseWidthEx, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, deviceNames, data)
+    ccall((:DAQmxGetAIConvDigFltrMinPulseWidthEx, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, deviceNames, data)
 end
 
 function DAQmxSetAIConvDigFltrMinPulseWidthEx(taskHandle, deviceNames, data)
@@ -10543,11 +10542,11 @@ function DAQmxResetAIConvDigFltrMinPulseWidthEx(taskHandle, deviceNames)
 end
 
 function DAQmxGetAIConvDigFltrTimebaseSrc(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetAIConvDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetAIConvDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetAIConvDigFltrTimebaseSrc(taskHandle, data)
-    ccall((:DAQmxSetAIConvDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetAIConvDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetAIConvDigFltrTimebaseSrc(taskHandle)
@@ -10555,11 +10554,11 @@ function DAQmxResetAIConvDigFltrTimebaseSrc(taskHandle)
 end
 
 function DAQmxGetAIConvDigFltrTimebaseSrcEx(taskHandle, deviceNames, data, bufferSize)
-    ccall((:DAQmxGetAIConvDigFltrTimebaseSrcEx, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring, uInt32), taskHandle, deviceNames, data, bufferSize)
+    ccall((:DAQmxGetAIConvDigFltrTimebaseSrcEx, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring, uInt32), taskHandle, deviceNames, data, bufferSize)
 end
 
 function DAQmxSetAIConvDigFltrTimebaseSrcEx(taskHandle, deviceNames, data)
-    ccall((:DAQmxSetAIConvDigFltrTimebaseSrcEx, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Cstring), taskHandle, deviceNames, data)
+    ccall((:DAQmxSetAIConvDigFltrTimebaseSrcEx, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, SafeCstring), taskHandle, deviceNames, data)
 end
 
 function DAQmxResetAIConvDigFltrTimebaseSrcEx(taskHandle, deviceNames)
@@ -10579,7 +10578,7 @@ function DAQmxResetAIConvDigFltrTimebaseRate(taskHandle)
 end
 
 function DAQmxGetAIConvDigFltrTimebaseRateEx(taskHandle, deviceNames, data)
-    ccall((:DAQmxGetAIConvDigFltrTimebaseRateEx, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, deviceNames, data)
+    ccall((:DAQmxGetAIConvDigFltrTimebaseRateEx, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, deviceNames, data)
 end
 
 function DAQmxSetAIConvDigFltrTimebaseRateEx(taskHandle, deviceNames, data)
@@ -10603,7 +10602,7 @@ function DAQmxResetAIConvDigSyncEnable(taskHandle)
 end
 
 function DAQmxGetAIConvDigSyncEnableEx(taskHandle, deviceNames, data)
-    ccall((:DAQmxGetAIConvDigSyncEnableEx, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{bool32}), taskHandle, deviceNames, data)
+    ccall((:DAQmxGetAIConvDigSyncEnableEx, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{bool32}), taskHandle, deviceNames, data)
 end
 
 function DAQmxSetAIConvDigSyncEnableEx(taskHandle, deviceNames, data)
@@ -10627,11 +10626,11 @@ function DAQmxResetMasterTimebaseRate(taskHandle)
 end
 
 function DAQmxGetMasterTimebaseSrc(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetMasterTimebaseSrc, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetMasterTimebaseSrc, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetMasterTimebaseSrc(taskHandle, data)
-    ccall((:DAQmxSetMasterTimebaseSrc, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetMasterTimebaseSrc, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetMasterTimebaseSrc(taskHandle)
@@ -10651,11 +10650,11 @@ function DAQmxResetRefClkRate(taskHandle)
 end
 
 function DAQmxGetRefClkSrc(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetRefClkSrc, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetRefClkSrc, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetRefClkSrc(taskHandle, data)
-    ccall((:DAQmxSetRefClkSrc, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetRefClkSrc, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetRefClkSrc(taskHandle)
@@ -10675,11 +10674,11 @@ function DAQmxResetSyncPulseType(taskHandle)
 end
 
 function DAQmxGetSyncPulseSrc(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetSyncPulseSrc, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetSyncPulseSrc, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetSyncPulseSrc(taskHandle, data)
-    ccall((:DAQmxSetSyncPulseSrc, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetSyncPulseSrc, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetSyncPulseSrc(taskHandle)
@@ -10743,7 +10742,7 @@ function DAQmxResetSyncPulseResetDelay(taskHandle)
 end
 
 function DAQmxGetSyncPulseTerm(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetSyncPulseTerm, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetSyncPulseTerm, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxGetSyncClkInterval(taskHandle, data)
@@ -10835,15 +10834,15 @@ function DAQmxResetStartTrigType(taskHandle)
 end
 
 function DAQmxGetStartTrigTerm(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetStartTrigTerm, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetStartTrigTerm, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxGetDigEdgeStartTrigSrc(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetDigEdgeStartTrigSrc, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetDigEdgeStartTrigSrc, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetDigEdgeStartTrigSrc(taskHandle, data)
-    ccall((:DAQmxSetDigEdgeStartTrigSrc, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetDigEdgeStartTrigSrc, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetDigEdgeStartTrigSrc(taskHandle)
@@ -10887,11 +10886,11 @@ function DAQmxResetDigEdgeStartTrigDigFltrMinPulseWidth(taskHandle)
 end
 
 function DAQmxGetDigEdgeStartTrigDigFltrTimebaseSrc(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetDigEdgeStartTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetDigEdgeStartTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetDigEdgeStartTrigDigFltrTimebaseSrc(taskHandle, data)
-    ccall((:DAQmxSetDigEdgeStartTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetDigEdgeStartTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetDigEdgeStartTrigDigFltrTimebaseSrc(taskHandle)
@@ -10923,11 +10922,11 @@ function DAQmxResetDigEdgeStartTrigDigSyncEnable(taskHandle)
 end
 
 function DAQmxGetDigPatternStartTrigSrc(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetDigPatternStartTrigSrc, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetDigPatternStartTrigSrc, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetDigPatternStartTrigSrc(taskHandle, data)
-    ccall((:DAQmxSetDigPatternStartTrigSrc, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetDigPatternStartTrigSrc, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetDigPatternStartTrigSrc(taskHandle)
@@ -10935,11 +10934,11 @@ function DAQmxResetDigPatternStartTrigSrc(taskHandle)
 end
 
 function DAQmxGetDigPatternStartTrigPattern(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetDigPatternStartTrigPattern, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetDigPatternStartTrigPattern, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetDigPatternStartTrigPattern(taskHandle, data)
-    ccall((:DAQmxSetDigPatternStartTrigPattern, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetDigPatternStartTrigPattern, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetDigPatternStartTrigPattern(taskHandle)
@@ -10959,11 +10958,11 @@ function DAQmxResetDigPatternStartTrigWhen(taskHandle)
 end
 
 function DAQmxGetAnlgEdgeStartTrigSrc(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetAnlgEdgeStartTrigSrc, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetAnlgEdgeStartTrigSrc, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetAnlgEdgeStartTrigSrc(taskHandle, data)
-    ccall((:DAQmxSetAnlgEdgeStartTrigSrc, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetAnlgEdgeStartTrigSrc, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetAnlgEdgeStartTrigSrc(taskHandle)
@@ -11043,11 +11042,11 @@ function DAQmxResetAnlgEdgeStartTrigDigFltrMinPulseWidth(taskHandle)
 end
 
 function DAQmxGetAnlgEdgeStartTrigDigFltrTimebaseSrc(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetAnlgEdgeStartTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetAnlgEdgeStartTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetAnlgEdgeStartTrigDigFltrTimebaseSrc(taskHandle, data)
-    ccall((:DAQmxSetAnlgEdgeStartTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetAnlgEdgeStartTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetAnlgEdgeStartTrigDigFltrTimebaseSrc(taskHandle)
@@ -11079,11 +11078,11 @@ function DAQmxResetAnlgEdgeStartTrigDigSyncEnable(taskHandle)
 end
 
 function DAQmxGetAnlgMultiEdgeStartTrigSrcs(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetAnlgMultiEdgeStartTrigSrcs, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetAnlgMultiEdgeStartTrigSrcs, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetAnlgMultiEdgeStartTrigSrcs(taskHandle, data)
-    ccall((:DAQmxSetAnlgMultiEdgeStartTrigSrcs, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetAnlgMultiEdgeStartTrigSrcs, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetAnlgMultiEdgeStartTrigSrcs(taskHandle)
@@ -11139,11 +11138,11 @@ function DAQmxResetAnlgMultiEdgeStartTrigCouplings(taskHandle)
 end
 
 function DAQmxGetAnlgWinStartTrigSrc(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetAnlgWinStartTrigSrc, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetAnlgWinStartTrigSrc, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetAnlgWinStartTrigSrc(taskHandle, data)
-    ccall((:DAQmxSetAnlgWinStartTrigSrc, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetAnlgWinStartTrigSrc, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetAnlgWinStartTrigSrc(taskHandle)
@@ -11223,11 +11222,11 @@ function DAQmxResetAnlgWinStartTrigDigFltrMinPulseWidth(taskHandle)
 end
 
 function DAQmxGetAnlgWinStartTrigDigFltrTimebaseSrc(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetAnlgWinStartTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetAnlgWinStartTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetAnlgWinStartTrigDigFltrTimebaseSrc(taskHandle, data)
-    ccall((:DAQmxSetAnlgWinStartTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetAnlgWinStartTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetAnlgWinStartTrigDigFltrTimebaseSrc(taskHandle)
@@ -11407,15 +11406,15 @@ function DAQmxResetRefTrigPretrigSamples(taskHandle)
 end
 
 function DAQmxGetRefTrigTerm(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetRefTrigTerm, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetRefTrigTerm, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxGetDigEdgeRefTrigSrc(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetDigEdgeRefTrigSrc, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetDigEdgeRefTrigSrc, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetDigEdgeRefTrigSrc(taskHandle, data)
-    ccall((:DAQmxSetDigEdgeRefTrigSrc, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetDigEdgeRefTrigSrc, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetDigEdgeRefTrigSrc(taskHandle)
@@ -11459,11 +11458,11 @@ function DAQmxResetDigEdgeRefTrigDigFltrMinPulseWidth(taskHandle)
 end
 
 function DAQmxGetDigEdgeRefTrigDigFltrTimebaseSrc(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetDigEdgeRefTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetDigEdgeRefTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetDigEdgeRefTrigDigFltrTimebaseSrc(taskHandle, data)
-    ccall((:DAQmxSetDigEdgeRefTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetDigEdgeRefTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetDigEdgeRefTrigDigFltrTimebaseSrc(taskHandle)
@@ -11495,11 +11494,11 @@ function DAQmxResetDigEdgeRefTrigDigSyncEnable(taskHandle)
 end
 
 function DAQmxGetDigPatternRefTrigSrc(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetDigPatternRefTrigSrc, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetDigPatternRefTrigSrc, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetDigPatternRefTrigSrc(taskHandle, data)
-    ccall((:DAQmxSetDigPatternRefTrigSrc, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetDigPatternRefTrigSrc, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetDigPatternRefTrigSrc(taskHandle)
@@ -11507,11 +11506,11 @@ function DAQmxResetDigPatternRefTrigSrc(taskHandle)
 end
 
 function DAQmxGetDigPatternRefTrigPattern(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetDigPatternRefTrigPattern, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetDigPatternRefTrigPattern, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetDigPatternRefTrigPattern(taskHandle, data)
-    ccall((:DAQmxSetDigPatternRefTrigPattern, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetDigPatternRefTrigPattern, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetDigPatternRefTrigPattern(taskHandle)
@@ -11531,11 +11530,11 @@ function DAQmxResetDigPatternRefTrigWhen(taskHandle)
 end
 
 function DAQmxGetAnlgEdgeRefTrigSrc(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetAnlgEdgeRefTrigSrc, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetAnlgEdgeRefTrigSrc, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetAnlgEdgeRefTrigSrc(taskHandle, data)
-    ccall((:DAQmxSetAnlgEdgeRefTrigSrc, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetAnlgEdgeRefTrigSrc, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetAnlgEdgeRefTrigSrc(taskHandle)
@@ -11615,11 +11614,11 @@ function DAQmxResetAnlgEdgeRefTrigDigFltrMinPulseWidth(taskHandle)
 end
 
 function DAQmxGetAnlgEdgeRefTrigDigFltrTimebaseSrc(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetAnlgEdgeRefTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetAnlgEdgeRefTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetAnlgEdgeRefTrigDigFltrTimebaseSrc(taskHandle, data)
-    ccall((:DAQmxSetAnlgEdgeRefTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetAnlgEdgeRefTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetAnlgEdgeRefTrigDigFltrTimebaseSrc(taskHandle)
@@ -11651,11 +11650,11 @@ function DAQmxResetAnlgEdgeRefTrigDigSyncEnable(taskHandle)
 end
 
 function DAQmxGetAnlgMultiEdgeRefTrigSrcs(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetAnlgMultiEdgeRefTrigSrcs, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetAnlgMultiEdgeRefTrigSrcs, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetAnlgMultiEdgeRefTrigSrcs(taskHandle, data)
-    ccall((:DAQmxSetAnlgMultiEdgeRefTrigSrcs, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetAnlgMultiEdgeRefTrigSrcs, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetAnlgMultiEdgeRefTrigSrcs(taskHandle)
@@ -11711,11 +11710,11 @@ function DAQmxResetAnlgMultiEdgeRefTrigCouplings(taskHandle)
 end
 
 function DAQmxGetAnlgWinRefTrigSrc(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetAnlgWinRefTrigSrc, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetAnlgWinRefTrigSrc, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetAnlgWinRefTrigSrc(taskHandle, data)
-    ccall((:DAQmxSetAnlgWinRefTrigSrc, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetAnlgWinRefTrigSrc, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetAnlgWinRefTrigSrc(taskHandle)
@@ -11795,11 +11794,11 @@ function DAQmxResetAnlgWinRefTrigDigFltrMinPulseWidth(taskHandle)
 end
 
 function DAQmxGetAnlgWinRefTrigDigFltrTimebaseSrc(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetAnlgWinRefTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetAnlgWinRefTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetAnlgWinRefTrigDigFltrTimebaseSrc(taskHandle, data)
-    ccall((:DAQmxSetAnlgWinRefTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetAnlgWinRefTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetAnlgWinRefTrigDigFltrTimebaseSrc(taskHandle)
@@ -11947,11 +11946,11 @@ function DAQmxResetAdvTrigType(taskHandle)
 end
 
 function DAQmxGetDigEdgeAdvTrigSrc(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetDigEdgeAdvTrigSrc, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetDigEdgeAdvTrigSrc, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetDigEdgeAdvTrigSrc(taskHandle, data)
-    ccall((:DAQmxSetDigEdgeAdvTrigSrc, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetDigEdgeAdvTrigSrc, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetDigEdgeAdvTrigSrc(taskHandle)
@@ -11995,11 +11994,11 @@ function DAQmxResetHshkTrigType(taskHandle)
 end
 
 function DAQmxGetInterlockedHshkTrigSrc(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetInterlockedHshkTrigSrc, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetInterlockedHshkTrigSrc, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetInterlockedHshkTrigSrc(taskHandle, data)
-    ccall((:DAQmxSetInterlockedHshkTrigSrc, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetInterlockedHshkTrigSrc, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetInterlockedHshkTrigSrc(taskHandle)
@@ -12031,15 +12030,15 @@ function DAQmxResetPauseTrigType(taskHandle)
 end
 
 function DAQmxGetPauseTrigTerm(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetPauseTrigTerm, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetPauseTrigTerm, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxGetAnlgLvlPauseTrigSrc(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetAnlgLvlPauseTrigSrc, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetAnlgLvlPauseTrigSrc, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetAnlgLvlPauseTrigSrc(taskHandle, data)
-    ccall((:DAQmxSetAnlgLvlPauseTrigSrc, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetAnlgLvlPauseTrigSrc, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetAnlgLvlPauseTrigSrc(taskHandle)
@@ -12119,11 +12118,11 @@ function DAQmxResetAnlgLvlPauseTrigDigFltrMinPulseWidth(taskHandle)
 end
 
 function DAQmxGetAnlgLvlPauseTrigDigFltrTimebaseSrc(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetAnlgLvlPauseTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetAnlgLvlPauseTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetAnlgLvlPauseTrigDigFltrTimebaseSrc(taskHandle, data)
-    ccall((:DAQmxSetAnlgLvlPauseTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetAnlgLvlPauseTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetAnlgLvlPauseTrigDigFltrTimebaseSrc(taskHandle)
@@ -12155,11 +12154,11 @@ function DAQmxResetAnlgLvlPauseTrigDigSyncEnable(taskHandle)
 end
 
 function DAQmxGetAnlgWinPauseTrigSrc(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetAnlgWinPauseTrigSrc, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetAnlgWinPauseTrigSrc, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetAnlgWinPauseTrigSrc(taskHandle, data)
-    ccall((:DAQmxSetAnlgWinPauseTrigSrc, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetAnlgWinPauseTrigSrc, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetAnlgWinPauseTrigSrc(taskHandle)
@@ -12239,11 +12238,11 @@ function DAQmxResetAnlgWinPauseTrigDigFltrMinPulseWidth(taskHandle)
 end
 
 function DAQmxGetAnlgWinPauseTrigDigFltrTimebaseSrc(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetAnlgWinPauseTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetAnlgWinPauseTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetAnlgWinPauseTrigDigFltrTimebaseSrc(taskHandle, data)
-    ccall((:DAQmxSetAnlgWinPauseTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetAnlgWinPauseTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetAnlgWinPauseTrigDigFltrTimebaseSrc(taskHandle)
@@ -12275,11 +12274,11 @@ function DAQmxResetAnlgWinPauseTrigDigSyncEnable(taskHandle)
 end
 
 function DAQmxGetDigLvlPauseTrigSrc(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetDigLvlPauseTrigSrc, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetDigLvlPauseTrigSrc, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetDigLvlPauseTrigSrc(taskHandle, data)
-    ccall((:DAQmxSetDigLvlPauseTrigSrc, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetDigLvlPauseTrigSrc, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetDigLvlPauseTrigSrc(taskHandle)
@@ -12323,11 +12322,11 @@ function DAQmxResetDigLvlPauseTrigDigFltrMinPulseWidth(taskHandle)
 end
 
 function DAQmxGetDigLvlPauseTrigDigFltrTimebaseSrc(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetDigLvlPauseTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetDigLvlPauseTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetDigLvlPauseTrigDigFltrTimebaseSrc(taskHandle, data)
-    ccall((:DAQmxSetDigLvlPauseTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetDigLvlPauseTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetDigLvlPauseTrigDigFltrTimebaseSrc(taskHandle)
@@ -12359,11 +12358,11 @@ function DAQmxResetDigLvlPauseTrigDigSyncEnable(taskHandle)
 end
 
 function DAQmxGetDigPatternPauseTrigSrc(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetDigPatternPauseTrigSrc, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetDigPatternPauseTrigSrc, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetDigPatternPauseTrigSrc(taskHandle, data)
-    ccall((:DAQmxSetDigPatternPauseTrigSrc, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetDigPatternPauseTrigSrc, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetDigPatternPauseTrigSrc(taskHandle)
@@ -12371,11 +12370,11 @@ function DAQmxResetDigPatternPauseTrigSrc(taskHandle)
 end
 
 function DAQmxGetDigPatternPauseTrigPattern(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetDigPatternPauseTrigPattern, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetDigPatternPauseTrigPattern, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetDigPatternPauseTrigPattern(taskHandle, data)
-    ccall((:DAQmxSetDigPatternPauseTrigPattern, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetDigPatternPauseTrigPattern, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetDigPatternPauseTrigPattern(taskHandle)
@@ -12407,15 +12406,15 @@ function DAQmxResetArmStartTrigType(taskHandle)
 end
 
 function DAQmxGetArmStartTerm(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetArmStartTerm, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetArmStartTerm, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxGetDigEdgeArmStartTrigSrc(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetDigEdgeArmStartTrigSrc, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetDigEdgeArmStartTrigSrc, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetDigEdgeArmStartTrigSrc(taskHandle, data)
-    ccall((:DAQmxSetDigEdgeArmStartTrigSrc, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetDigEdgeArmStartTrigSrc, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetDigEdgeArmStartTrigSrc(taskHandle)
@@ -12459,11 +12458,11 @@ function DAQmxResetDigEdgeArmStartTrigDigFltrMinPulseWidth(taskHandle)
 end
 
 function DAQmxGetDigEdgeArmStartTrigDigFltrTimebaseSrc(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetDigEdgeArmStartTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetDigEdgeArmStartTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetDigEdgeArmStartTrigDigFltrTimebaseSrc(taskHandle, data)
-    ccall((:DAQmxSetDigEdgeArmStartTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetDigEdgeArmStartTrigDigFltrTimebaseSrc, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetDigEdgeArmStartTrigDigFltrTimebaseSrc(taskHandle)
@@ -12595,11 +12594,11 @@ function DAQmxResetWatchdogExpirTrigTrigOnNetworkConnLoss(taskHandle)
 end
 
 function DAQmxGetDigEdgeWatchdogExpirTrigSrc(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetDigEdgeWatchdogExpirTrigSrc, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetDigEdgeWatchdogExpirTrigSrc, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxSetDigEdgeWatchdogExpirTrigSrc(taskHandle, data)
-    ccall((:DAQmxSetDigEdgeWatchdogExpirTrigSrc, NIDAQmx), int32, (TaskHandle, Cstring), taskHandle, data)
+    ccall((:DAQmxSetDigEdgeWatchdogExpirTrigSrc, NIDAQmx), int32, (TaskHandle, SafeCstring), taskHandle, data)
 end
 
 function DAQmxResetDigEdgeWatchdogExpirTrigSrc(taskHandle)
@@ -12619,7 +12618,7 @@ function DAQmxResetDigEdgeWatchdogExpirTrigEdge(taskHandle)
 end
 
 function DAQmxGetWatchdogDOExpirState(taskHandle, lines, data)
-    ccall((:DAQmxGetWatchdogDOExpirState, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, lines, data)
+    ccall((:DAQmxGetWatchdogDOExpirState, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, lines, data)
 end
 
 function DAQmxSetWatchdogDOExpirState(taskHandle, lines, data)
@@ -12631,7 +12630,7 @@ function DAQmxResetWatchdogDOExpirState(taskHandle, lines)
 end
 
 function DAQmxGetWatchdogAOOutputType(taskHandle, lines, data)
-    ccall((:DAQmxGetWatchdogAOOutputType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, lines, data)
+    ccall((:DAQmxGetWatchdogAOOutputType, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, lines, data)
 end
 
 function DAQmxSetWatchdogAOOutputType(taskHandle, lines, data)
@@ -12643,7 +12642,7 @@ function DAQmxResetWatchdogAOOutputType(taskHandle, lines)
 end
 
 function DAQmxGetWatchdogAOExpirState(taskHandle, lines, data)
-    ccall((:DAQmxGetWatchdogAOExpirState, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{float64}), taskHandle, lines, data)
+    ccall((:DAQmxGetWatchdogAOExpirState, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{float64}), taskHandle, lines, data)
 end
 
 function DAQmxSetWatchdogAOExpirState(taskHandle, lines, data)
@@ -12655,7 +12654,7 @@ function DAQmxResetWatchdogAOExpirState(taskHandle, lines)
 end
 
 function DAQmxGetWatchdogCOExpirState(taskHandle, lines, data)
-    ccall((:DAQmxGetWatchdogCOExpirState, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ptr{int32}), taskHandle, lines, data)
+    ccall((:DAQmxGetWatchdogCOExpirState, NIDAQmx), int32, (TaskHandle, Ref{UInt8}, Ref{int32}), taskHandle, lines, data)
 end
 
 function DAQmxSetWatchdogCOExpirState(taskHandle, lines, data)
@@ -12715,7 +12714,7 @@ function DAQmxGetWriteOvercurrentChansExist(taskHandle, data)
 end
 
 function DAQmxGetWriteOvercurrentChans(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetWriteOvercurrentChans, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetWriteOvercurrentChans, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxGetWriteOvertemperatureChansExist(taskHandle, data)
@@ -12723,7 +12722,7 @@ function DAQmxGetWriteOvertemperatureChansExist(taskHandle, data)
 end
 
 function DAQmxGetWriteOvertemperatureChans(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetWriteOvertemperatureChans, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetWriteOvertemperatureChans, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxGetWriteExternalOvervoltageChansExist(taskHandle, data)
@@ -12731,7 +12730,7 @@ function DAQmxGetWriteExternalOvervoltageChansExist(taskHandle, data)
 end
 
 function DAQmxGetWriteExternalOvervoltageChans(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetWriteExternalOvervoltageChans, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetWriteExternalOvervoltageChans, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxGetWriteOverloadedChansExist(taskHandle, data)
@@ -12739,7 +12738,7 @@ function DAQmxGetWriteOverloadedChansExist(taskHandle, data)
 end
 
 function DAQmxGetWriteOverloadedChans(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetWriteOverloadedChans, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetWriteOverloadedChans, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxGetWriteOpenCurrentLoopChansExist(taskHandle, data)
@@ -12747,7 +12746,7 @@ function DAQmxGetWriteOpenCurrentLoopChansExist(taskHandle, data)
 end
 
 function DAQmxGetWriteOpenCurrentLoopChans(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetWriteOpenCurrentLoopChans, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetWriteOpenCurrentLoopChans, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxGetWritePowerSupplyFaultChansExist(taskHandle, data)
@@ -12755,7 +12754,7 @@ function DAQmxGetWritePowerSupplyFaultChansExist(taskHandle, data)
 end
 
 function DAQmxGetWritePowerSupplyFaultChans(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetWritePowerSupplyFaultChans, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetWritePowerSupplyFaultChans, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxGetWriteSyncUnlockedChansExist(taskHandle, data)
@@ -12763,7 +12762,7 @@ function DAQmxGetWriteSyncUnlockedChansExist(taskHandle, data)
 end
 
 function DAQmxGetWriteSyncUnlockedChans(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetWriteSyncUnlockedChans, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetWriteSyncUnlockedChans, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxGetWriteSpaceAvail(taskHandle, data)
@@ -12779,7 +12778,7 @@ function DAQmxGetWriteAccessoryInsertionOrRemovalDetected(taskHandle, data)
 end
 
 function DAQmxGetWriteDevsWithInsertedOrRemovedAccessories(taskHandle, data, bufferSize)
-    ccall((:DAQmxGetWriteDevsWithInsertedOrRemovedAccessories, NIDAQmx), int32, (TaskHandle, Cstring, uInt32), taskHandle, data, bufferSize)
+    ccall((:DAQmxGetWriteDevsWithInsertedOrRemovedAccessories, NIDAQmx), int32, (TaskHandle, SafeCstring, uInt32), taskHandle, data, bufferSize)
 end
 
 function DAQmxGetWriteRawDataWidth(taskHandle, data)
