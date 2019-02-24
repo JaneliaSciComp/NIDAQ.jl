@@ -43,6 +43,7 @@ export digital_input_channels, digital_output_channels
 export counter_input_channels, counter_output_channels
 
 const NIDAQmx = "C:\\Windows\\System32\\nicaiu.dll"
+const SafeCstring = Ref{UInt8}
 
 primitive type Bool32<:Integer 32 end
 export Bool32
@@ -92,11 +93,11 @@ safechop(str::AbstractString) = isempty(str) ? str : chop(str)
 
 function catch_error(code::Int32, extra::String=""; err_fcn=error)
     sz = DAQmxGetErrorString(code, convert(Ptr{UInt8},C_NULL), convert(UInt32,0))
-    data = zeros(UInt8,sz)
-    ret = DAQmxGetErrorString(code, pointer(data), convert(UInt32,sz))
+    data = String(zeros(UInt8,sz))
+    ret = DAQmxGetErrorString(code, Ref(codeunits(data),1), convert(UInt32,sz))
     ret>0 && @warn("DAQmxGetErrorString error $ret")
     ret<0 && err_fcn("DAQmxGetErrorString error $ret")
-    data = safechop(String(data))
+    data = safechop(data)
     code>0 && @warn("NIDAQmx: "*extra*data)
     code<0 && err_fcn("NIDAQmx: "*extra*data)
 end
