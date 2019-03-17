@@ -8,8 +8,8 @@ for (cfunction, jfunction, ntask) in (
     end
     @eval function $jfunction(t::$ntask, channel::String)
         catch_error( $cfunction(t.th,
-                pointer(channel),
-                pointer(""),
+                Ref(codeunits(channel),1),
+                Ref(codeunits(""),1),
                 Val_ChanPerLine) )
         nothing
     end
@@ -40,14 +40,14 @@ function read(t::DITask, precision::DataType, num_samples_per_chan::Integer = -1
     num_channels = getproperties(t)["NumChans"][1]
     num_samples_per_chan_read = Int32[0]
     buffer_size = num_samples_per_chan==-1 ? 1024 : num_samples_per_chan
-    data = Array{precision}(buffer_size*num_channels)
+    data = Array{precision}(undef, buffer_size*num_channels)
     catch_error( read_digital_cfunctions[precision](t.th,
         convert(Int32,num_samples_per_chan),
         1.0,
         reinterpret(Bool32,Val_GroupByChannel),
-        pointer(data),
+        Ref(data,1),
         convert(UInt32,buffer_size*num_channels),
-        pointer(num_samples_per_chan_read),
+        Ref(num_samples_per_chan_read,1),
         reinterpret(Ptr{Bool32},C_NULL)) )
     data = data[1:num_samples_per_chan_read[1]*num_channels]
     num_channels==1 ? data : reshape(data, (div(length(data),num_channels), convert(Int64,num_channels)))
@@ -66,8 +66,8 @@ for (cfunction, types) in (
             reinterpret(Bool32,UInt32(false)),
             1.0,
             reinterpret(Bool32,Val_GroupByChannel),
-            pointer(data),
-            pointer(num_samples_per_chan_written),
+            Ref(data,1),
+            Ref(num_samples_per_chan_written,1),
             reinterpret(Ptr{Bool32},C_NULL)) )
         num_samples_per_chan_written[1]
     end

@@ -4,10 +4,10 @@
 get a list of available NIDAQ devices
 """
 function devices()
-    sz = GetSysDevNames(convert(Ptr{UInt8},C_NULL), UInt32(0))
-    data=zeros(UInt8,sz)
-    catch_error(GetSysDevNames(pointer(data), UInt32(sz)))
-    devs = map((x)->convert(String,x), split(chop(ascii(String(data))),", "))
+    sz = GetSysDevNames(Ref{UInt8}(C_NULL), UInt32(0))
+    data=String(zeros(UInt8,sz))
+    catch_error(GetSysDevNames(Ref(codeunits(data),1), UInt32(sz)))
+    devs = map((x)->convert(String,x), split(safechop(ascii(data)),", "))
     devs[devs .!= ""]
 
 end
@@ -20,11 +20,11 @@ for (jfunction, cfunction) in (
         (:counter_input_channels, GetDevCIPhysicalChans),
         (:counter_output_channels, GetDevCOPhysicalChans))
     @eval function $jfunction(device::String)
-        sz = $cfunction(pointer(device), convert(Ptr{UInt8},C_NULL), UInt32(0))
+        sz = $cfunction(Ref(codeunits(device),1), Ref{UInt8}(C_NULL), UInt32(0))
         data=zeros(UInt8,sz)
-        catch_error( $cfunction(pointer(device), pointer(data),
+        catch_error( $cfunction(Ref(codeunits(device),1), Ref(data,1),
                 UInt32(sz)) )
-        map((x)->convert(String,x), split(chop(ascii(String(data))),", "))
+        map((x)->convert(String,x), split(safechop(ascii(String(data))),", "))
     end
 
     @eval function $jfunction()
@@ -45,9 +45,9 @@ for (jfunction, cfunction) in (
         (:analog_input_ranges, GetDevAIVoltageRngs),
         (:analog_output_ranges, GetDevAOVoltageRngs))
     @eval function $jfunction(device::String)
-        sz = $cfunction(pointer(device), convert(Ptr{Float64},C_NULL), UInt32(0))
+        sz = $cfunction(Ref(codeunits(device),1), convert(Ptr{Float64},C_NULL), UInt32(0))
         data=zeros(sz)
-        catch_error( $cfunction(pointer(device), pointer(data),
+        catch_error( $cfunction(Ref(codeunits(device),1), Ref(data,1),
                 UInt32(sz)) )
         reshape(data,(2,length(data)>>1))'
     end
@@ -74,19 +74,19 @@ get the type of the specified NIDAQ channel
 function channel_type(t::Task, channel::String)
     val1 = Cint[0]
     catch_error(
-        GetChanType(t.th, pointer(channel), pointer(val1)) )
+        GetChanType(t.th, Ref(codeunits(channel),1), Ref(val1,1)) )
 
     val2 = Cint[0]
     if val1[1] == Val_AI
-        ret = GetAIMeasType(t.th, pointer(channel), pointer(val2))
+        ret = GetAIMeasType(t.th, Ref(codeunits(channel),1), Ref(val2,1))
     elseif val1[1] == Val_AO
-        ret = GetAOOutputType(t.th, pointer(channel), pointer(val2))
+        ret = GetAOOutputType(t.th, Ref(codeunits(channel),1), Ref(val2,1))
     elseif val1[1] == Val_DI || val1[1] == Val_DO
         return val1[1], nothing
     elseif val1[1] == Val_CI
-        ret = GetCIMeasType(t.th, pointer(channel), pointer(val2))
+        ret = GetCIMeasType(t.th, Ref(codeunits(channel),1), Ref(val2,1))
     elseif val1[1] == Val_CO
-        ret = GetCOOutputType(t.th, pointer(channel), pointer(val2))
+        ret = GetCOOutputType(t.th, Ref(codeunits(channel),1), Ref(val2,1))
     end
     catch_error(ret)
 
@@ -98,11 +98,11 @@ function _getproperties(args, suffix::String, warning::Bool)
     local settable
     local data
     local ret
-    for sym in names(NIDAQ,true)
-        eval(:(!issubtype(typeof(NIDAQ.$sym),Function))) && continue
+    for sym in names(NIDAQ, all=true)
+        eval(:(!(typeof(NIDAQ.$sym) <:Function))) && continue
         if string(sym)[1:min(end,8+length(suffix))]=="DAQmxGet"*suffix
             cfunction = getfield(NIDAQ, sym)
-	    ccall_args = code_lowered(cfunction)[1].code[end].args[1].args[3]
+	    ccall_args = code_lowered(cfunction)[1].code[end-1].args[3]
             try
                 basetype = eltype(ccall_args[1+length(args)])
                 if length(ccall_args)==1+length(args)
@@ -116,7 +116,7 @@ function _getproperties(args, suffix::String, warning::Bool)
                       throw()
                     end
                     data = zeros(basetype,sz)
-                    ret = cfunction(args..., pointer(data), convert(UInt32,sz))
+                    ret = cfunction(args..., Ref(data,1), convert(UInt32,sz))
                 end
                 if ret!=0
                     throw()
@@ -125,27 +125,29 @@ function _getproperties(args, suffix::String, warning::Bool)
                 elseif basetype == Int32
                     try
                         data = map((x)->signed_constants[x], data)
+                    catch
                     end
                 elseif basetype == UInt32
                     try
                         data = map((x)->unsigned_constants[x], data)
+                    catch
                     end
                 elseif basetype == UInt8
-                    data = split(chop(ascii(String(data))),", ")
+                    data = split(safechop(ascii(String(data))),", ")
 
                 end
             catch
                 if warning
                     if ret!=0
-                        catch_error(ret, string(cfunction)*": ", err_fcn=warn)
+                        catch_error(ret, string(cfunction)*": ", err_fcn=x->@warn(x))
                     else
-                        warn("can't handle function signature for $cfunction: $ccall_args")
+                        @warn("can't handle function signature for $cfunction: $ccall_args")
                     end
                 end
                 continue
             end
             try
-                getfield(NIDAQ, Symbol(replace(string(cfunction),"Get"*suffix,"Set"*suffix)))
+                getfield(NIDAQ, Symbol(replace(string(cfunction),"Get"*suffix =>"Set"*suffix)))
                 settable=true
             catch
                 settable=false
@@ -171,7 +173,7 @@ end
 get the properties of the specified NIDAQ device
 """
 function getproperties(device::String; warning=false)
-    _getproperties((pointer(device),), "Dev", warning)
+    _getproperties((Ref(codeunits(device),1),), "Dev", warning)
 end
 
 """
@@ -193,10 +195,10 @@ channel_types = ["Val_AI", "Val_AO",
 get the properties of the specified NIDAQ channel
 """
 function getproperties(t::Task, channel::String; warning=false)
-    kind = channel_types[ find(channel_type(t, channel)[1] .==
+    kind = channel_types[ findall(channel_type(t, channel)[1] .==
             map((x)->getfield(NIDAQ,Symbol(x)), channel_types))[1]][end-1:end]
 
-    _getproperties((t.th, pointer(channel)), kind, warning)
+    _getproperties((t.th, Ref(codeunits(channel),1)), kind, warning)
 end
 
 """
@@ -205,10 +207,10 @@ end
 set the specified NIDAQ property to value
 """
 function setproperty!(t::Task, channel::String, property::String, value)
-    kind = channel_types[ find(channel_type(t, channel)[1] .==
+    kind = channel_types[ findall(channel_type(t, channel)[1] .==
             map((x)->getfield(NIDAQ,Symbol(x)), channel_types))[1]][end-1:end]
 
-    @eval ret = $(Symbol("DAQmxSet"*kind*property))($t.th, pointer($channel), $value)
+    @eval ret = $(Symbol("DAQmxSet"*kind*property))($t.th, Ref(codeunits($channel),1), $value)
     catch_error(ret, "DAQmxSet$kind$property: ")
     nothing
 end

@@ -1,5 +1,3 @@
-__precompile__()
-
 """
 `NIDAQ.jl` provides an interface to NI-DAQmx--- National Instruments' driver
 for their data acquisition boards.  See the README.md for documentation.
@@ -22,7 +20,13 @@ More examples are in tests/.
 """
 module NIDAQ
 
-import Base.write, Base.read, Base.start
+import Base.write, Base.read
+
+if VERSION < v"1.0.0"
+    import Base.start
+else
+    export start
+end
 
 # tasks
 export stop, clear
@@ -39,6 +43,7 @@ export digital_input_channels, digital_output_channels
 export counter_input_channels, counter_output_channels
 
 const NIDAQmx = "C:\\Windows\\System32\\nicaiu.dll"
+const SafeCstring = Ref{UInt8}
 
 primitive type Bool32<:Integer 32 end
 export Bool32
@@ -67,8 +72,8 @@ end
 unsigned_constants = Dict{UInt64,Symbol}()
 signed_constants = Dict{Int64,Symbol}()
 
-for sym in names(NIDAQ,true)
-    isdefined(sym) || continue
+for sym in names(NIDAQ, all=true)
+    @isdefined(sym) || continue
     sym_str = string(sym)
     (length(sym_str)<5 || sym_str[1:5]!="DAQmx") && continue
     sym_str = sym_str[6:end]
@@ -84,15 +89,16 @@ for sym in names(NIDAQ,true)
         @eval $(Symbol(sym_str)) = $sym
     end
 end
+safechop(str::AbstractString) = isempty(str) ? str : chop(str)
 
 function catch_error(code::Int32, extra::String=""; err_fcn=error)
     sz = DAQmxGetErrorString(code, convert(Ptr{UInt8},C_NULL), convert(UInt32,0))
-    data = zeros(UInt8,sz)
-    ret = DAQmxGetErrorString(code, pointer(data), convert(UInt32,sz))
-    ret>0 && warn("DAQmxGetErrorString error $ret")
+    data = String(zeros(UInt8,sz))
+    ret = DAQmxGetErrorString(code, Ref(codeunits(data),1), convert(UInt32,sz))
+    ret>0 && @warn("DAQmxGetErrorString error $ret")
     ret<0 && err_fcn("DAQmxGetErrorString error $ret")
-    data = chop(convert(String, data))
-    code>0 && warn("NIDAQmx: "*extra*data)
+    data = safechop(data)
+    code>0 && @warn("NIDAQmx: "*extra*data)
     code<0 && err_fcn("NIDAQmx: "*extra*data)
 end
 

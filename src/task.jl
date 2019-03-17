@@ -1,7 +1,7 @@
 abstract type Task end
 
 for pre in ("AI", "AO", "DI", "DO", "CI", "CO")
-  @eval type $(Symbol(pre*"Task")) <: Task
+  @eval mutable struct $(Symbol(pre*"Task")) <: Task
       th::TaskHandle
   end
   @eval $(Symbol(pre*"Task"))() = $(Symbol(pre*"Task"))(task())
@@ -10,7 +10,7 @@ end
 
 function task(name::String)
     t = TaskHandle[0]
-    catch_error( DAQmxCreateTask(pointer(name), pointer(t)) )
+    catch_error( DAQmxCreateTask(Ref(codeunits(name),1), pointer(t)) )
     t[1]
 end
 task() = task("")

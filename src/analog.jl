@@ -24,8 +24,8 @@ function analog_input(t::AITask, channel::String;
         range=float(analog_input_ranges(device)[end,:])
     end
     catch_error( CreateAIVoltageChan(t.th,
-            pointer(channel),
-            pointer(""),
+            Ref(codeunits(channel),1),
+            Ref(codeunits(""), 1),
             analog_input_configs[terminal_config],
             range[1], range[2],
             Val_Volts,
@@ -52,8 +52,8 @@ function analog_output(t::AOTask, channel::String; range=nothing)
         range=float(analog_output_ranges(device)[end,:])
     end
     catch_error( CreateAOVoltageChan(t.th,
-            pointer(channel),
-            pointer(""),
+            Ref(codeunits(channel),1),
+            Ref(codeunits(""),1),
             range[1], range[2],
             Val_Volts,
             convert(Ptr{UInt8},C_NULL)) )
@@ -71,14 +71,14 @@ function read(t::AITask, precision::DataType, num_samples_per_chan::Integer = -1
     num_channels = getproperties(t)["NumChans"][1]
     num_samples_per_chan_read = Int32[0]
     buffer_size = num_samples_per_chan==-1 ? 1024 : num_samples_per_chan
-    data = Array{precision}(buffer_size*num_channels)
+    data = Array{precision}(undef, buffer_size*num_channels)
     catch_error( read_analog_cfunctions[precision](t.th,
         convert(Int32,num_samples_per_chan),
         1.0,
         reinterpret(Bool32,Val_GroupByChannel),
-        pointer(data),
+        Ref(data,1),
         convert(UInt32,buffer_size*num_channels),
-        pointer(num_samples_per_chan_read),
+        Ref(num_samples_per_chan_read,1),
         reinterpret(Ptr{Bool32},C_NULL)) )
     data = data[1:num_samples_per_chan_read[1]*num_channels]
     num_channels==1 ? data : reshape(data, (div(length(data),num_channels), convert(Int64,num_channels)))
@@ -99,8 +99,8 @@ for (cfunction, types) in (
             reinterpret(Bool32, UInt32(false)),
             1.0,
             reinterpret(Bool32,Val_GroupByChannel),
-            pointer(data),
-            pointer(num_samples_per_chan_written),
+            Ref(data,1),
+            Ref(num_samples_per_chan_written,1),
             reinterpret(Ptr{Bool32},C_NULL)) )
         num_samples_per_chan_written[1]
     end
