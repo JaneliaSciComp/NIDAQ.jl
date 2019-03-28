@@ -67,7 +67,7 @@ read_analog_cfunctions = Dict{Type,Function}(
     UInt16 => ReadBinaryU16,
     UInt32 => ReadBinaryU32 )
 
-function read(t::AITask, precision::DataType, num_samples_per_chan::Integer = -1)
+function read(t::AITask, num_samples_per_chan::Integer = -1, precision::DataType = Float64)
     outdata_ref = Ref{Cuint}()
     DAQmxGetTaskNumChans(t.th, outdata_ref)
     num_channels = outdata_ref.x
