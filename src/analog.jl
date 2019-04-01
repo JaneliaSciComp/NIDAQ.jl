@@ -1,4 +1,4 @@
-@enum TerminalConfig RSE=Val_RSE NRSE=Val_NRSE Differential=Val_Diff PseudoDifferential=Val_PseudoDiff
+@enum TerminalConfig::Cuint RSE=Val_RSE NRSE=Val_NRSE Differential=Val_Diff PseudoDifferential=Val_PseudoDiff
 
 
 """
@@ -8,22 +8,22 @@
 
 create an analog input channel, and a new task if one is not specified
 """
-function analog_input(channel::String; terminal_config::TerminalConfig=NRSE, range=nothing)
+function analog_input(channel::String; terminal_config::TerminalConfig=Differential, range=nothing)
     t = AITask()
     analog_input(t, channel, terminal_config=terminal_config, range=range)
     t
 end
 
 function analog_input(t::AITask, channel::String;
-        terminal_config::TerminalConfig=NRSE, range=nothing)
+        terminal_config::TerminalConfig=Differential, range=nothing)
     if range==nothing
         device::String = split(channel,'/')[1]
         range=float(analog_input_ranges(device)[end,:])
     end
     catch_error( CreateAIVoltageChan(t.th,
-            pointer(channel),
-            pointer(""),
-            Cuint(terminal_config),
+            Ref(codeunits(channel),1),
+            Ref(codeunits(""),1),
+            terminal_config,
             range[1], range[2],
             Val_Volts,
             convert(Ptr{UInt8},C_NULL)) )
