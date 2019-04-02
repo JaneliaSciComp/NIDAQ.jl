@@ -8,8 +8,8 @@ for (cfunction, jfunction, ntask) in (
     end
     @eval function $jfunction(t::$ntask, channel::String)
         catch_error( $cfunction(t.th,
-                Ref(codeunits(channel)),
-                Ref(codeunits("")),
+                Ref(codeunits(channel), 1),
+                Ref(codeunits(""), 1),
                 Val_ChanPerLine) )
         nothing
     end
