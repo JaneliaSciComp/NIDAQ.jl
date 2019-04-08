@@ -49,8 +49,8 @@ function analog_output(t::AOTask, channel::String; range=nothing)
         range=float(analog_output_ranges(device)[end,:])
     end
     catch_error( CreateAOVoltageChan(t.th,
-            pointer(channel),
-            pointer(""),
+            Ref(codeunits(channel),1),
+            Ref(codeunits(""),1),
             range[1], range[2],
             Val_Volts,
             convert(Ptr{UInt8},C_NULL)) )
