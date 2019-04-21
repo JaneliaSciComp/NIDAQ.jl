@@ -42,6 +42,8 @@ export analog_input_channels, analog_output_channels
 export digital_input_channels, digital_output_channels
 export counter_input_channels, counter_output_channels
 
+export RSE, NRSE, Differential, PseudoDifferential
+
 const NIDAQmx = "C:\\Windows\\System32\\nicaiu.dll"
 const SafeCstring = Ref{UInt8}
 

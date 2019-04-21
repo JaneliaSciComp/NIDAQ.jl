@@ -1,8 +1,5 @@
-analog_input_configs = Dict{AbstractString,Number}(
-    "referenced single-ended" => Val_RSE,
-    "non-referenced single-ended" => Val_NRSE,
-    "pseudo-differential" => Val_PseudoDiff,
-    "differential" => Val_Diff )
+@enum TerminalConfig::Cuint RSE=Val_RSE NRSE=Val_NRSE Differential=Val_Diff PseudoDifferential=Val_PseudoDiff
+
 
 """
 `analog_input(channel, config, range) -> task`
@@ -11,14 +8,14 @@ analog_input_configs = Dict{AbstractString,Number}(
 
 create an analog input channel, and a new task if one is not specified
 """
-function analog_input(channel::String; terminal_config="differential", range=nothing)
+function analog_input(channel::String; terminal_config::TerminalConfig=Differential, range=nothing)
     t = AITask()
     analog_input(t, channel, terminal_config=terminal_config, range=range)
     t
 end
 
 function analog_input(t::AITask, channel::String;
-        terminal_config="differential", range=nothing)
+        terminal_config::TerminalConfig=Differential, range=nothing)
     if range==nothing
         device::String = split(channel,'/')[1]
         range=float(analog_input_ranges(device)[end,:])
@@ -26,7 +23,7 @@ function analog_input(t::AITask, channel::String;
     catch_error( CreateAIVoltageChan(t.th,
             Ref(codeunits(channel),1),
             Ref(codeunits(""), 1),
-            analog_input_configs[terminal_config],
+            terminal_config,
             range[1], range[2],
             Val_Volts,
             convert(Ptr{UInt8},C_NULL)) )
