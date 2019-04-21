@@ -39,16 +39,16 @@ else
     @test typeof(getproperties(t,dev*"/ai0")) == Dict{String,Tuple{Any,Bool}}
     @test typeof(t) == NIDAQ.AITask
     @test start(t) == nothing
-    @test length(read(t, Float64, 3)) == 3
+    @test length(read(t, 3)) == 3
     @test stop(t) == nothing
     @test analog_input(t, dev*"/ai1") == nothing
     @test start(t) == nothing
-    @test length(read(t, UInt32, 6)) == 12
+    @test length(read(t, 6, UInt32)) == 12
     @test stop(t) == nothing
     @test NIDAQ.CfgSampClkTiming(t.th, convert(Ref{UInt8},b""), 100.0, NIDAQ.Val_Rising,
               NIDAQ.Val_FiniteSamps, UInt64(10)) == 0
     @test start(t) == nothing
-    @test length(read(t, Float64)) == 20
+    @test length(read(t)) == 20
     @test stop(t) == nothing
     @test clear(t) == nothing
 end
@@ -85,11 +85,11 @@ else
     t = digital_input(dev*"/Port0/Line0")
     @test typeof(t) == NIDAQ.DITask
     @test start(t) == nothing
-    @test length(read(t, UInt32, 3)) == 3
+    @test length(read(t, 3)) == 3
     @test stop(t) == nothing
     @test digital_input(t, dev*"/Port0/Line1") == nothing
     @test start(t) == nothing
-    @test length(read(t, UInt32, 6)) == 12
+    @test length(read(t, 6)) == 12
     @test stop(t) == nothing
     rslt = Ref{UInt32}(0)
     NIDAQ.DAQmxGetBufInputOnbrdBufSize(t.th, rslt)
@@ -98,7 +98,7 @@ else
                                      NIDAQ.Val_FiniteSamps, UInt64(10)) == 0
         if first(props["ProductCategory"]) != :Val_MSeriesDAQ # M Series has no digital onboard clock
 	    @test start(t) == nothing
-	    @test length(read(t, UInt32)) == 20
+	    @test length(read(t)) == 20
 	    @test stop(t) == nothing
         end
         @test clear(t) == nothing
