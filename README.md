@@ -250,7 +250,7 @@ Once everything is configured, get some data using the `read` function:
 ```
 julia> start(t)
 
-julia> read(t, Float64, 10)
+julia> read(t, 10)
 10x3 Array{Float64,2}:
  1.52407   -0.448835   0.381075
  1.37546   -0.213537   0.305847
@@ -268,7 +268,23 @@ julia> stop(t)
 julia> clear(t)
 ```
 
-`read` can also return `Int16`, `Int32`, `UInt16`, and `UInt32`.
+`read` can also return `Int16`, `Int32`, `UInt16`, and `UInt32` by specifying
+those types as an additional argument:
+
+```
+julia> read(t, 10, Int16)
+10×3 Array{Int16,2}:
+ -12619  -5351  -13973
+ -12618  -5350  -13973
+ -12620  -5350  -13973
+ -12619  -5350  -13974
+ -12618  -5351  -13972
+ -12618  -5348  -13974
+ -12619  -5350  -13973
+ -12619  -5350  -13973
+ -12619  -5350  -13972
+ -12620  -5350  -13973
+```
 
 Similar work flows exist for `analog_output`, `digital_input`,
 and `digital_output`.  The high-level API also supports many counter
