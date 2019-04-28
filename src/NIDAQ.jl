@@ -109,6 +109,7 @@ include("analog.jl")
 include("digital.jl")
 include("counter.jl")
 include("properties.jl")
+include("deprecations.jl")
 
 @doc """`read(task, precision, nsamples) -> Matrix`
 
