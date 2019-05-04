@@ -1,5 +1,11 @@
 @enum TerminalConfig::Cuint RSE=Val_RSE NRSE=Val_NRSE Differential=Val_Diff PseudoDifferential=Val_PseudoDiff
 
+analog_input_configs = Dict{AbstractString,TerminalConfig}(  # deprecate
+    "referenced single-ended" => RSE,
+    "non-referenced single-ended" => NRSE,
+    "pseudo-differential" => PseudoDifferential,
+    "differential" => Differential)
+
 
 """
 `analog_input(channel, config, range) -> task`
@@ -8,14 +14,21 @@
 
 create an analog input channel, and a new task if one is not specified
 """
-function analog_input(channel::String; terminal_config::TerminalConfig=Differential, range=nothing)
+function analog_input(channel::String;
+                      terminal_config::Union{String,TerminalConfig}=Differential, range=nothing)
+    if typeof(terminal_config) == String  # deprecate
+      terminal_config = analog_input_configs[terminal_config]
+    end
     t = AITask()
     analog_input(t, channel, terminal_config=terminal_config, range=range)
     t
 end
 
 function analog_input(t::AITask, channel::String;
-        terminal_config::TerminalConfig=Differential, range=nothing)
+                      terminal_config::Union{String,TerminalConfig}=Differential, range=nothing)
+    if typeof(terminal_config) == String  # deprecate
+      terminal_config = analog_input_configs[terminal_config]
+    end
     if range==nothing
         device::String = split(channel,'/')[1]
         range=float(analog_input_ranges(device)[end,:])
