@@ -17,6 +17,7 @@ create an analog input channel, and a new task if one is not specified
 function analog_input(channel::String;
                       terminal_config::Union{String,TerminalConfig}=Differential, range=nothing)
     if typeof(terminal_config) == String  # deprecate
+      Base.depwarn("specifying terminal configurations with Strings is deprecated.  Use the TerminalConfig Enum instead.", :analog_input)
       terminal_config = analog_input_configs[terminal_config]
     end
     t = AITask()
@@ -27,6 +28,7 @@ end
 function analog_input(t::AITask, channel::String;
                       terminal_config::Union{String,TerminalConfig}=Differential, range=nothing)
     if typeof(terminal_config) == String  # deprecate
+      Base.depwarn("specifying terminal configurations with Strings is deprecated.  Use the TerminalConfig Enum instead.", :analog_input)
       terminal_config = analog_input_configs[terminal_config]
     end
     if range==nothing
