@@ -152,7 +152,8 @@ function _getproperties(args, suffix::String, warning::Bool)
             catch
                 settable=false
             end
-            ret_val[string(cfunction)[9+length(suffix):end]] = (data, settable)
+	    n_skip = VERSION >= v"1.2" ? 15 : 9
+            ret_val[string(cfunction)[n_skip+length(suffix):end]] = (data, settable)
         end
     end
     ret_val
