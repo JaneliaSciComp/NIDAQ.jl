@@ -20,11 +20,13 @@ Instruments card of course.
 Installation
 ============
 
-First download and install NI-DAQmx version [18.6](http://www.ni.com/en-us/support/downloads/drivers/download/unpackaged.ni-daqmx.291872.html) (
-or for julia v6, [17.1.0](http://www.ni.com/download/ni-daqmx-17.1/6836/en/);
-or for Julia v5, [16.0.0](http://www.ni.com/download/ni-daqmx-16.0/6120/en/);
-or for Julia v4, [15.1.1](http://www.ni.com/download/ni-daqmx-15.1.1/5665/en/);
-or for Julia v3, [14.1.0](http://www.ni.com/download/ni-daqmx-14.1/4953/en/),
+First download and install NI-DAQmx version
+[19.6](https://www.ni.com/en-us/support/downloads/drivers/download/packaged.ni-daqmx.333268.html) (or
+[18.6](http://www.ni.com/en-us/support/downloads/drivers/download/unpackaged.ni-daqmx.291872.html);
+or for Julia 0.6, [17.1.0](http://www.ni.com/download/ni-daqmx-17.1/6836/en/);
+or for Julia 0.5, [16.0.0](http://www.ni.com/download/ni-daqmx-16.0/6120/en/);
+or for Julia 0.4, [15.1.1](http://www.ni.com/download/ni-daqmx-15.1.1/5665/en/);
+or for Julia 0.3, [14.1.0](http://www.ni.com/download/ni-daqmx-14.1/4953/en/),
 [14.0.0](http://www.ni.com/download/ni-daqmx-14.0/4918/en/), or
 [9.6.0](http://www.ni.com/download/ni-daqmx-9.6/3423/en/)) from National
 Instruments.  Then on the Julia command line:
@@ -361,33 +363,44 @@ to set `BUILD_LLVM_CLANG=1` in Make.user, and compile Julia from source.
 Find `NIDAQmx.h`, which usually lives in
 `C:\Program Files (x86)\National Instruments\NI-DAQ\DAQmx ANSI C Dev\include`.
 
-Then,
+Edit this header file as follows:
+
++ For NI-DAQmx v19.6 in `NIDAQmx.h` change `__int64 int64` to `long long int int64`
+and `unsigned __int64 uInt64` to `unsigned long long uInt64`.
++ For NI-DAQmx v9.6.0 in `NIDAQmx.h` change 
+`defined(__linux__)` to `defined(__linux__) || defined(__APPLE__)`.
+
+Then run Clang to produce the corresponding Julia files:
 
 ```
 julia> using Clang
-julia> context = wrap_c.init()
-julia> context.common_file = "common.jl"
-julia> context.headers = ["NIDAQmx.h"]
-julia> run(context)
-$ mv NIDAQmx.h src/NIDAQmx_V<version>.h
+julia> wc = init(; headers = ["NIDAQmx.h"],
+                   output_file = "NIDAQmx.jl",
+                   common_file = "common.jl",
+                   clang_includes = vcat(CLANG_INCLUDE),
+                   clang_args = map(x->"-I"*x, find_std_headers()),
+                   header_wrapped = (root, current)->root == current,
+                   header_library = x->"NIDAQmx",
+                   clang_diagnostics = true)
+julia> run(wc)
 $ mv NIDAQmx.jl src/functions_V<version>.jl
 $ mv common.jl src/constants_V<version>.jl
+$ rm LibTemplate.jl ctypes.jl
 ```
 
-The following manual edits are then necessary:
+Finally, the following manual edits are necessary:
 
-+ For NI-DAQmx v9.6.0 in `NIDAQmx.h` change 
-`defined(__linux__)` to `defined(__linux__) || defined(__APPLE__)`.
 + In `constants_V<version>.jl`
-  + comment out `const CVICALLBACK = CVICDECL`,
+  + delete `const CVICALLBACK = CVICDECL`,
+  + in NI-DAQmx v19.6 add `struct CVITime; lsb::uInt64; msb::int64; end`
   + in NI-DAQmx v17.1.0 comment out `const CVIAbsoluteTime = VOID`
   + change `const bool32 = uInt32` to `const bool32 = Bool32`.
-  + in NI-DAQmx v15.1.1 and greater comment out `using Compat`
+  + in NI-DAQmx v15 to v18 comment out `using Compat`
 + In `functions_V<version>.jl`
-  + globally search for `Ptr` and replace with `Ref`, then globally
+  + in NI-DAQmx v18 and earlier, globally search for `Ptr` and replace with `Ref`, then globally
 search for `CallbackRef` and replace with `CallbackPtr`.
   + globally search for `Cstring` and replace with `SafeCstring`
-  + (for Julia 0.7 support) replace `type` with `_type`
+  + for Julia 0.7 support, replace `type` with `_type`
 
 
 Author

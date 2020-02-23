@@ -1,8 +1,9 @@
 name = "NIDAQ"
 uuid = "66b72792-1abf-55ab-8064-6e9051317175"
+version = "0.5.0"
 
 [compat]
-julia = "≥ 0.7.0"
+julia = "0.7, 1"
 
 [extras]
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
