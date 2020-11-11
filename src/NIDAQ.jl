@@ -47,7 +47,6 @@ export RSE, NRSE, Differential, PseudoDifferential
 const NIDAQmx = Sys.iswindows() ? "C:\\Windows\\System32\\nicaiu.dll" :
     "/usr/lib/x86_64-linux-gnu/libnidaqmx.so"
 const SafeCstring = Ref{UInt8}
-const SafeCstring = Ref{UInt8}
 
 primitive type Bool32<:Integer 32 end
 export Bool32
