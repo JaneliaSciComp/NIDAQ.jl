@@ -44,7 +44,9 @@ export counter_input_channels, counter_output_channels
 
 export RSE, NRSE, Differential, PseudoDifferential
 
-const NIDAQmx = "C:\\Windows\\System32\\nicaiu.dll"
+const NIDAQmx = Sys.iswindows() ? "C:\\Windows\\System32\\nicaiu.dll" :
+    "/usr/lib/x86_64-linux-gnu/libnidaqmx.so"
+const SafeCstring = Ref{UInt8}
 const SafeCstring = Ref{UInt8}
 
 primitive type Bool32<:Integer 32 end
