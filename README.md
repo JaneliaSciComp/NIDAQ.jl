@@ -36,7 +36,7 @@ or for Julia 0.3, [14.1.0](http://www.ni.com/download/ni-daqmx-14.1/4953/en/),
 Instruments.
 
 **Linux**  
-The package only support DAQmx 20.1 on linux. Follow the instructions from this [support doc](https://www.ni.com/en-us/support/documentation/supplemental/18/downloading-and-installing-ni-driver-software-on-linux-desktop.html).
+The package only supports DAQmx 20.1 on linux. Follow the instructions from this [support doc](https://www.ni.com/en-us/support/documentation/supplemental/18/downloading-and-installing-ni-driver-software-on-linux-desktop.html).
 
 **Adding `NIDAQ.jl`**  
 Then on the Julia command line:
