@@ -12,15 +12,17 @@ Similar functionality for the Python language is provided by
 
 System Requirements
 ===================
-
+**General**
 - Supports Windows and Linux
-- NI-DAQmx Base is not supported
-- For linux support, you need the latest DAQmx (currently 20.1). More info on installing DAQmx can be found in this [support doc](https://www.ni.com/en-us/support/documentation/supplemental/18/downloading-and-installing-ni-driver-software-on-linux-desktop.html).
-- Currently the DAQmx on linux does not support USB DAQ devices
+- NI-DAQmx Base is not supported  
+
+**Linux specific**  
+- Requires the latest DAQmx (currently 20.1)
+- DAQmx on linux does not support USB DAQ devices
 
 Installation
 ============
-
+**Windows**  
 First download and install NI-DAQmx version
 [20.1](https://www.ni.com/en-us/support/downloads/drivers/download.ni-daqmx.html#348669) (or 
 [19.6](https://www.ni.com/en-us/support/downloads/drivers/download/packaged.ni-daqmx.333268.html), 
@@ -31,8 +33,13 @@ or for Julia 0.4, [15.1.1](http://www.ni.com/download/ni-daqmx-15.1.1/5665/en/);
 or for Julia 0.3, [14.1.0](http://www.ni.com/download/ni-daqmx-14.1/4953/en/),
 [14.0.0](http://www.ni.com/download/ni-daqmx-14.0/4918/en/), or
 [9.6.0](http://www.ni.com/download/ni-daqmx-9.6/3423/en/)) from National
-Instruments.  Then on the Julia command line:
+Instruments.
 
+**Linux**  
+The package only support DAQmx 20.1 on linux. Follow the instructions from this [support doc](https://www.ni.com/en-us/support/documentation/supplemental/18/downloading-and-installing-ni-driver-software-on-linux-desktop.html).
+
+**Adding `NIDAQ.jl`**  
+Then on the Julia command line:
 ```
 ]add NIDAQ
 ```
