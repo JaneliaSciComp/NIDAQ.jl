@@ -36,11 +36,13 @@ export analog_input, analog_output, digital_input, digital_output
 export count_edges, quadrature_input, line_to_line, generate_pulses
 
 # properties
-export devices, channel_type, getproperties, setproperty!
-export analog_input_ranges, analog_output_ranges
-export analog_input_channels, analog_output_channels
-export digital_input_channels, digital_output_channels
-export counter_input_channels, counter_output_channels
+export devices, channel_type, getproperties #, setproperty!
+export analog_input_ranges,          analog_output_ranges
+export analog_volt_input_ranges,     analog_volt_output_ranges
+export analog_current_input_ranges,  analog_current_output_ranges
+export analog_input_channels,        analog_output_channels
+export digital_input_channels,       digital_output_channels
+export counter_input_channels,       counter_output_channels
 
 export RSE, NRSE, Differential, PseudoDifferential
 

@@ -1,4 +1,5 @@
 @enum TerminalConfig::Cuint RSE=Val_RSE NRSE=Val_NRSE Differential=Val_Diff PseudoDifferential=Val_PseudoDiff
+@enum InputType::Cuint Voltage=Val_ChannelVoltage Current=Val_ChannelCurrent
 
 analog_input_configs = Dict{AbstractString,TerminalConfig}(  # deprecate
     "referenced single-ended" => RSE,
@@ -8,40 +9,75 @@ analog_input_configs = Dict{AbstractString,TerminalConfig}(  # deprecate
 
 
 """
-`analog_input(channel, config, range) -> task`
+`analog_input(channel; terminal_config, range, type=Voltage) -> task`
 
-`analog_input(task, channel, config, range)`
+`analog_input(task, channel; terminal_config, range, type=Voltage)`
 
-create an analog input channel, and a new task if one is not specified
+create an analog input channel, and a new task if one is not specified.
+
+terminal_config can be Default, RSE, NRSE, Differential, PseudoDifferential
+range specifies the minimum and maximum value to measure in volt or ampere
+type indicates whether it is a voltage or current input. For current inputs, default it is
+ the internal shunt resistor.
+
+The measurements are returned in volt or ampere.
+
+For more information see the NI documentation:
+https://zone.ni.com/reference/en-XX/help/370471AM-01/daqmxcfunc/daqmxcreateaivoltagechan/
+https://zone.ni.com/reference/en-XX/help/370471AM-01/daqmxcfunc/daqmxcreateaicurrentchan/
+
 """
 function analog_input(channel::String;
-                      terminal_config::Union{String,TerminalConfig}=Differential, range=nothing)
+                      terminal_config::Union{String,TerminalConfig}=Differential,
+                      range=nothing, 
+                      type=Voltage
+                      )
     if typeof(terminal_config) == String  # deprecate
       Base.depwarn("specifying terminal configurations with Strings is deprecated.  Use the TerminalConfig Enum instead.", :analog_input)
       terminal_config = analog_input_configs[terminal_config]
     end
     t = AITask()
-    analog_input(t, channel, terminal_config=terminal_config, range=range)
+    analog_input(t, channel; terminal_config, range, type)
     t
 end
 
-function analog_input(t::AITask, channel::String;
-                      terminal_config::Union{String,TerminalConfig}=Differential, range=nothing)
+function analog_input(t::AITask, 
+                      channel::String;
+                      terminal_config::Union{String,TerminalConfig}=Differential, 
+                      range=nothing, 
+                      type=Voltage)
     if typeof(terminal_config) == String  # deprecate
       Base.depwarn("specifying terminal configurations with Strings is deprecated.  Use the TerminalConfig Enum instead.", :analog_input)
       terminal_config = analog_input_configs[terminal_config]
     end
-    if range==nothing
+    if isnothing(range)
         device::String = split(channel,'/')[1]
-        range=float(analog_input_ranges(device)[end,:])
+        if type == Voltage
+            range = float(analog_volt_input_ranges(device)[end,:])
+        else
+            range = float(analog_current_input_ranges(device)[end,:])
     end
+    end
+    if type == Voltage # https://zone.ni.com/reference/en-XX/help/370471AM-01/daqmxcfunc/daqmxcreateaivoltagechan/
     catch_error( CreateAIVoltageChan(t.th,
             Ref(codeunits(channel),1),
             Ref(codeunits(""), 1),
             terminal_config,
             range[1], range[2],
             Val_Volts,
-            convert(Ptr{UInt8},C_NULL)) )
+                convert(Ptr{UInt8},C_NULL)), "see https://www.ni.com/documentation/en/ni-daqmx/latest/devconsid/defaulttermconfig/" )
+    elseif type == Current # https://zone.ni.com/reference/en-XX/help/370471AM-01/daqmxcfunc/daqmxcreateaicurrentchan/
+        catch_error( CreateAICurrentChan(t.th,
+                Ref(codeunits(channel),1),
+                Ref(codeunits(""), 1),
+                terminal_config,
+                range[1], range[2],
+                Val_Amps,
+                Val_Default, # shuntResistorLoc
+                0 ,
+                convert(Ptr{UInt8},C_NULL)), "see https://www.ni.com/documentation/en/ni-daqmx/latest/devconsid/defaulttermconfig/" )
+    end
+
     nothing
 end
 

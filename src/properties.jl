@@ -43,7 +43,11 @@ end
 
 for (jfunction, cfunction) in (
         (:analog_input_ranges, GetDevAIVoltageRngs),
-        (:analog_output_ranges, GetDevAOVoltageRngs))
+        (:analog_output_ranges, GetDevAOVoltageRngs),
+        (:analog_volt_input_ranges, GetDevAIVoltageRngs),
+        (:analog_volt_output_ranges, GetDevAOVoltageRngs),
+        (:analog_current_input_ranges, GetDevAICurrentRngs), 
+        (:analog_current_output_ranges, GetDevAOCurrentRngs))
     @eval function $jfunction(device::String)
         sz = $cfunction(Ref(codeunits(device),1), convert(Ptr{Float64},C_NULL), UInt32(0))
         data=zeros(sz)

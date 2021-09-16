@@ -24,8 +24,10 @@ else
     @test typeof(digital_output_channels()) == Vector{String}
     @test typeof(counter_input_channels()) == Vector{String}
     @test typeof(counter_output_channels()) == Vector{String}
-    @test typeof(analog_input_ranges()) == LinearAlgebra.Adjoint{Float64,Array{Float64,2}}
-    @test typeof(analog_output_ranges()) == LinearAlgebra.Adjoint{Float64,Array{Float64,2}}
+    @test typeof(analog_volt_input_ranges()) == LinearAlgebra.Adjoint{Float64,Array{Float64,2}}
+    @test typeof(analog_volt_output_ranges()) == LinearAlgebra.Adjoint{Float64,Array{Float64,2}}
+    @test typeof(analog_current_input_ranges()) == LinearAlgebra.Adjoint{Float64,Array{Float64,2}}
+    @test typeof(analog_current_output_ranges()) == LinearAlgebra.Adjoint{Float64,Array{Float64,2}}
 end
 end
 
