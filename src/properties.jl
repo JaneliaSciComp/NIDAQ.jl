@@ -211,7 +211,7 @@ end
 
 set the specified NIDAQ property to value
 """
-function setproperty!(t::Task, channel::String, property::String, value)
+function Base.setproperty!(t::Task, channel::String, property::String, value)
     kind = channel_types[ findall(channel_type(t, channel)[1] .==
             map((x)->getfield(NIDAQ,Symbol(x)), channel_types))[1]][end-1:end]
 
