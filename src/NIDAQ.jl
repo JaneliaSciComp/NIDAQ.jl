@@ -33,6 +33,7 @@ export stop, clear
 
 # channels
 export analog_input, analog_output, digital_input, digital_output
+export acceleration_input
 export count_edges, quadrature_input, line_to_line, generate_pulses
 
 # properties

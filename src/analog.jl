@@ -56,15 +56,15 @@ function analog_input(t::AITask,
             range = float(analog_volt_input_ranges(device)[end,:])
         else
             range = float(analog_current_input_ranges(device)[end,:])
-    end
+        end
     end
     if type == Voltage # https://zone.ni.com/reference/en-XX/help/370471AM-01/daqmxcfunc/daqmxcreateaivoltagechan/
-    catch_error( CreateAIVoltageChan(t.th,
-            Ref(codeunits(channel),1),
-            Ref(codeunits(""), 1),
-            terminal_config,
-            range[1], range[2],
-            Val_Volts,
+        catch_error( CreateAIVoltageChan(t.th,
+                Ref(codeunits(channel),1),
+                Ref(codeunits(""), 1),
+                terminal_config,
+                range[1], range[2],
+                Val_Volts,
                 convert(Ptr{UInt8},C_NULL)), "see https://www.ni.com/documentation/en/ni-daqmx/latest/devconsid/defaulttermconfig/" )
     elseif type == Current # https://zone.ni.com/reference/en-XX/help/370471AM-01/daqmxcfunc/daqmxcreateaicurrentchan/
         catch_error( CreateAICurrentChan(t.th,
@@ -81,6 +81,57 @@ function analog_input(t::AITask,
     nothing
 end
 
+"""
+`acceleration_input(channel, config, range) -> task`
+
+`acceleration_input(task, channel, config, range)`
+
+create an acceleration input channel, and a new task if one is not specified
+
+terminal_config can be Default, RSE, NRSE, Differential, PseudoDifferential
+range specifies the minimum and maximum value to measure in g (9.81 m/s^2)
+sensitivity specifies the sensor´s sensitivity in mV/g. Default is 100mV/g
+
+The measurements are returned in g.
+
+For more information see the NI documentation:
+https://zone.ni.com/reference/en-XX/help/370471AA-01/daqmxcfunc/daqmxcreateaiaccelchan/
+"""
+
+function acceleration_input(channel::String;
+                      terminal_config::TerminalConfig = Differential, 
+                      range = nothing, # in g
+                      sensitivity::Real = 100. , 
+                      currentexcitval::Real = 0.002)
+    
+    t = AITask()
+    acceleration_input(t, channel; terminal_config, range, sensitivity, currentexcitval)
+    t
+end
+
+function acceleration_input(t::AITask, channel::String;
+                      terminal_config::TerminalConfig = Differential, 
+                      range = nothing, # in g 
+                      sensitivity::Real = 100. , # mV / g
+                      currentexcitval::Real = 0.002) # Ampere
+    if isnothing(range)
+        @error "specifiy input ranges"
+    end
+    # https://zone.ni.com/reference/en-XX/help/370471AA-01/daqmxcfunc/daqmxcreateaiaccelchan/
+    catch_error( CreateAIAccelChan(t.th,
+            Ref(codeunits(channel),1),
+            Ref(codeunits(""), 1),
+            terminal_config,
+            range[1], range[2],
+            Val_AccelUnit_g, # or Val_MetersPerSecondSquared
+            sensitivity,
+            Val_mVoltsPerG, # or Val_VoltsPerG
+            Val_Internal,
+            currentexcitval,
+            convert(Ptr{UInt8},C_NULL)), "see https://www.ni.com/documentation/en/ni-daqmx/latest/devconsid/defaulttermconfig/" )
+    @warn("Attention, this channel has input/output values based in g, not SI (m/s2)")
+    nothing
+end
 """
 `analog_output(channel, range) -> task`
 
@@ -133,6 +184,25 @@ function read(t::AITask, num_samples_per_chan::Integer = -1, precision::DataType
     data = data[1:num_samples_per_chan_read[1]*num_channels]
     num_channels==1 ? data : reshape(data, (div(length(data),num_channels), convert(Int64,num_channels)))
 end
+function Base.read!(data,t::AITask, num_samples_per_chan::Integer = -1, precision::DataType = Float64)
+    outdata_ref = Ref{Cuint}()
+    DAQmxGetTaskNumChans(t.th, outdata_ref)
+    num_channels = outdata_ref.x
+    num_samples_per_chan_read = Int32[0]
+    buffer_size = num_samples_per_chan==-1 ? 1024 : num_samples_per_chan
+    # data = Array{precision}(undef, buffer_size*num_channels)
+    catch_error( read_analog_cfunctions[precision](t.th,
+        convert(Int32,num_samples_per_chan),
+        1.0,
+        reinterpret(Bool32,Val_GroupByChannel),
+        Ref(data,1),
+        convert(UInt32,buffer_size*num_channels),
+        Ref(num_samples_per_chan_read,1),
+        reinterpret(Ptr{Bool32},C_NULL)) )
+    # data = data[1:num_samples_per_chan_read[1]*num_channels]
+    # num_channels==1 ? data : reshape(data, (div(length(data),num_channels), convert(Int64,num_channels)))
+end
+
 
 for (cfunction, types) in (
         (WriteAnalogF64, Float64),
