@@ -42,8 +42,11 @@ for (jfunction, cfunction) in (
 end
 
 for (jfunction, cfunction) in (
-        (:analog_input_ranges, GetDevAIVoltageRngs),
-        (:analog_output_ranges, GetDevAOVoltageRngs))
+        (:analog_voltage_input_ranges,  GetDevAIVoltageRngs),
+        (:analog_voltage_output_ranges, GetDevAOVoltageRngs),
+        (:analog_current_input_ranges,  GetDevAICurrentRngs), 
+        (:analog_current_output_ranges, GetDevAOCurrentRngs))
+        
     @eval function $jfunction(device::String)
         sz = $cfunction(Ref(codeunits(device),1), convert(Ptr{Float64},C_NULL), UInt32(0))
         data=zeros(sz)
@@ -207,7 +210,7 @@ end
 
 set the specified NIDAQ property to value
 """
-function setproperty!(t::Task, channel::String, property::String, value)
+function Base.setproperty!(t::Task, channel::String, property::String, value)
     kind = channel_types[ findall(channel_type(t, channel)[1] .==
             map((x)->getfield(NIDAQ,Symbol(x)), channel_types))[1]][end-1:end]
 
@@ -215,3 +218,4 @@ function setproperty!(t::Task, channel::String, property::String, value)
     catch_error(ret, "DAQmxSet$kind$property: ")
     nothing
 end
+
