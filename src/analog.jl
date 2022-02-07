@@ -2,10 +2,10 @@
 @enum InputType::Cuint Voltage=Val_ChannelVoltage Current=Val_ChannelCurrent
 
 analog_input_configs = Dict{AbstractString,TerminalConfig}(  # deprecate
-    "referenced single-ended" => RSE,
+    "referenced single-ended"     => RSE,
     "non-referenced single-ended" => NRSE,
-    "pseudo-differential" => PseudoDifferential,
-    "differential" => Differential)
+    "pseudo-differential"         => PseudoDifferential,
+    "differential"                => Differential)
 
 
 """
@@ -28,9 +28,9 @@ https://zone.ni.com/reference/en-XX/help/370471AM-01/daqmxcfunc/daqmxcreateaicur
 
 """
 function analog_input(channel::String;
-                      terminal_config::Union{String,TerminalConfig}=Differential,
-                      range=nothing, 
-                      type=Voltage
+                      terminal_config::Union{String,TerminalConfig} = Differential,
+                      range = nothing, 
+                      type  = Voltage
                       )
     if typeof(terminal_config) == String  # deprecate
       Base.depwarn("specifying terminal configurations with Strings is deprecated.  Use the TerminalConfig Enum instead.", :analog_input)
@@ -53,7 +53,7 @@ function analog_input(t::AITask,
     if isnothing(range)
         device::String = split(channel,'/')[1]
         if type == Voltage
-            range = float(analog_volt_input_ranges(device)[end,:])
+            range = float(analog_voltage_input_ranges(device)[end,:])
         else
             range = float(analog_current_input_ranges(device)[end,:])
         end
@@ -90,7 +90,8 @@ create an acceleration input channel, and a new task if one is not specified
 
 terminal_config can be Default, RSE, NRSE, Differential, PseudoDifferential
 range specifies the minimum and maximum value to measure in g (9.81 m/s^2)
-sensitivity specifies the sensor´s sensitivity in mV/g. Default is 100mV/g
+sensitivity specifies the sensor´s sensitivity in mV/g (default is 100mV/g)
+currentexcitval is the excitation current in ampere (default 2mA)
 
 The measurements are returned in g.
 
@@ -146,7 +147,7 @@ function analog_output(channel::String; range=nothing)
 end
 
 function analog_output(t::AOTask, channel::String; range=nothing)
-    if range==nothing
+    if range == nothing
         device::String = split(channel,'/')[1]
         range=float(analog_output_ranges(device)[end,:])
     end
@@ -161,10 +162,10 @@ end
 
 read_analog_cfunctions = Dict{Type,Function}(
     Float64 => ReadAnalogF64,
-    Int16 => ReadBinaryI16,
-    Int32 => ReadBinaryI32,
-    UInt16 => ReadBinaryU16,
-    UInt32 => ReadBinaryU32 )
+    Int16   => ReadBinaryI16,
+    Int32   => ReadBinaryI32,
+    UInt16  => ReadBinaryU16,
+    UInt32  => ReadBinaryU32 )
 
 function read(t::AITask, num_samples_per_chan::Integer = -1, precision::DataType = Float64)
     outdata_ref = Ref{Cuint}()
@@ -199,8 +200,6 @@ function Base.read!(data,t::AITask, num_samples_per_chan::Integer = -1, precisio
         convert(UInt32,buffer_size*num_channels),
         Ref(num_samples_per_chan_read,1),
         reinterpret(Ptr{Bool32},C_NULL)) )
-    # data = data[1:num_samples_per_chan_read[1]*num_channels]
-    # num_channels==1 ? data : reshape(data, (div(length(data),num_channels), convert(Int64,num_channels)))
 end
 
 
@@ -227,3 +226,4 @@ for (cfunction, types) in (
     @eval write(t::AOTask, data::Vector{$types}) =
         write(t, reshape(data,(length(data),1)))
 end
+
