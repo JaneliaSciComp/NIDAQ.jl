@@ -17,8 +17,9 @@ task() = task("")
 
 for (cfunction, jfunction) in (
         (DAQmxStartTask, :start),
-        (DAQmxStopTask, :stop),
+        (DAQmxStopTask,  :stop),
         (DAQmxClearTask, :clear))
+        
     @eval function $jfunction(t::Task)
         catch_error( $cfunction(t.th) )
         nothing
@@ -28,3 +29,4 @@ for (cfunction, jfunction) in (
 
     """,jfunction," the specified NIDAQ task")) $jfunction
 end
+

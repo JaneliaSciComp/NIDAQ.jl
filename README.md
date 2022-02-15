@@ -316,7 +316,7 @@ julia> names(NIDAQ)
   :counter_input_channels 
   :counter_output_channels
   :NIDAQ                  
-  :analog_volt_input_ranges    
+  :analog_voltage_input_ranges    
   :analog_current_input_ranges    
   :digital_input          
   :stop                   
@@ -325,7 +325,7 @@ julia> names(NIDAQ)
   :digital_output_channels
   :analog_input           
   :channel_type           
-  :analog_volt_output_ranges   
+  :analog_voltage_output_ranges   
   :analog_current_output_ranges   
   :devices                
   :digital_output         
@@ -427,3 +427,4 @@ Author
 [Howard Hughes Medical Institute](http://www.hhmi.org)
 
 [![Picture](/hhmi_janelia_160px.png)](http://www.janelia.org)
+
