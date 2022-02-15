@@ -3,8 +3,11 @@ National Instruments Data Acquisition Interface
 
 This package provides an interface to NI-DAQmx--- National Instruments' driver
 for their data acquisition boards.  Their entire C header file was ported
-using [Clang.jl](https://github.com/ihnorton/Clang.jl), and a rudimentary
-higher-level API is provided for ease of use.
+using [Clang.jl](https://github.com/JuliaInterop/Clang.jl), and a rudimentary
+higher-level API is provided for ease of use. Clang v0.13.0 was used 
+(old-generator) and functions with VarArg are not ported (see commented 
+functions in functions_V21.3.0.jl). VarArg functions are supported only 
+from Clang v0.14.0 on. 
 
 Similar functionality for the Python language is provided by
 [PyDAQmx](https://pythonhosted.org/PyDAQmx).
@@ -17,14 +20,15 @@ System Requirements
 - NI-DAQmx Base is not supported  
 
 **Linux specific**  
-- Requires the latest DAQmx (currently 20.1)
+- Requires the DAQmx 21.3 or 20.1
 - DAQmx on linux does not support USB DAQ devices
 
 Installation
 ============
 **Windows**  
 First download and install NI-DAQmx version
-[20.1](https://www.ni.com/en-us/support/downloads/drivers/download.ni-daqmx.html#348669) (or 
+[21.3](https://www.ni.com/de-de/support/downloads/drivers/download.ni-daqmx.html#428058) (or
+[20.1](https://www.ni.com/en-us/support/downloads/drivers/download.ni-daqmx.html#348669), 
 [19.6](https://www.ni.com/en-us/support/downloads/drivers/download/packaged.ni-daqmx.333268.html), 
 [18.6](http://www.ni.com/en-us/support/downloads/drivers/download/unpackaged.ni-daqmx.291872.html);
 or for Julia 0.6, [17.1.0](http://www.ni.com/download/ni-daqmx-17.1/6836/en/);
@@ -36,7 +40,7 @@ or for Julia 0.3, [14.1.0](http://www.ni.com/download/ni-daqmx-14.1/4953/en/),
 Instruments.
 
 **Linux**  
-The package only supports DAQmx 20.1 on linux. Follow the instructions from this [support doc](https://www.ni.com/en-us/support/documentation/supplemental/18/downloading-and-installing-ni-driver-software-on-linux-desktop.html).
+The package supports DAQmx 21.3 (only First Look for Ubuntu) and DAQmx 20.1 on linux. Follow the instructions from this [support doc](https://www.ni.com/en-us/support/documentation/supplemental/18/downloading-and-installing-ni-driver-software-on-linux-desktop.html).
 
 **Adding `NIDAQ.jl`**  
 Then on the Julia command line:
