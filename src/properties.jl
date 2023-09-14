@@ -175,6 +175,7 @@ function Base.setproperty!(t::Task, channel::String, property::String, value)
     nothing
 end
 
+
 function Base.getproperty(t::Task,channel::String,property::String)
     kind = channel_types[ findall(channel_type(t, channel)[1] .==
             map((x)->getfield(NIDAQ,Symbol(x)), channel_types))[1]][end-1:end]

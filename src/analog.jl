@@ -149,7 +149,7 @@ end
 function analog_output(t::AOTask, channel::String; range=nothing)
     if range == nothing
         device::String = split(channel,'/')[1]
-        range=float(analog_output_ranges(device)[end,:])
+        range=float(analog_voltage_output_ranges(device)[end,:])
     end
     catch_error( CreateAOVoltageChan(t.th,
             Ref(str2code(channel),1),

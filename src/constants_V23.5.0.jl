@@ -24,43 +24,43 @@ struct CVITime
     data::NTuple{1, UInt8}
 end
 
-function Base.getproperty(x::Ptr{CVITime}, f::Symbol)
-    f === :lsb && return Ptr{Cint}(x + 0)
-    f === :msb && return Ptr{int64}(x + 0)
-    return getfield(x, f)
-end
+# function Base.getproperty(x::Ptr{CVITime}, f::Symbol)
+#     f === :lsb && return Ptr{Cint}(x + 0)
+#     f === :msb && return Ptr{int64}(x + 0)
+#     return getfield(x, f)
+# end
 
-function Base.getproperty(x::CVITime, f::Symbol)
-    r = Ref{CVITime}(x)
-    ptr = Base.unsafe_convert(Ptr{CVITime}, r)
-    fptr = getproperty(ptr, f)
-    GC.@preserve r unsafe_load(fptr)
-end
+# function Base.getproperty(x::CVITime, f::Symbol)
+#     r = Ref{CVITime}(x)
+#     ptr = Base.unsafe_convert(Ptr{CVITime}, r)
+#     fptr = getproperty(ptr, f)
+#     GC.@preserve r unsafe_load(fptr)
+# end
 
-function Base.setproperty!(x::Ptr{CVITime}, f::Symbol, v)
-    unsafe_store!(getproperty(x, f), v)
-end
+# function Base.setproperty!(x::Ptr{CVITime}, f::Symbol, v)
+#     unsafe_store!(getproperty(x, f), v)
+# end
 
 struct CVIAbsoluteTime
     data::NTuple{1, UInt8}
 end
 
-function Base.getproperty(x::Ptr{CVIAbsoluteTime}, f::Symbol)
-    f === :cviTime && return Ptr{CVITime}(x + 0)
-    f === :u32Data && return Ptr{NTuple{4, uInt32}}(x + 0)
-    return getfield(x, f)
-end
+# function Base.getproperty(x::Ptr{CVIAbsoluteTime}, f::Symbol)
+#     f === :cviTime && return Ptr{CVITime}(x + 0)
+#     f === :u32Data && return Ptr{NTuple{4, uInt32}}(x + 0)
+#     return getfield(x, f)
+# end
 
-function Base.getproperty(x::CVIAbsoluteTime, f::Symbol)
-    r = Ref{CVIAbsoluteTime}(x)
-    ptr = Base.unsafe_convert(Ptr{CVIAbsoluteTime}, r)
-    fptr = getproperty(ptr, f)
-    GC.@preserve r unsafe_load(fptr)
-end
+# function Base.getproperty(x::CVIAbsoluteTime, f::Symbol)
+#     r = Ref{CVIAbsoluteTime}(x)
+#     ptr = Base.unsafe_convert(Ptr{CVIAbsoluteTime}, r)
+#     fptr = getproperty(ptr, f)
+#     GC.@preserve r unsafe_load(fptr)
+# end
 
-function Base.setproperty!(x::Ptr{CVIAbsoluteTime}, f::Symbol, v)
-    unsafe_store!(getproperty(x, f), v)
-end
+# function Base.setproperty!(x::Ptr{CVIAbsoluteTime}, f::Symbol, v)
+#     unsafe_store!(getproperty(x, f), v)
+# end
 
 const bool32 = Bool32
 
