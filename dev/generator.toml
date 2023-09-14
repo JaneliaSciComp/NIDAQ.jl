@@ -1,0 +1,4 @@
+[general]
+library_name = "NIDAQmx"
+output_api_file_path = "NIDAQmx.jl"
+output_common_file_path = "common.jl"
