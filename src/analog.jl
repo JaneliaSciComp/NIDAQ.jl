@@ -60,16 +60,16 @@ function analog_input(t::AITask,
     end
     if type == Voltage # https://zone.ni.com/reference/en-XX/help/370471AM-01/daqmxcfunc/daqmxcreateaivoltagechan/
         catch_error( CreateAIVoltageChan(t.th,
-                Ref(codeunits(channel),1),
-                Ref(codeunits(""), 1),
+                Ref(str2code(channel),1),
+                Ref(str2code(""), 1),
                 terminal_config,
                 range[1], range[2],
                 Val_Volts,
                 convert(Ptr{UInt8},C_NULL)), "see https://www.ni.com/documentation/en/ni-daqmx/latest/devconsid/defaulttermconfig/" )
     elseif type == Current # https://zone.ni.com/reference/en-XX/help/370471AM-01/daqmxcfunc/daqmxcreateaicurrentchan/
         catch_error( CreateAICurrentChan(t.th,
-                Ref(codeunits(channel),1),
-                Ref(codeunits(""), 1),
+                Ref(str2code(channel),1),
+                Ref(str2code(""), 1),
                 terminal_config,
                 range[1], range[2],
                 Val_Amps,
@@ -120,8 +120,8 @@ function acceleration_input(t::AITask, channel::String;
     end
     # https://zone.ni.com/reference/en-XX/help/370471AA-01/daqmxcfunc/daqmxcreateaiaccelchan/
     catch_error( CreateAIAccelChan(t.th,
-            Ref(codeunits(channel),1),
-            Ref(codeunits(""), 1),
+            Ref(str2code(channel),1),
+            Ref(str2code(""), 1),
             terminal_config,
             range[1], range[2],
             Val_AccelUnit_g, # or Val_MetersPerSecondSquared
@@ -152,8 +152,8 @@ function analog_output(t::AOTask, channel::String; range=nothing)
         range=float(analog_output_ranges(device)[end,:])
     end
     catch_error( CreateAOVoltageChan(t.th,
-            Ref(codeunits(channel),1),
-            Ref(codeunits(""),1),
+            Ref(str2code(channel),1),
+            Ref(str2code(""),1),
             range[1], range[2],
             Val_Volts,
             convert(Ptr{UInt8},C_NULL)) )
