@@ -27,8 +27,10 @@ Installation
 ============
 **Windows**  
 First download and install NI-DAQmx version
-[21.3](https://www.ni.com/de-de/support/downloads/drivers/download.ni-daqmx.html#428058) (or
+[23.5](https://www.ni.com/en/support/downloads/drivers/download.ni-daq-mx.html#484356) (or
+[21.3](https://www.ni.com/de-de/support/downloads/drivers/download.ni-daqmx.html#428058),
 [20.1](https://www.ni.com/en-us/support/downloads/drivers/download.ni-daqmx.html#348669), 
+[20.1](https://www.ni.com/en-us/support/downloads/drivers/download.ni-daqmx.html#348669),
 [19.6](https://www.ni.com/en-us/support/downloads/drivers/download/packaged.ni-daqmx.333268.html), 
 [18.6](http://www.ni.com/en-us/support/downloads/drivers/download/unpackaged.ni-daqmx.291872.html);
 or for Julia 0.6, [17.1.0](http://www.ni.com/download/ni-daqmx-17.1/6836/en/);
@@ -369,38 +371,18 @@ take care to caste the other inputs appropriately though.
 Adding Support for a Version of NI-DAQmx
 ========================================
 
-Install [Clang.jl](https://github.com/ihnorton/Clang.jl).  If there are
-build problems, make sure that `llvm-config` is on your `PATH`, and that
-`libclang` can be found, as described in the Clang.jl README.  Clang
-defaults to using a system installed version of LLVM.  An alternative is
-to set `BUILD_LLVM_CLANG=1` in Make.user, and compile Julia from source.
+Install [Clang.jl](https://github.com/ihnorton/Clang.jl) to a local folder, e.g. `dev`.  
 
 Find `NIDAQmx.h`, which usually lives in
 `C:\Program Files (x86)\National Instruments\NI-DAQ\DAQmx ANSI C Dev\include`.
+and copy `NIDAQmx.h` to `dev` folder.
 
-Edit this header file as follows:
+Run `generator.jl` in `dev` folder, it will generate `NIDAQmx.jl` and `common.jl` in `dev` folder.
 
-+ For NI-DAQmx v19.6 in `NIDAQmx.h` change `__int64 int64` to `long long int int64`
-and `unsigned __int64 uInt64` to `unsigned long long uInt64`.
-+ For NI-DAQmx v9.6.0 in `NIDAQmx.h` change 
-`defined(__linux__)` to `defined(__linux__) || defined(__APPLE__)`.
-
-Then run Clang to produce the corresponding Julia files:
-
+Move the above two files to `src` folder, and edit the file names accordingly as below:
 ```
-julia> using Clang
-julia> wc = init(; headers = ["NIDAQmx.h"],
-                   output_file = "NIDAQmx.jl",
-                   common_file = "common.jl",
-                   clang_includes = vcat(CLANG_INCLUDE),
-                   clang_args = map(x->"-I"*x, find_std_headers()),
-                   header_wrapped = (root, current)->root == current,
-                   header_library = x->"NIDAQmx",
-                   clang_diagnostics = true)
-julia> run(wc)
 $ mv NIDAQmx.jl src/functions_V<version>.jl
 $ mv common.jl src/constants_V<version>.jl
-$ rm LibTemplate.jl ctypes.jl
 ```
 
 Finally, the following manual edits are necessary:
@@ -411,6 +393,8 @@ Finally, the following manual edits are necessary:
   + in NI-DAQmx v17.1.0 comment out `const CVIAbsoluteTime = VOID`
   + change `const bool32 = uInt32` to `const bool32 = Bool32`.
   + in NI-DAQmx v15 to v18 comment out `using Compat`
+  + in NI-DAQmx v23.5.0, comment out `const __CFUNC = __stdcall`
+  + in NI-DAQmx v23.5.0 comment out all functions.
 + In `functions_V<version>.jl`
   + in NI-DAQmx v18 and earlier, globally search for `Ptr` and replace with `Ref`, then globally
 search for `CallbackRef` and replace with `CallbackPtr`.
