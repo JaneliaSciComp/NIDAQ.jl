@@ -1,7 +1,7 @@
 using Revise
 using NIDAQ
 
-devices()
+dev = devices()
 getproperties()
 prop = getproperties("Dev1")
 show(stdout, "text/plain", prop)
@@ -9,7 +9,7 @@ show(stdout, "text/plain", prop)
 show(stdout, "text/plain", names(NIDAQ))
 
 ## test analog input
-analog_input_channels("Dev1")
+ch = analog_input_channels("Dev1")
 analog_voltage_input_ranges("Dev1")
 t = analog_input("Dev1/ai0")
 getproperties(t)
@@ -18,7 +18,7 @@ show(stdout, "text/plain", ch_prop)
 #setproperty!(t, "Dev1/ai0", "Max", Float64(10.0))
 val = getproperty(t, "Dev1/ai0", "Max")
 start(t)
-NIDAQ.read(t)
+vol = NIDAQ.read(t,10)
 stop(t)
 clear(t)
 

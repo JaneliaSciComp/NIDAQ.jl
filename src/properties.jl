@@ -9,7 +9,7 @@ function devices()
     catch_error(GetSysDevNames(Ref(data,1), UInt32(sz)))
     devs = map((x)->convert(String,x), split(safechop(ascii(String(UInt8.(data)))),", "))
     devs[devs .!= ""]
-
+    return devs
 end
 
 for (jfunction, cfunction) in (
@@ -24,7 +24,8 @@ for (jfunction, cfunction) in (
         data=zeros(NIDAQ.dType,sz)
         catch_error( $cfunction(Ref(str2code(device),1), Ref(data,1),
                 UInt32(sz)) )
-        map((x)->convert(String,x), split(safechop(ascii(String(UInt8.(data)))),", "))
+        return map((x)->convert(String,x), split(safechop(ascii(String(UInt8.(data)))),", "))
+        
     end
 
     @eval function $jfunction()
