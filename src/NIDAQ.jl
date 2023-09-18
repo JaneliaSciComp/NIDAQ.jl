@@ -63,14 +63,14 @@ try
   ccall((:DAQmxGetSysNIDAQUpdateVersion,NIDAQmx),Int32,(Ref{UInt32},),update)
   ver = "$(major[]).$(minor[]).$(update[])"
 catch
-  error("can not determine NIDAQmx version.")
+  @warn("can not determine NIDAQmx version.")
 end
 
 try
   include("constants_V$ver.jl")
   include("functions_V$ver.jl")
 catch
-  error("NIDAQmx version $ver is not supported.")
+  @warn("NIDAQmx version $ver is not supported.")
 end
 
 unsigned_constants = Dict{UInt64,Symbol}()
