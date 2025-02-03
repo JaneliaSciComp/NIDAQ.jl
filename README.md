@@ -370,29 +370,11 @@ Install [Clang.jl](https://github.com/ihnorton/Clang.jl) to a local folder, e.g.
 
 Find `NIDAQmx.h`, which usually lives in
 `C:\Program Files (x86)\National Instruments\NI-DAQ\DAQmx ANSI C Dev\include`.
-and copy `NIDAQmx.h` to `dev` folder
+and copy `NIDAQmx.h` to `dev` folder.
 
-Create a config file `generator.toml` in `dev` folder: 
-```
-[general]
-library_name = "NIDAQmx"
-output_api_file_path = "NIDAQmx.jl"
-output_common_file_path = "common.jl"
-```
+Run `generator.jl` in `dev` folder, it will generate `NIDAQmx.jl` and `common.jl` in `dev` folder.
 
-Create a Julia script `generator.jl` in `dev` folder:
-```julia
-using Clang.Generators
-cd(@__DIR__)
-options = load_options(joinpath(@__DIR__, "generator.toml"))
-args = get_default_args()  
-headers = ["NIDAQmx.h"]
-ctx = create_context(headers, args, options)
-# run generator
-build!(ctx)
-```
-
-Move the following two files to `src` folder
+Move the above two files to `src` folder, and edit the file names accordingly as below:
 ```
 $ mv NIDAQmx.jl src/functions_V<version>.jl
 $ mv common.jl src/constants_V<version>.jl

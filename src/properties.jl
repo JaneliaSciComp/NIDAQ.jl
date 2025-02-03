@@ -20,9 +20,9 @@ for (jfunction, cfunction) in (
         (:counter_input_channels, GetDevCIPhysicalChans),
         (:counter_output_channels, GetDevCOPhysicalChans))
     @eval function $jfunction(device::String)
-        sz = $cfunction(Ref(str2code(device),1), Ref{NIDAQ.dType}(C_NULL), UInt32(0))
+        sz = $cfunction(str2code(device), Ref{NIDAQ.dType}(C_NULL), UInt32(0))
         data=zeros(NIDAQ.dType,sz)
-        catch_error( $cfunction(Ref(str2code(device),1), Ref(data,1),
+        catch_error( $cfunction(str2code(device), Ref(data,1),
                 UInt32(sz)) )
         return map((x)->convert(String,x), split(safechop(ascii(String(UInt8.(data)))),", "))
         
@@ -49,9 +49,9 @@ for (jfunction, cfunction) in (
         (:analog_current_output_ranges, GetDevAOCurrentRngs))
         
     @eval function $jfunction(device::String)
-        sz = $cfunction(Ref(str2code(device),1), convert(Ptr{Float64},C_NULL), UInt32(0))
+        sz = $cfunction(str2code(device), convert(Ptr{Float64},C_NULL), UInt32(0))
         data=zeros(sz)
-        catch_error( $cfunction(Ref(str2code(device),1), Ref(data,1),
+        catch_error( $cfunction(str2code(device), Ref(data,1),
                 UInt32(sz)) )
         reshape(data,(2,length(data)>>1))'
     end
@@ -78,19 +78,19 @@ get the type of the specified NIDAQ channel
 function channel_type(t::Task, channel::String)
     val1 = Cint[0]
     catch_error(
-        GetChanType(t.th, Ref(str2code(channel),1), Ref(val1,1)) )
+        GetChanType(t.th, str2code(channel), Ref(val1,1)) )
 
     val2 = Cint[0]
     if val1[1] == Val_AI
-        ret = GetAIMeasType(t.th, Ref(str2code(channel),1), Ref(val2,1))
+        ret = GetAIMeasType(t.th, str2code(channel), Ref(val2,1))
     elseif val1[1] == Val_AO
-        ret = GetAOOutputType(t.th, Ref(str2code(channel),1), Ref(val2,1))
+        ret = GetAOOutputType(t.th, str2code(channel), Ref(val2,1))
     elseif val1[1] == Val_DI || val1[1] == Val_DO
         return val1[1], nothing
     elseif val1[1] == Val_CI
-        ret = GetCIMeasType(t.th, Ref(str2code(channel),1), Ref(val2,1))
+        ret = GetCIMeasType(t.th, str2code(channel), Ref(val2,1))
     elseif val1[1] == Val_CO
-        ret = GetCOOutputType(t.th, Ref(str2code(channel),1), Ref(val2,1))
+        ret = GetCOOutputType(t.th, str2code(channel), Ref(val2,1))
     end
     catch_error(ret)
 
@@ -134,7 +134,7 @@ end
 get the properties of the specified NIDAQ device
 """
 function getproperties(device::String; warning=false)
-    _getproperties((Ref(str2code(device),1),), "Dev", warning)
+    _getproperties((str2code(device),), "Dev", warning)
 end
 
 """

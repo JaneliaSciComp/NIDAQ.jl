@@ -10,7 +10,7 @@ end
 
 function task(name::String)
     t = TaskHandle[0]
-    catch_error( DAQmxCreateTask(Ref(str2code(name),1), pointer(t)) )
+    catch_error( DAQmxCreateTask(str2code(name), pointer(t)) )
     t[1]
 end
 task() = task("")
