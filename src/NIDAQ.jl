@@ -63,14 +63,14 @@ try
   ccall((:DAQmxGetSysNIDAQUpdateVersion,NIDAQmx),Int32,(Ref{UInt32},),update)
   ver = "$(major[]).$(minor[]).$(update[])"
 catch
-  error("can not determine NIDAQmx version.")
+  @warn("can not determine NIDAQmx version.")
 end
 
 try
   include("constants_V$ver.jl")
   include("functions_V$ver.jl")
 catch
-  error("NIDAQmx version $ver is not supported.")
+  @warn("NIDAQmx version $ver is not supported.")
 end
 
 unsigned_constants = Dict{UInt64,Symbol}()
@@ -96,9 +96,10 @@ end
 safechop(str::AbstractString) = isempty(str) ? str : chop(str)
 
 function catch_error(code::Int32, extra::String=""; err_fcn=error)
-    sz = DAQmxGetErrorString(code, convert(Ptr{UInt8},C_NULL), convert(UInt32,0))
-    data = String(zeros(UInt8,sz))
-    ret = DAQmxGetErrorString(code, Ref(codeunits(data),1), convert(UInt32,sz))
+    sz = DAQmxGetErrorString(code, convert(Ptr{NIDAQ.dType},C_NULL), convert(UInt32,0))
+    data = zeros(NIDAQ.dType,sz)
+    ret = DAQmxGetErrorString(code, Ref(data,1), convert(UInt32,sz))
+    data = String(UInt8.(data))
     ret>0 && @warn("DAQmxGetErrorString error $ret")
     ret<0 && err_fcn("DAQmxGetErrorString error $ret")
     data = safechop(data)

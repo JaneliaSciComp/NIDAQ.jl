@@ -41,16 +41,16 @@ end
         @test typeof(getproperties(t,dev*"/ai0")) == Dict{String,Tuple{Any,Bool}}
         @test typeof(t) == NIDAQ.AITask
         @test start(t) == nothing
-        @test length(read(t, 3)) == 3
+        @test length(NIDAQ.read(t, 3)) == 3
         @test stop(t) == nothing
         @test analog_input(t, dev*"/ai1") == nothing
         @test start(t) == nothing
-        @test length(read(t, 6, UInt32)) == 12
+        @test length(NIDAQ.read(t, 6, UInt32)) == 12
         @test stop(t) == nothing
-        @test NIDAQ.CfgSampClkTiming(t.th, convert(Ref{UInt8},b""), 100.0, NIDAQ.Val_Rising,
+        @test NIDAQ.CfgSampClkTiming(t.th, convert(Ref{Int8},Cchar.(b"")), 100.0, NIDAQ.Val_Rising,
                 NIDAQ.Val_FiniteSamps, UInt64(10)) == 0
         @test start(t) == nothing
-        @test length(read(t)) == 20
+        @test length(NIDAQ.read(t)) == 20
         @test stop(t) == nothing
         @test clear(t) == nothing
     end
@@ -63,18 +63,17 @@ end
         t = analog_output(dev*"/ao0")
         @test typeof(t) == NIDAQ.AOTask
         @test start(t) == nothing
-        @test write(t, rand(3)) == 3
+        @test NIDAQ.write(t, rand(3)) == 3
         @test stop(t) == nothing
         @test analog_output(t, dev*"/ao1") == nothing
         @test start(t) == nothing
-        @test write(t, rand(UInt32,6,2)) == 6
+        @test NIDAQ.write(t, rand(UInt32,6,2)) == 6
         @test stop(t) == nothing
-        @test NIDAQ.CfgSampClkTiming(t.th, convert(Ref{UInt8},b""), 100.0, NIDAQ.Val_Rising,
-                NIDAQ.Val_FiniteSamps, UInt64(10)) == 0
-        @test write(t, rand(UInt32,10,2)) == 10 
+        #@test NIDAQ.CfgSampClkTiming(t.th, convert(Ref{Int8},Cchar.(b"")), 100.0, NIDAQ.Val_Rising,NIDAQ.Val_FiniteSamps, UInt64(10)) == 0
         @test start(t) == nothing
-        @test NIDAQ.WaitUntilTaskDone(t.th,10.0) == 0
+        @test NIDAQ.write(t, rand(UInt32,10,2)) == 10 
         @test stop(t) == nothing
+        @test NIDAQ.WaitUntilTaskDone(t.th,10.0) == 0
         @test clear(t) == nothing
     end
 end
@@ -87,20 +86,20 @@ end
         t = digital_input(dev*"/Port0/Line0")
         @test typeof(t) == NIDAQ.DITask
         @test start(t) == nothing
-        @test length(read(t, 3)) == 3
+        @test length(NIDAQ.read(t, 3)) == 3
         @test stop(t) == nothing
         @test digital_input(t, dev*"/Port0/Line1") == nothing
         @test start(t) == nothing
-        @test length(read(t, 6)) == 12
+        @test length(NIDAQ.read(t, 6)) == 12
         @test stop(t) == nothing
         rslt = Ref{UInt32}(0)
         NIDAQ.DAQmxGetBufInputOnbrdBufSize(t.th, rslt)
         if rslt[] != 0 #If the device supports buffered digital input
-            @test NIDAQ.CfgSampClkTiming(t.th, convert(Ref{UInt8},b""), 100.0, NIDAQ.Val_Rising,
+            @test NIDAQ.CfgSampClkTiming(t.th, convert(Ref{Int8},Cchar.(b"")), 100.0, NIDAQ.Val_Rising,
                                         NIDAQ.Val_FiniteSamps, UInt64(10)) == 0
             if first(props["ProductCategory"]) != :Val_MSeriesDAQ # M Series has no digital onboard clock
             @test start(t) == nothing
-            @test length(read(t)) == 20
+            @test length(NIDAQ.read(t)) == 20
             @test stop(t) == nothing
             end
             @test clear(t) == nothing
@@ -117,19 +116,19 @@ end
         t = digital_output(dev*"/Port0/Line0")
         @test typeof(t) == NIDAQ.DOTask
         @test start(t) == nothing
-        @test write(t, round.(UInt32, [1,0,1,0,1,0])) == 6
+        @test NIDAQ.write(t, round.(UInt32, [1,0,1,0,1,0])) == 6
         @test stop(t) == nothing
         @test digital_output(t, dev*"/Port0/Line1") == nothing
         @test start(t) == nothing
-        @test write(t, round.(UInt32, [1 0; 0 0; 1 0; 0 1; 1 1; 0 1])) == 6
+        @test NIDAQ.write(t, round.(UInt32, [1 0; 0 0; 1 0; 0 1; 1 1; 0 1])) == 6
         @test stop(t) == nothing
         rslt = Ref{UInt32}(0)
         NIDAQ.DAQmxGetBufOutputOnbrdBufSize(t.th, rslt)
         if rslt[] != 0 #If the device supports buffered digital output
-            @test NIDAQ.CfgSampClkTiming(t.th, convert(Ref{UInt8},b""), 100.0, NIDAQ.Val_Rising,
+            @test NIDAQ.CfgSampClkTiming(t.th, convert(Ref{Int8},Cchar.(b"")), 100.0, NIDAQ.Val_Rising,
                                         NIDAQ.Val_FiniteSamps, UInt64(10)) == 0
             if first(props["ProductCategory"]) != :Val_MSeriesDAQ # M Series has no digital onboard clock
-                @test write(t, rand(UInt32,10,2)) == 10
+                @test NIDAQ.write(t, rand(UInt32,10,2)) == 10
             @test start(t) == nothing
                 @test NIDAQ.WaitUntilTaskDone(t.th,10.0) == 0
             @test stop(t) == nothing

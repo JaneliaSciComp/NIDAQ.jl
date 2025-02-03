@@ -60,16 +60,16 @@ function analog_input(t::AITask,
     end
     if type == Voltage # https://zone.ni.com/reference/en-XX/help/370471AM-01/daqmxcfunc/daqmxcreateaivoltagechan/
         catch_error( CreateAIVoltageChan(t.th,
-                Ref(codeunits(channel),1),
-                Ref(codeunits(""), 1),
+                str2code(channel),
+                str2code(""),
                 terminal_config,
                 range[1], range[2],
                 Val_Volts,
                 convert(Ptr{UInt8},C_NULL)), "see https://www.ni.com/documentation/en/ni-daqmx/latest/devconsid/defaulttermconfig/" )
     elseif type == Current # https://zone.ni.com/reference/en-XX/help/370471AM-01/daqmxcfunc/daqmxcreateaicurrentchan/
         catch_error( CreateAICurrentChan(t.th,
-                Ref(codeunits(channel),1),
-                Ref(codeunits(""), 1),
+                str2code(channel),
+                str2code(""),
                 terminal_config,
                 range[1], range[2],
                 Val_Amps,
@@ -120,8 +120,8 @@ function acceleration_input(t::AITask, channel::String;
     end
     # https://zone.ni.com/reference/en-XX/help/370471AA-01/daqmxcfunc/daqmxcreateaiaccelchan/
     catch_error( CreateAIAccelChan(t.th,
-            Ref(codeunits(channel),1),
-            Ref(codeunits(""), 1),
+            str2code(channel),
+            str2code(""),
             terminal_config,
             range[1], range[2],
             Val_AccelUnit_g, # or Val_MetersPerSecondSquared
@@ -149,11 +149,11 @@ end
 function analog_output(t::AOTask, channel::String; range=nothing)
     if range == nothing
         device::String = split(channel,'/')[1]
-        range=float(analog_output_ranges(device)[end,:])
+        range=float(analog_voltage_output_ranges(device)[end,:])
     end
     catch_error( CreateAOVoltageChan(t.th,
-            Ref(codeunits(channel),1),
-            Ref(codeunits(""),1),
+            str2code(channel),
+            str2code(""),
             range[1], range[2],
             Val_Volts,
             convert(Ptr{UInt8},C_NULL)) )
@@ -183,7 +183,7 @@ function read(t::AITask, num_samples_per_chan::Integer = -1, precision::DataType
         Ref(num_samples_per_chan_read,1),
         reinterpret(Ptr{Bool32},C_NULL)) )
     data = data[1:num_samples_per_chan_read[1]*num_channels]
-    num_channels==1 ? data : reshape(data, (div(length(data),num_channels), convert(Int64,num_channels)))
+    return num_channels==1 ? data : reshape(data, (div(length(data),num_channels), convert(Int64,num_channels)))
 end
 function Base.read!(data,t::AITask, num_samples_per_chan::Integer = -1, precision::DataType = Float64)
     outdata_ref = Ref{Cuint}()

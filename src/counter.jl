@@ -13,8 +13,8 @@ function count_edges(channel::String;
         error("direction must either be \"up\" or \"down\"")
     end
     catch_error( CreateCICountEdgesChan(t.th,
-        Ref(codeunits(channel),1),
-        Ref(codeunits(""),1),
+        str2code(channel),
+        str2code(""),
         edge == "rising" ? Val_Rising : Val_Falling,
         UInt32(initial_count),
         direction == "up" ? Val_CountUp : Val_CountDown) )
@@ -26,14 +26,14 @@ function measure_duty_cycle(channel::String;  units::AbstractString="seconds")
     t = CITask()
     if units == "seconds"
         ret = CreateCIPulseChanTime(t.th,
-                Ref(codeunits(channel),1), Ref(codeunits(""),1),
+                Ref(str2code(channel),1), Ref(str2code(""),1),
                 2.0, 1000.0,
                 Val_Seconds)
     elseif units == "ticks"
         ret = CreateCIPulseChanTicks(t.th,
-                Ref(codeunits(channel),1),
-                Ref(codeunits(""),1),
-                Ref(codeunits(""),1),
+                Ref(str2code(channel),1),
+                Ref(str2code(""),1),
+                Ref(str2code(""),1),
                 2.0, 1000.0)
     else
         error("units must either be \"seconds\" or \"ticks\"")
@@ -51,15 +51,15 @@ create a NIDAQ counter input channel
 function quadrature_input(channel::String; z_enable::Bool=true)
     t = CITask()
     ret = CreateCIAngEncoderChan(t.th,
-            Ref(codeunits(channel),1),
-            Ref(codeunits(""),1),
+            str2code(channel),
+            str2code(""),
             Val_X4,
             reinterpret(Bool32, UInt32(z_enable)),
             0.0,
             Val_AHighBHigh,
             Val_Ticks,
             UInt32(1), 0.0,
-            Ref(codeunits(""),1))
+            str2code(""))
     ret>0 && @warn(error(ret))
     ret<0 && error(error(ret))
     t
@@ -83,13 +83,13 @@ function line_to_line(channel::String;
         error("edge2 must either be \"rising\" or \"falling\"")
     end
     catch_error( CreateCITwoEdgeSepChan(t.th,
-            Ref(codeunits(channel),1),
-            Ref(codeunits(""),1),
+            str2code(channel),
+            str2code(""),
             1.0, 1000.0, 
             units == "seconds" ? Val_Seconds : Val_Ticks,
             edge1 == "rising" ? Val_Rising : Val_Falling,
             edge2 == "rising" ? Val_Rising : Val_Falling,
-            Ref(codeunits(""),1)) )
+            str2code("")) )
     t
 end
 
@@ -102,8 +102,8 @@ function generate_pulses(channel::String; low::T=2, high::T=2, delay::T=0) where
     t = COTask()
     if T<:AbstractFloat
         ret = CreateCOPulseChanTime(t.th,
-                Ref(codeunits(channel),1),
-                Ref(codeunits(""),1),
+                str2code(channel),
+                str2code(""),
                 Val_Seconds,
                 Val_Low,
                 convert(Float64,delay),
@@ -111,9 +111,9 @@ function generate_pulses(channel::String; low::T=2, high::T=2, delay::T=0) where
                 convert(Float64,high))
     elseif T<:Integer
         ret = CreateCOPulseChanTicks(t.th,
-                Ref(codeunits(channel),1),
-                Ref(codeunits(""),1),
-                Ref(codeunits(""),1),
+                str2code(channel),
+                str2code(""),
+                str2code(""),
                 Val_Low,
                 convert(Int32,delay),
                 convert(Int32,low),
@@ -185,7 +185,7 @@ function read(t::CITask, channel::String; num_samples::Integer = -1)
     elseif tmp[2] == Val_TwoEdgeSep  # might be broken
         val = Cint[0]
         catch_error( GetCITwoEdgeSepUnits(t.th,
-                Ref(codeunits(channel),1),
+                str2code(channel),
                 Ref(val,1)) )
         if val[1] == Val_Ticks
             data = read_counter_vector(UInt32, ReadCounterU32)
