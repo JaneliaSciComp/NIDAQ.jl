@@ -63,14 +63,14 @@ try
   ccall((:DAQmxGetSysNIDAQUpdateVersion,NIDAQmx),Int32,(Ref{UInt32},),update)
   ver = "$(major[]).$(minor[]).$(update[])"
 catch
-  @warn("can not determine NIDAQmx version.")
+  error("can not determine NIDAQmx version.")
 end
 
 try
   include("constants_V$ver.jl")
   include("functions_V$ver.jl")
 catch
-  @warn("NIDAQmx version $ver is not supported.")
+  error("NIDAQmx version $ver is not supported.")
 end
 
 unsigned_constants = Dict{UInt64,Symbol}()
@@ -113,6 +113,10 @@ include("digital.jl")
 include("counter.jl")
 include("properties.jl")
 include("deprecations.jl")
+
+str2code(s::String) = str2code(Val(NIDAQ.dType), s)
+str2code(::Val{Cchar}, s::String) = Ref(Cchar.(codeunits(s)),1)
+str2code(::Val{UInt8}, s::String) = Ref(codeunits(s),1)
 
 @doc """`read(task, precision, nsamples) -> Matrix`
 
